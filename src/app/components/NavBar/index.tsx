@@ -1,13 +1,13 @@
 function NavBar() {
   return (
-    <div className="w-full mx-auto bg-tertiary border-b">
-      <div className="relative flex flex-col w-full p-5 mx-auto md:items-center md:justify-between md:flex-row md:px-6 lg:px-8">
-        <div className="bg-accent flex flex-row items-center justify-between lg:justify-start">
+    <div className="w-full mx-auto bg-tertiary border-b shadow-sm">
+      <div className="relative flex flex-col w-full h-24 justify-center mx-auto md:items-center md:justify-between md:flex-row px-8">
+        <div className="bg-accent w-min flex flex-row items-center justify-between lg:justify-start">
           <a
             className="text-lg tracking-tight text-primary shadow-lg uppercase focus:outline-none focus:ring lg:text-2xl"
             href="/"
           >
-            <span className="lg:text-2xl font-semibold lowercase focus:ring-0">
+            <span className="lg:text-2xl font-bold lowercase focus:ring-0">
               Lettrbox
             </span>
           </a>
@@ -38,7 +38,7 @@ function NavBar() {
             <button className="block px-4 py-2 mt-2 text-sm text-gray-500 md:mt-0 hover:text-accent focus:outline-none focus:shadow-outline">
               Sign in
             </button>
-            <button className="inline-flex items-center justify-center px-4 py-2 text-sm font-semibold transition-all hover:px-10 hover:shadow-lg text-tertiary bg-primary group focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 hover:text-primary hover:bg-accent">
+            <button className="inline-flex items-center justify-center px-4 py-2 text-sm font-bold transition-all hover:px-10 hover:shadow-lg text-tertiary bg-primary group focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 hover:text-primary hover:bg-accent">
               Sign up
             </button>
           </div>
