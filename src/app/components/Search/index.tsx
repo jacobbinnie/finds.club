@@ -16,16 +16,15 @@ function Search() {
         <input
           type="search"
           className="text-primary rounded-tl-lg rounded-bl-lg px-6 lg:px-8 w-full font-medium focus:outline-none"
-          placeholder="Where are you looking for property?"
+          placeholder="Where's the next property?"
         />
 
         <button
           onMouseOver={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
-          className={clsx(
-            isHovered ? "rounded-tr-none" : "rounded-tr-lg",
-            "bg-primary rounded-br-lg w-44 relative text-tertiary transition-all font-bold"
-          )}
+          className={
+            "hover:rounded-tr-none rounded-tr-lg rounded-br-lg bg-primary hover:w-60 w-44 relative text-tertiary transition-all font-bold"
+          }
           type="submit"
         >
           <div className="absolute top-0 right-0">
