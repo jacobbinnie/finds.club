@@ -23,7 +23,7 @@ function Search() {
           onMouseOver={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
           className={
-            "hover:rounded-tr-none rounded-tr-lg rounded-br-lg bg-primary hover:w-60 w-44 relative text-tertiary transition-all font-bold"
+            "hover:rounded-tr-none rounded-tr-lg rounded-br-lg bg-primary hover:bg-accent hover:w-60 w-44 relative text-tertiary transition-all font-bold"
           }
           type="submit"
         >
