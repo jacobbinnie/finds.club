@@ -1,6 +1,4 @@
-import Image from "next/image";
 import NavBar from "../../components/NavBar";
-import Map from "../../../assets/images/map.jpg";
 
 function Home() {
   return (
