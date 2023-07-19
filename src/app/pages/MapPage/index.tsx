@@ -3,6 +3,7 @@ import FilterBar from "@/app/components/FilterBar";
 import MapElement from "@/app/components/MapElement";
 import NavBar from "@/app/components/NavBar";
 import PropertyGrid from "@/app/components/PropertyGrid";
+import Search from "@/app/components/Search";
 
 function MapPage() {
   return (
@@ -10,6 +11,7 @@ function MapPage() {
       <NavBar />
       <ActionBar />
       <MapElement />
+      <Search />
       <FilterBar />
       <PropertyGrid />
     </div>

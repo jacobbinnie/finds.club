@@ -14,9 +14,9 @@ function MapElement() {
       >
         <div
           onClick={() => setIsMapHidden(!isMapHidden)}
-          className="px-3 cursor-pointer py-2 absolute top-2 right-2 rounded-md bg-primary text-tertiary text-sm font-bold"
+          className="px-3 cursor-pointer h-8 flex items-center absolute top-2 right-2 rounded-md bg-primary text-tertiary text-sm font-bold"
         >
-          {isMapHidden ? "Show Map" : "Hide Map"}
+          {isMapHidden ? "Expand map" : "Hide map"}
         </div>
       </div>
     </div>
