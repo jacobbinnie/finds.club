@@ -2,7 +2,7 @@ function NavBar() {
   const isSignedIn = true;
 
   return (
-    <div className="w-full mx-auto bg-tertiary border-b">
+    <div className="w-full mx-auto bg-tertiary">
       <div className="relative flex flex-col w-full h-24 justify-center mx-auto md:items-center md:justify-between md:flex-row px-8">
         <div className="h-8 w-min flex flex-row items-center justify-between lg:justify-start rounded-md">
           <a

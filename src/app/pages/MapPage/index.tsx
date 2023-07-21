@@ -1,5 +1,5 @@
 import ActionBar from "@/app/components/ActionBar";
-// import FilterBar from "@/app/components/FilterBar";
+import FilterBar from "@/app/components/FilterBar";
 import MapElement from "@/app/components/MapElement";
 import NavBar from "@/app/components/NavBar";
 import PropertyGrid from "@/app/components/PropertyGrid";
@@ -16,8 +16,7 @@ function MapPage() {
       <NavBar />
       <ActionBar />
       <MapElement apiKey={GOOGLE_API_KEY} />
-      {/* <Search apiKey={GOOGLE_API_KEY} /> */}
-      {/* <FilterBar /> */}
+      <FilterBar />
       <PropertyGrid />
     </div>
   );

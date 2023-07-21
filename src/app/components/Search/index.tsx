@@ -1,33 +1,26 @@
-import { Dispatch, SetStateAction } from "react";
 import Autocomplete from "react-google-autocomplete";
 
 interface SearchProps {
   apiKey: string;
-  setMapLocation: Dispatch<
-    SetStateAction<{
-      lat: number;
-      lng: number;
-      zoom: number;
-    }>
-  >;
+  handleUpdateLocation(lat: number, lng: number, zoom: number): void;
 }
 
-function Search({ apiKey, setMapLocation }: SearchProps) {
+function Search({ apiKey, handleUpdateLocation }: SearchProps) {
   // const [isHovered, setIsHovered] = useState(false);
 
   return (
     <div className="flex w-full relative justify-center px-3 lg:px-6">
-      <div className="w-full rounded-md transition-all flex mt-[-34px] h-16 md:w-1/2 focus:outline-none shadow-lg">
+      <div className="w-full rounded-md transition-all flex mt-[-34px] border-4 border-tertiary h-16 md:w-1/2 focus:outline-none shadow-t-lg">
         <Autocomplete
-          className="text-primary rounded-lg px-6 lg:px-8 w-full font-medium focus:outline-none"
+          className="text-primary rounded-sm px-6 lg:px-8 w-full font-medium focus:outline-none"
           apiKey={apiKey}
           onPlaceSelected={(place) => {
             if (place && place.geometry && place.geometry.location) {
-              setMapLocation({
-                lat: place.geometry.location.lat(),
-                lng: place.geometry.location.lng(),
-                zoom: 18,
-              });
+              handleUpdateLocation(
+                place.geometry.location.lat(),
+                place.geometry.location.lng(),
+                18
+              );
             }
           }}
           placeholder="Where's the next property?"

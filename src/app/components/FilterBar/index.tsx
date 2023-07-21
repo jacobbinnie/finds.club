@@ -14,35 +14,35 @@ function FilterBar() {
   const [minPrice, setMinPrice] = useState(100000);
   const [maxPrice, setMaxPrice] = useState(1000000);
 
-  const handleSetBedrooms = (bedrooms: string) => {
-    setMinBedrooms(parseInt(bedrooms));
-  };
+  // const handleSetBedrooms = (bedrooms: string) => {
+  //   setMinBedrooms(parseInt(bedrooms));
+  // };
 
-  const handleSetBathrooms = (bathrooms: string) => {
-    setMinBathrooms(parseInt(bathrooms));
-  };
+  // const handleSetBathrooms = (bathrooms: string) => {
+  //   setMinBathrooms(parseInt(bathrooms));
+  // };
 
-  const handleSetMinPrice = (priceString: string) => {
-    setMinPrice(prices[priceString]);
-  };
+  // const handleSetMinPrice = (priceString: string) => {
+  //   setMinPrice(prices[priceString]);
+  // };
 
-  const handleSetMaxPrice = (priceString: string) => {
-    setMaxPrice(prices[priceString]);
-  };
+  // const handleSetMaxPrice = (priceString: string) => {
+  //   setMaxPrice(prices[priceString]);
+  // };
 
-  function getKeyByValue(object: Prices, value: number): string {
-    const res = Object.keys(object).find((key) => object[key] === value);
-    if (res) {
-      return res;
-    } else {
-      return "";
-    }
-  }
+  // function getKeyByValue(object: Prices, value: number): string {
+  //   const res = Object.keys(object).find((key) => object[key] === value);
+  //   if (res) {
+  //     return res;
+  //   } else {
+  //     return "";
+  //   }
+  // }
 
   return (
-    <div className="px-6 lg:px-8 h-32 mt-6 bg-accent shadow-md">
-      <div className="w-full gap-8 flex rounded-md">
-        <div className="flex flex-col gap-1 text-primary font-bold">
+    <div className="px-6 lg:px-8 h-48 mt-6">
+      <div className="w-full bg-gray-300 h-full gap-8 flex rounded-md">
+        {/* <div className="flex flex-col gap-1 text-primary font-bold">
           <p>Bedrooms</p>
           <Dropdown
             value={minBedrooms.toString()}
@@ -79,7 +79,7 @@ function FilterBar() {
               options={Object.keys(prices)}
             />
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

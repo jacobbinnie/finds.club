@@ -9,13 +9,18 @@ interface MapElementProps {
 }
 
 function MapElement({ apiKey }: MapElementProps) {
-  const [isMapHidden, setIsMapHidden] = useState(false);
+  const [isMapHidden, setIsMapHidden] = useState(true);
   const [mapLocation, setMapLocation] = useState({
     lat: -36.789211,
     lng: 174.772339,
     zoom: 10,
   });
   const [isLoaded, setIsLoaded] = useState(false);
+
+  function handleUpdateLocation(lat: number, lng: number, zoom: number) {
+    isMapHidden && setIsMapHidden(false);
+    setMapLocation({ lat, lng, zoom });
+  }
 
   return (
     <div className="w-full flex-col flex justify-between items-center px-6 lg:px-8 pt-8">
@@ -26,7 +31,7 @@ function MapElement({ apiKey }: MapElementProps) {
       <div
         className={clsx(
           isMapHidden ? "h-[100px]" : "h-[calc(100vh-300px)]",
-          "w-full bg-gray-300 transition-all relative rounded-md flex justify-center items-center"
+          "w-full overflow-hidden bg-gray-300 transition-all relative rounded-lg shadow-lg flex justify-center items-center"
         )}
       >
         <div
@@ -47,11 +52,14 @@ function MapElement({ apiKey }: MapElementProps) {
               disableDefaultUI: true,
               zoomControl: true,
               tilt: 45,
+              keyboardShortcuts: false,
             }}
           />
         )}
       </div>
-      {isLoaded && <Search apiKey={apiKey} setMapLocation={setMapLocation} />}
+      {isLoaded && (
+        <Search apiKey={apiKey} handleUpdateLocation={handleUpdateLocation} />
+      )}
     </div>
   );
 }
