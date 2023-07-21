@@ -10,7 +10,7 @@ function Search() {
         onSubmit={(e) => {
           e.preventDefault();
         }}
-        className="w-full transition-all flex mt-[-34px] h-16 md:w-1/2 focus:outline-none shadow-lg"
+        className="w-full rounded-md transition-all flex mt-[-34px] h-16 md:w-1/2 focus:outline-none shadow-lg"
       >
         <input
           type="search"

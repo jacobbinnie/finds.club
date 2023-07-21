@@ -12,7 +12,7 @@ function LetterboxFlag({ active }: LetterboxFlagProps) {
         "transition-all flex origin-top-right"
       )}
     >
-      <div className="w-4 h-6 relative bg-accent rounded-tr-none rounded-md" />
+      <div className="w-4 h-6 relative bg-accent rounded-tr-none rounded-sm" />
       <div className="w-6 relative ml-[-10px] h-2 bg-accent" />
     </div>
   );

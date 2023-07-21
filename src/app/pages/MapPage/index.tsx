@@ -1,5 +1,5 @@
 import ActionBar from "@/app/components/ActionBar";
-import FilterBar from "@/app/components/FilterBar";
+// import FilterBar from "@/app/components/FilterBar";
 import MapElement from "@/app/components/MapElement";
 import NavBar from "@/app/components/NavBar";
 import PropertyGrid from "@/app/components/PropertyGrid";
@@ -12,7 +12,7 @@ function MapPage() {
       <ActionBar />
       <MapElement />
       <Search />
-      <FilterBar />
+      {/* <FilterBar /> */}
       <PropertyGrid />
     </div>
   );
