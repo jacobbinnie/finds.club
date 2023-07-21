@@ -46,11 +46,11 @@ function MapElement({ apiKey }: MapElementProps) {
             mapContainerStyle={{ height: "100%", width: "100%" }}
             mapContainerClassName="map-container"
             center={{ lat: mapLocation.lat, lng: mapLocation.lng }}
-            zoom={mapLocation.zoom}
             options={{
               mapId: process.env.NEXT_PUBLIC_MAP_ID || "",
               disableDefaultUI: true,
               zoomControl: true,
+              zoom: mapLocation.zoom,
               tilt: 45,
               keyboardShortcuts: false,
             }}

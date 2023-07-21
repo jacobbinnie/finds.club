@@ -10,7 +10,7 @@ function Search({ apiKey, handleUpdateLocation }: SearchProps) {
 
   return (
     <div className="flex w-full relative justify-center px-3 lg:px-6">
-      <div className="w-full rounded-md transition-all flex mt-[-34px] border-4 border-tertiary h-16 md:w-1/2 focus:outline-none shadow-t-lg">
+      <div className="w-full rounded-md transition-all flex mt-[-34px] border-4 border-tertiary h-16 lg:w-1/2 max-w-lg focus:outline-none shadow-t-lg">
         <Autocomplete
           className="text-primary rounded-sm px-6 lg:px-8 w-full font-medium focus:outline-none"
           apiKey={apiKey}
@@ -19,14 +19,14 @@ function Search({ apiKey, handleUpdateLocation }: SearchProps) {
               handleUpdateLocation(
                 place.geometry.location.lat(),
                 place.geometry.location.lng(),
-                18
+                17
               );
             }
           }}
-          placeholder="Where's the next property?"
+          placeholder="Enter a suburb"
           options={{
             componentRestrictions: { country: "nz" },
-            types: ["address"],
+            types: ["(regions)"],
           }}
         />
         {/* <button
