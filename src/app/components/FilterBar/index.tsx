@@ -40,7 +40,7 @@ function FilterBar() {
   }
 
   return (
-    <div className="px-6 lg:px-8 py-6 mt-3 bg-tertiary shadow-md">
+    <div className="px-6 lg:px-8 h-32 mt-6 bg-accent shadow-md">
       <div className="w-full gap-8 flex rounded-md">
         <div className="flex flex-col gap-1 text-primary font-bold">
           <p>Bedrooms</p>
