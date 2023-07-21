@@ -1,24 +1,42 @@
-import { useState } from "react";
-import LetterboxFlag from "../LetterboxFlag";
+import { Dispatch, SetStateAction } from "react";
+import Autocomplete from "react-google-autocomplete";
 
-function Search() {
-  const [isHovered, setIsHovered] = useState(false);
+interface SearchProps {
+  apiKey: string;
+  setMapLocation: Dispatch<
+    SetStateAction<{
+      lat: number;
+      lng: number;
+      zoom: number;
+    }>
+  >;
+}
+
+function Search({ apiKey, setMapLocation }: SearchProps) {
+  // const [isHovered, setIsHovered] = useState(false);
 
   return (
-    <div className="flex relative justify-center px-3 lg:px-6">
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-        }}
-        className="w-full rounded-md transition-all flex mt-[-34px] h-16 md:w-1/2 focus:outline-none shadow-lg"
-      >
-        <input
-          type="search"
-          className="text-primary rounded-tl-lg rounded-bl-lg px-6 lg:px-8 w-full font-medium focus:outline-none"
+    <div className="flex w-full relative justify-center px-3 lg:px-6">
+      <div className="w-full rounded-md transition-all flex mt-[-34px] h-16 md:w-1/2 focus:outline-none shadow-lg">
+        <Autocomplete
+          className="text-primary rounded-lg px-6 lg:px-8 w-full font-medium focus:outline-none"
+          apiKey={apiKey}
+          onPlaceSelected={(place) => {
+            if (place && place.geometry && place.geometry.location) {
+              setMapLocation({
+                lat: place.geometry.location.lat(),
+                lng: place.geometry.location.lng(),
+                zoom: 18,
+              });
+            }
+          }}
           placeholder="Where's the next property?"
+          options={{
+            componentRestrictions: { country: "nz" },
+            types: ["address"],
+          }}
         />
-
-        <button
+        {/* <button
           onMouseOver={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
           className={
@@ -30,8 +48,8 @@ function Search() {
             <LetterboxFlag active={isHovered} />
           </div>
           Search
-        </button>
-      </form>
+        </button> */}
+      </div>
     </div>
   );
 }
