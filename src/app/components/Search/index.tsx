@@ -6,42 +6,36 @@ interface SearchProps {
 }
 
 function Search({ apiKey, handleUpdateLocation }: SearchProps) {
-  // const [isHovered, setIsHovered] = useState(false);
+  // Returns ZOOM level based on address type
+  const checkAddressType = (place: google.maps.places.PlaceResult) => {
+    if (place.address_components) {
+      if (place.address_components[0].types[0] === "street_number") {
+        return 20;
+      } else return 17;
+    } else return 17;
+  };
 
   return (
     <div className="flex w-full relative justify-center px-3 lg:px-6">
-      <div className="w-full rounded-md transition-all flex mt-[-34px] border-4 border-tertiary h-16 lg:w-1/2 max-w-lg focus:outline-none shadow-t-lg">
+      <div className="w-full rounded-md transition-all flex mt-[-34px] h-16 lg:w-1/2 max-w-lg focus:outline-none shadow-t-lg">
         <Autocomplete
-          className="text-primary rounded-sm px-6 lg:px-8 w-full font-medium focus:outline-none"
+          className="text-primary bg-tertiary rounded-md shadow-md px-6 lg:px-8 w-full font-medium focus:outline-none"
           apiKey={apiKey}
           onPlaceSelected={(place) => {
             if (place && place.geometry && place.geometry.location) {
               handleUpdateLocation(
                 place.geometry.location.lat(),
                 place.geometry.location.lng(),
-                17
+                checkAddressType(place)
               );
             }
           }}
-          placeholder="Enter a suburb"
+          placeholder="Enter an address or suburb"
           options={{
             componentRestrictions: { country: "nz" },
-            types: ["(regions)"],
+            types: ["geocode"],
           }}
         />
-        {/* <button
-          onMouseOver={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}
-          className={
-            "hover:rounded-tr-none rounded-tr-lg rounded-br-lg bg-primary hover:bg-accent hover:w-60 w-44 relative text-tertiary transition-all font-bold"
-          }
-          type="submit"
-        >
-          <div className="absolute top-0 right-0">
-            <LetterboxFlag active={isHovered} />
-          </div>
-          Search
-        </button> */}
       </div>
     </div>
   );
