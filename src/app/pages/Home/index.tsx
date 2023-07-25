@@ -1,4 +1,6 @@
+import FilterBar from "@/app/components/FilterBar";
 import NavBar from "../../components/NavBar";
+import PropertyGrid from "@/app/components/PropertyGrid";
 
 function Home() {
   return (
@@ -16,6 +18,8 @@ function Home() {
           </p>
         </div>
       </div>
+      <FilterBar />
+      <PropertyGrid />
     </div>
   );
 }

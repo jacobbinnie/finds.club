@@ -20,7 +20,7 @@ function Dropdown({ value, setValue, options, includePlus }: DropdownProps) {
             setValue(option);
             setOpen(false);
           }}
-          className="flex items-center cursor-pointer w-48 px-4 h-8 hover:bg-accent bg-primary"
+          className="flex items-center cursor-pointer font-medium px-4 h-8 opacity-80 transition-all text-primary hover:bg-gray-200 bg-gray-300"
         >
           {option}
           {includePlus && " +"}
@@ -35,7 +35,7 @@ function Dropdown({ value, setValue, options, includePlus }: DropdownProps) {
         onClick={() => setOpen((prev) => !prev)}
         id="dropdownDefaultButton"
         data-dropdown-toggle="dropdown"
-        className="text-white w-22 transition-all bg-primary hover:bg-accent focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex h-8 items-center justify-between"
+        className="text-primary w-full flex grow transition-all bg-transparent border-2 border-gray-300 focus:outline-none font-medium rounded-md text-sm px-3 text-center h-10 items-center justify-between"
         type="button"
       >
         {value}
@@ -48,6 +48,7 @@ function Dropdown({ value, setValue, options, includePlus }: DropdownProps) {
           viewBox="0 0 10 6"
         >
           <path
+            className="stroke-primary"
             stroke="currentColor"
             stroke-linecap="round"
             stroke-linejoin="round"
@@ -61,11 +62,11 @@ function Dropdown({ value, setValue, options, includePlus }: DropdownProps) {
         id="dropdown"
         className={clsx(
           open ? "block" : "hidden",
-          "z-10 max-h-60 transition-all absolute top-12 left-0 bg-white divide-y divide-gray-100 rounded-md overflow-y-scroll overflow-x-hidden no-scrollbar shadow dark:bg-gray-700 w-full"
+          "z-10 max-h-60 transition-all absolute top-10 left-0 rounded-md overflow-y-scroll overflow-x-hidden no-scrollbar w-full"
         )}
       >
         <ul
-          className="text-sm text-gray-700 dark:text-gray-200"
+          className="text-sm text-primary"
           aria-labelledby="dropdownDefaultButton"
         >
           {mappedOptions}

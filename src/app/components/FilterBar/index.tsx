@@ -40,10 +40,39 @@ function FilterBar() {
   }
 
   return (
-    <div className="px-6 lg:px-8 h-48 mt-6">
-      <div className="w-full bg-gray-300 h-full gap-8 flex rounded-md">
-        <div className="flex flex-col gap-1 text-primary font-bold">
-          <p>Bedrooms</p>
+    <div className="px-6 lg:px-8 h-48 pb-8 bg-white flex justify-center">
+      <div className="w-full px-6 lg:px-8 py-8 bg-tertiary h-full gap-8 flex flex-col rounded-lg max-w-[1338px]">
+        <p className="text-3xl text-primary font-bold">
+          Houses and property for sale in New Zealand
+        </p>
+
+        <div className="grid grid-cols-4 w-full">
+          <div className="w-full flex">
+            <Dropdown
+              value={minBedrooms.toString()}
+              setValue={handleSetBedrooms}
+              options={["1", "2", "3", "4", "5", "6"]}
+              includePlus={true}
+            />
+            <Dropdown
+              value={minBedrooms.toString()}
+              setValue={handleSetBedrooms}
+              options={["1", "2", "3", "4", "5", "6"]}
+              includePlus={true}
+            />
+          </div>
+          <Dropdown
+            value={minBedrooms.toString()}
+            setValue={handleSetBedrooms}
+            options={["1", "2", "3", "4", "5", "6"]}
+            includePlus={true}
+          />
+          <Dropdown
+            value={minBedrooms.toString()}
+            setValue={handleSetBedrooms}
+            options={["1", "2", "3", "4", "5", "6"]}
+            includePlus={true}
+          />
           <Dropdown
             value={minBedrooms.toString()}
             setValue={handleSetBedrooms}
@@ -52,7 +81,17 @@ function FilterBar() {
           />
         </div>
 
-        <div className="flex flex-col gap-1 text-primary font-bold">
+        {/* <div className="flex flex-col gap-1 text-primary font-bold">
+          <p>Bedrooms</p>
+          <Dropdown
+            value={minBedrooms.toString()}
+            setValue={handleSetBedrooms}
+            options={["1", "2", "3", "4", "5", "6"]}
+            includePlus={true}
+          />
+        </div> */}
+
+        {/* <div className="flex flex-col gap-1 text-primary font-bold">
           <p>Bathrooms</p>
           <Dropdown
             value={minBathrooms.toString()}
@@ -79,7 +118,7 @@ function FilterBar() {
               options={Object.keys(prices)}
             />
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

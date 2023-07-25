@@ -9,7 +9,7 @@ interface MapElementProps {
 }
 
 function MapElement({ apiKey }: MapElementProps) {
-  const [isMapHidden, setIsMapHidden] = useState(true);
+  const [isMapHidden, setIsMapHidden] = useState(false);
   const [mapLocation, setMapLocation] = useState({
     lat: -36.789211,
     lng: 174.772339,
@@ -30,7 +30,7 @@ function MapElement({ apiKey }: MapElementProps) {
       />
       <div
         className={clsx(
-          isMapHidden ? "h-[100px]" : "h-[calc(100vh-300px)]",
+          isMapHidden ? "h-[100px]" : "h-[calc(100vh-400px)]",
           "w-full overflow-hidden bg-gray-300 transition-all relative rounded-lg shadow-lg flex justify-center items-center"
         )}
       >
