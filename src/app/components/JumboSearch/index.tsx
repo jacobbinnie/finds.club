@@ -3,6 +3,7 @@ import {
   useAddressAutofillCore,
   useSearchSession,
 } from "@mapbox/search-js-react";
+import clsx from "clsx";
 import React, { useCallback, useEffect, useState } from "react";
 
 const JumboSearch: React.FC = () => {
@@ -77,25 +78,41 @@ const JumboSearch: React.FC = () => {
 
   return (
     <div className="flex flex-col w-full relative items-center px-3 lg:px-6">
-      <div className="w-full flex-col rounded-md transition-all h-32 flex lg:w-1/2 max-w-lg focus:outline-none">
-        <div className="bg-primary flex w-full h-1/2"></div>
+      <div
+        className={clsx(
+          suggestions.length > 0 ? "rounded-t-lg" : "rounded-lg",
+          "w-full flex-col shadow-lg transition-all h-48 overflow-hidden flex max-w-[800px] focus:outline-none"
+        )}
+      >
+        <div className="bg-primary flex w-full h-2/5"></div>
         <input
-          className="w-full h-1/2"
+          placeholder="Enter your property address"
+          className="w-full h-3/5 px-6 font-bold text-xl focus:outline-none"
           autoComplete="shipping address-line1"
           value={value}
           onChange={(e) => setValue(e.target.value)}
         />
       </div>
-      <ul className="w-full flex flex-col lg:w-1/2 max-w-lg">
-        {suggestions.map((suggestion) => (
-          <li
-            onClick={() => setSelectedSuggestion(suggestion)}
-            key={suggestion.full_address}
-          >
-            {suggestion.matching_name}, {suggestion.locality}
-          </li>
-        ))}
-      </ul>
+      <div className="w-full max-w-[800px]">
+        <ul
+          className={clsx(
+            suggestions.length > 0
+              ? "h-full py-6 border-t-gray-300 border-t-[1px]"
+              : "py-0 h-0",
+            "w-full h-min flex flex-col max-w-[800px] bg-white transition-all shadow-lg rounded-b-lg"
+          )}
+        >
+          {suggestions.map((suggestion) => (
+            <li
+              className="w-full h-12 hover:bg-gray-300 transition-all cursor-pointer flex items-center px-6"
+              onClick={() => setSelectedSuggestion(suggestion)}
+              key={suggestion.full_address}
+            >
+              {suggestion.matching_name}, {suggestion.locality}
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 };
