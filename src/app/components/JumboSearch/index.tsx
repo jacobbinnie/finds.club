@@ -26,11 +26,7 @@ const JumboSearch: React.FC = () => {
           const e = await searchCore.suggest(value, searchSession);
           const formattedSuggestions: Suggestion[] = [];
           e.suggestions.forEach((suggestion) => {
-            if (
-              suggestion.full_address &&
-              suggestion.address_line1 &&
-              suggestion.address_level3
-            ) {
+            if (suggestion.full_address) {
               formattedSuggestions.push({
                 full_address: suggestion.full_address,
                 matching_name: suggestion.matching_name,
@@ -42,6 +38,9 @@ const JumboSearch: React.FC = () => {
                 language: suggestion.language,
                 metadata: suggestion.metadata,
                 match_code: suggestion.match_code,
+                address_level_1: suggestion.address_level1,
+                address_level_2: suggestion.address_level2,
+                address_line_1: suggestion.address_line1,
               });
             }
           });
@@ -55,8 +54,9 @@ const JumboSearch: React.FC = () => {
     }
   }, [value, searchSession, searchCore, setSuggestions]); // Include all dependencies in the useCallback dependencies array
 
-  const retrieveParam = useCallback(() => {
-    if (selectedSuggestion) {
+  const retrieveCoordinates = useCallback(() => {
+    if (selectedSuggestion !== null && selectedSuggestion !== undefined) {
+      console.log("Retrieving coordinates...");
       searchCore
         .retrieve(selectedSuggestion, {
           sessionToken: searchSession.sessionToken,
@@ -66,15 +66,15 @@ const JumboSearch: React.FC = () => {
           throw new Error(e);
         });
     }
-  }, []);
+  }, [selectedSuggestion, searchCore, searchSession.sessionToken]);
+
+  useEffect(() => {
+    retrieveCoordinates();
+  }, [selectedSuggestion]);
 
   useEffect(() => {
     suggestParam();
   }, [value]);
-
-  useEffect(() => {
-    retrieveParam();
-  }, [selectedSuggestion]);
 
   return (
     <div className="flex flex-col w-full relative items-center px-3 lg:px-6">
@@ -108,7 +108,12 @@ const JumboSearch: React.FC = () => {
               onClick={() => setSelectedSuggestion(suggestion)}
               key={suggestion.full_address}
             >
-              {suggestion.matching_name}, {suggestion.locality}
+              {suggestion.address_line_1 + ", "}
+              {suggestion.locality
+                ? suggestion.locality + ", "
+                : suggestion.address_level_2 &&
+                  suggestion.address_level_2 + ", "}
+              {suggestion.address_level_1}
             </li>
           ))}
         </ul>
