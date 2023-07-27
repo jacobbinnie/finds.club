@@ -38,7 +38,7 @@ function NavBar() {
 
           {isSignedIn ? (
             <div className="flex items-center gap-6 list-none lg:ml-auto">
-              <button className="inline-flex items-center justify-center px-4 h-8 text-sm font-bold transition-all hover:px-10 hover:shadow-lg rounded-md text-tertiary bg-primary group focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 hover:text-primary hover:bg-accent">
+              <button className="inline-flex tracking-tighter items-center justify-center px-4 h-8 text-sm transition-all hover:px-10 hover:shadow-lg rounded-md text-tertiary bg-primary group focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 hover:bg-accent">
                 Messages
               </button>
               <button className="block py-2 mt-2 text-sm text-gray-500 md:mt-0 hover:text-accent focus:outline-none focus:shadow-outline">

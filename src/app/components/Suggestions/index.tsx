@@ -18,7 +18,7 @@ function Suggestions({ suggestions }: SuggestionsProps) {
       >
         {suggestions.map((suggestion) => (
           <li
-            className="w-full h-12 hover:bg-primary hover:text-tertiary transition-all cursor-pointer flex items-center px-6"
+            className="w-full h-12 hover:bg-primary tracking-tighter hover:text-tertiary transition-all cursor-pointer flex items-center px-6"
             // onClick={() => setSelectedSuggestion(suggestion)}
             key={suggestion.properties.name}
           >
