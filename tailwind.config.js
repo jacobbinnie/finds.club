@@ -12,7 +12,7 @@ module.exports = {
         primary: "#0a0a0a",
         secondary: "#6b7280",
         tertiary: "#f5f5f5",
-        accent: "#a855f7",
+        accent: "#00d688",
       },
       boxShadow: {
         "t-sm": "0 -1px 2px 0 rgba(0, 0, 0, 0.05)",

@@ -48,7 +48,7 @@ const JumboSearch: React.FC = () => {
         <div className="flex w-full h-2/5 bg-white">
           <div
             className={clsx(
-              tab === "BUY" ? "border-primary" : "border-tertiary",
+              tab === "BUY" ? "border-accent" : "border-tertiary",
               "w-1/2 flex cursor-pointer border-b-4 h-full tracking-tighter text-primary transition-all duration-300 ease-out justify-center items-center"
             )}
             onClick={() => setTab("BUY")}
@@ -57,7 +57,7 @@ const JumboSearch: React.FC = () => {
           </div>
           <div
             className={clsx(
-              tab === "SELL" ? "border-primary" : "border-tertiary",
+              tab === "SELL" ? "border-accent" : "border-tertiary",
               "w-1/2 flex cursor-pointer border-b-4 h-full tracking-tighter text-primary transition-all duration-300 justify-center items-center"
             )}
             onClick={() => setTab("SELL")}
@@ -70,7 +70,7 @@ const JumboSearch: React.FC = () => {
           <input
             placeholder={
               tab === "BUY"
-                ? "Where are you buying?"
+                ? "Enter a suburb or street"
                 : "Enter your property address"
             }
             className="w-full h-3/5 px-6 font-normal tracking-tighter placeholder:text-gray-300 focus:outline-none"
