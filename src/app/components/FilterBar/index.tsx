@@ -111,12 +111,12 @@ function FilterBar({ tab }: FilterBarProps) {
     <div
       className={clsx(
         tab === "BUY" ? "py-8" : "h-0 py-0 overflow-hidden",
-        "w-full rounded-lg bg-white px-6 grid gap-x-3 gap-y-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 shadow-lg transition-all"
+        "w-full rounded-lg bg-white px-6 grid gap-x-3 gap-y-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 shadow-lg transition-all"
       )}
     >
       {/* BEDS */}
       <div className="flex flex-col gap-1">
-        <p className="font-regular tracking-tighter text-sm">Bedrooms</p>
+        <p className="font-regular tracking-tighter text-small">Bedrooms</p>
         <div className="flex gap-3 items-center">
           <Dropdown
             options={["Any", "1", "2", "3", "4", "5"]}
@@ -126,7 +126,7 @@ function FilterBar({ tab }: FilterBarProps) {
             category="BEDS"
           />
 
-          <p className="tracking-tighter text-sm">to</p>
+          <p className="tracking-tighter text-small">to</p>
 
           <Dropdown
             options={["Any", "1", "2", "3", "4", "5"]}
@@ -140,7 +140,7 @@ function FilterBar({ tab }: FilterBarProps) {
 
       {/* BATHS */}
       <div className="flex flex-col gap-1">
-        <p className="font-regular tracking-tighter text-sm">Bathrooms</p>
+        <p className="font-regular tracking-tighter text-small">Bathrooms</p>
         <div className="flex gap-3 items-center">
           <Dropdown
             options={["Any", "1", "2", "3", "4", "5"]}
@@ -150,7 +150,7 @@ function FilterBar({ tab }: FilterBarProps) {
             category="BATHS"
           />
 
-          <p className="tracking-tighter text-sm">to</p>
+          <p className="tracking-tighter text-small">to</p>
 
           <Dropdown
             options={["Any", "1", "2", "3", "4", "5"]}
@@ -164,7 +164,7 @@ function FilterBar({ tab }: FilterBarProps) {
 
       {/* PRICES */}
       <div className="flex flex-col gap-1">
-        <p className="font-regular tracking-tighter text-sm">Price</p>
+        <p className="font-regular tracking-tighter text-small">Price</p>
         <div className="flex gap-3 items-center">
           <Dropdown
             options={["Any", ...Object.keys(pricesJson.prices)]}
@@ -176,7 +176,7 @@ function FilterBar({ tab }: FilterBarProps) {
             category="PRICE"
           />
 
-          <p className="tracking-tighter text-sm">to</p>
+          <p className="tracking-tighter text-small">to</p>
 
           <Dropdown
             options={["Any", ...Object.keys(pricesJson.prices)]}
@@ -192,7 +192,9 @@ function FilterBar({ tab }: FilterBarProps) {
 
       {/* Ownership */}
       <div className="flex flex-col gap-1">
-        <p className="font-regular tracking-tighter text-sm">Ownership type</p>
+        <p className="font-regular tracking-tighter text-small">
+          Ownership type
+        </p>
         <div className="flex gap-3">
           <Dropdown
             options={[
@@ -210,14 +212,14 @@ function FilterBar({ tab }: FilterBarProps) {
         </div>
       </div>
 
-      <div className="flex flex-col gap-1">
-        <p className="font-regular tracking-tighter text-sm">Search terms</p>
+      <div className="flex flex-col gap-[5px]">
+        <p className="font-regular tracking-tighter text-small">Search terms</p>
         <Input />
       </div>
 
       {/* New Builds */}
       <div className="flex flex-col gap-1">
-        <p className="font-regular tracking-tighter text-sm">New builds</p>
+        <p className="font-regular tracking-tighter text-small">New builds</p>
         <div className="flex gap-3">
           <Dropdown
             options={["Show", "Hide", "Only"]}
@@ -230,6 +232,12 @@ function FilterBar({ tab }: FilterBarProps) {
       </div>
 
       <Checkbox title="Needs renovation" />
+
+      <div className="flex w-full transition-all md:col-span-2 items-center justify-end">
+        <button className="inline-flex w-full tracking-tighter items-center justify-center px-4 h-10 text-small transition-all hover:px-10 hover:shadow-lg rounded-md text-tertiary bg-primary group focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 hover:bg-accent">
+          Search
+        </button>
+      </div>
     </div>
   );
 }

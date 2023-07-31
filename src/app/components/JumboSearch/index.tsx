@@ -45,7 +45,7 @@ const JumboSearch: React.FC = () => {
             "w-full flex-col shadow-lg transition-all h-48 overflow-hidden flex max-w-[900px] focus:outline-none"
           )}
         >
-          <div className="flex w-full h-2/5 bg-white">
+          <div className="flex w-full h-1/2 bg-white">
             <div
               className={clsx(
                 tab === "BUY" ? "border-accent" : "border-tertiary",
@@ -71,7 +71,7 @@ const JumboSearch: React.FC = () => {
               I'm selling
             </div>
           </div>
-          <div className="flex bg-white justify-center h-3/5 px-6 items-center">
+          <div className="flex bg-white justify-center h-1/2 px-6 items-center">
             <MapPinIcon width={16} />
             <input
               placeholder={

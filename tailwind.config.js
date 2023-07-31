@@ -8,6 +8,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontSize: {
+        small: "16px",
+      },
       colors: {
         primary: "#0a0a0a",
         secondary: "#6b7280",
