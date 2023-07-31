@@ -20,7 +20,7 @@ function Suggestions({ suggestions }: SuggestionsProps) {
           <li
             className="w-full h-12 hover:bg-primary tracking-tighter hover:text-tertiary transition-all cursor-pointer flex items-center px-6"
             // onClick={() => setSelectedSuggestion(suggestion)}
-            key={suggestion.properties.name}
+            key={suggestion.properties.mapbox_id}
           >
             {suggestion.properties.name}
           </li>

@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@headlessui/react": "^1.7.16",
     "@heroicons/react": "^2.0.18",
     "@mapbox/search-js-react": "^1.0.0-beta.17",
     "@react-google-maps/api": "^2.19.0",
