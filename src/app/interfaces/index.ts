@@ -67,3 +67,18 @@ export function isValidMapboxResponse(
     "attribution" in data
   );
 }
+
+export type CategoryType =
+  | "BEDS"
+  | "BATHS"
+  | "PRICE"
+  | "OWNERSHIP"
+  | "NEWBUILDS";
+
+export type OwnershipType =
+  | "Freehold"
+  | "Cross Lease"
+  | "Unit Title"
+  | "Leasehold";
+
+export type NewBuildsType = "Show" | "Hide" | "Only";

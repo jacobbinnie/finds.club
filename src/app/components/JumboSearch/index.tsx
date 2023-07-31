@@ -35,21 +35,21 @@ const JumboSearch: React.FC = () => {
   }, [addressesQuery]);
 
   return (
-    <div className="flex flex-col w-full relative items-center gap-3 max-w-[800px]">
+    <div className="flex flex-col w-full relative items-center gap-3 max-w-[900px]">
       <div className="w-full">
         <div
           className={clsx(
             placesStreetsSuggestions.length > 0 || addressSuggestions.length > 0
               ? "rounded-t-lg"
               : "rounded-lg",
-            "w-full flex-col shadow-lg transition-all h-48 overflow-hidden flex max-w-[800px] focus:outline-none"
+            "w-full flex-col shadow-lg transition-all h-48 overflow-hidden flex max-w-[900px] focus:outline-none"
           )}
         >
           <div className="flex w-full h-2/5 bg-white">
             <div
               className={clsx(
                 tab === "BUY" ? "border-accent" : "border-tertiary",
-                "w-1/2 flex cursor-pointer border-b-4 h-full tracking-tighter text-primary transition-all duration-300 ease-out justify-center items-center"
+                "w-1/2 flex cursor-pointer border-b-[5px] h-full tracking-tighter text-primary transition-all duration-300 ease-out justify-center items-center"
               )}
               onClick={() => {
                 resetStates();
@@ -61,7 +61,7 @@ const JumboSearch: React.FC = () => {
             <div
               className={clsx(
                 tab === "SELL" ? "border-accent" : "border-tertiary",
-                "w-1/2 flex cursor-pointer border-b-4 h-full tracking-tighter text-primary transition-all duration-300 justify-center items-center"
+                "w-1/2 flex cursor-pointer border-b-[5px] h-full tracking-tighter text-primary transition-all duration-300 justify-center items-center"
               )}
               onClick={() => {
                 resetStates();
@@ -98,7 +98,7 @@ const JumboSearch: React.FC = () => {
           }
         />
       </div>
-      <FilterBar />
+      <FilterBar tab={tab} />
     </div>
   );
 };

@@ -7,13 +7,13 @@ interface SuggestionsProps {
 
 function Suggestions({ suggestions }: SuggestionsProps) {
   return (
-    <div className="w-full max-w-[800px]">
+    <div className="w-full max-w-[900px]">
       <ul
         className={clsx(
           suggestions.length > 0
             ? "h-full py-6 border-t-gray-300 border-t-[1px]"
             : "py-0 h-0",
-          "w-full h-min flex flex-col max-w-[800px] bg-white transition-all shadow-lg rounded-b-lg"
+          "w-full h-min flex flex-col max-w-[900px] bg-white transition-all shadow-lg rounded-b-lg"
         )}
       >
         {suggestions.map((suggestion) => (

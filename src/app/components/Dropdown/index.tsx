@@ -1,20 +1,17 @@
 import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
-
-function classNames(...classes: string[]) {
-  return classes.filter(Boolean).join(" ");
-}
+import { CategoryType } from "@/app/interfaces";
 
 interface DropdownProps {
   options: string[];
   selectedOption: string;
-  type: "MIN" | "MAX";
-  category: "BEDS" | "BATHS" | "PRICE";
+  type: "MIN" | "MAX" | "N/A";
+  category: CategoryType;
   handleUpdateCallback: (
     option: string,
-    type: "MIN" | "MAX",
-    category: "BEDS" | "BATHS" | "PRICE"
+    type: "MIN" | "MAX" | "N/A",
+    category: CategoryType
   ) => void;
 }
 
@@ -64,22 +61,7 @@ function Dropdown({
         leaveTo="transform opacity-0 scale-95"
       >
         <Menu.Items className="absolute max-h-52 overflow-scroll no-scrollbar right-0 z-10 mt-2 w-full origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-          <div className="py-1">
-            <Menu.Item>
-              {({ active }) => (
-                <button
-                  onClick={() => handleUpdateCallback("Any", type, category)}
-                  className={classNames(
-                    active ? "bg-gray-100 text-gray-900" : "text-gray-700",
-                    "block w-full px-4 py-2 text-left text-sm cursor-pointer"
-                  )}
-                >
-                  Any
-                </button>
-              )}
-            </Menu.Item>
-            {renderOptions()}
-          </div>
+          <div className="py-1">{renderOptions()}</div>
         </Menu.Items>
       </Transition>
     </Menu>
