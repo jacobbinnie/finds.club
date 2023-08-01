@@ -5,7 +5,7 @@ interface CheckboxProps {
 function Checkbox({ title }: CheckboxProps) {
   return (
     <div className="flex flex-col gap-1 w-full">
-      <p className="font-medium tracking-tighter text-small">{title}</p>
+      <p className="font-regular tracking-tighter text-small">{title}</p>
 
       <div className="h-full items-center flex">
         <label className="relative inline-flex items-center cursor-pointer rounded-xl">

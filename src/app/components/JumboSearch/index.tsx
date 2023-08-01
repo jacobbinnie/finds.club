@@ -6,11 +6,42 @@ import Suggestions from "../Suggestions";
 import { MapPinIcon } from "@heroicons/react/24/solid";
 import FilterBar from "../FilterBar";
 import SellingInfoBar from "../SellingInfoBar";
+import { MapboxFeatures } from "@/app/interfaces";
+import SelectedPlacesDisplay from "../SelectedPlacesDisplay";
 
 const JumboSearch: React.FC = () => {
   const [tab, setTab] = useState<"BUY" | "SELL">("BUY");
   const [placesStreetsQuery, setPlacesStreetsQuery] = useState<string>();
   const [addressesQuery, setAddressesQuery] = useState<string>();
+
+  const [selectedPlacesStreets, setSelectedPlacesStreets] = useState<
+    MapboxFeatures[]
+  >([]);
+
+  const [selectedAddress, setSelectedAddress] = useState<MapboxFeatures | null>(
+    null
+  );
+
+  const handleUpdateSelected = (
+    tab: "BUY" | "SELL",
+    selected: MapboxFeatures
+  ) => {
+    if (tab === "BUY") {
+      setPlacesStreetsQuery("");
+      setSelectedPlacesStreets((prev: MapboxFeatures[] | []) => [
+        ...prev,
+        selected,
+      ]);
+    } else {
+      setSelectedAddress(selected);
+    }
+  };
+
+  const handleRemoveSelected = (id: string) => {
+    setSelectedPlacesStreets((prev: MapboxFeatures[]) =>
+      prev.filter((selected) => selected.id !== id)
+    );
+  };
 
   const {
     data: placesStreetsSuggestions,
@@ -20,9 +51,14 @@ const JumboSearch: React.FC = () => {
   const { data: addressSuggestions, setData: setAddressSuggestions } =
     useAddresses(addressesQuery);
 
-  const resetStates = () => {
+  const resetQueries = () => {
     setAddressesQuery("");
     setPlacesStreetsQuery("");
+  };
+
+  const resetSelected = () => {
+    setSelectedAddress(null);
+    setSelectedPlacesStreets([]);
   };
 
   useEffect(() => {
@@ -54,10 +90,11 @@ const JumboSearch: React.FC = () => {
             <div
               className={clsx(
                 tab === "BUY" ? "border-accent" : "border-tertiary",
-                "w-1/2 flex cursor-pointer border-b-[5px] h-full tracking-tighter text-primary transition-all duration-300 ease-out justify-center items-center"
+                "w-1/2 flex cursor-pointer border-b-[5px] font-regular h-full tracking-tighter text-primary transition-all duration-300 ease-out justify-center items-center"
               )}
               onClick={() => {
-                resetStates();
+                resetQueries();
+                resetSelected();
                 setTab("BUY");
               }}
             >
@@ -66,10 +103,11 @@ const JumboSearch: React.FC = () => {
             <div
               className={clsx(
                 tab === "SELL" ? "border-accent" : "border-tertiary",
-                "w-1/2 flex cursor-pointer border-b-[5px] h-full tracking-tighter text-primary transition-all duration-300 justify-center items-center"
+                "w-1/2 flex cursor-pointer border-b-[5px] font-regular h-full tracking-tighter text-primary transition-all duration-300 justify-center items-center"
               )}
               onClick={() => {
-                resetStates();
+                resetQueries();
+                resetSelected();
                 setTab("SELL");
               }}
             >
@@ -101,8 +139,14 @@ const JumboSearch: React.FC = () => {
           suggestions={
             tab === "BUY" ? placesStreetsSuggestions : addressSuggestions
           }
+          tab={tab}
+          handleSelect={handleUpdateSelected}
         />
       </div>
+      <SelectedPlacesDisplay
+        selectedPlacesStreets={selectedPlacesStreets}
+        handleRemoveSelected={handleRemoveSelected}
+      />
       <FilterBar tab={tab} />
       <SellingInfoBar tab={tab} />
     </div>

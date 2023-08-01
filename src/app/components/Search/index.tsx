@@ -19,7 +19,7 @@ function Search({ apiKey, handleUpdateLocation }: SearchProps) {
     <div className="flex w-full relative justify-center px-3 lg:px-6">
       <div className="w-full rounded-md transition-all flex mt-[-34px] h-16 lg:w-1/2 max-w-lg focus:outline-none shadow-t-lg">
         <Autocomplete
-          className="text-primary bg-white rounded-md shadow-md px-6 lg:px-8 w-full font-medium focus:outline-none"
+          className="text-primary bg-white rounded-md shadow-md px-6 lg:px-8 w-full font-regular focus:outline-none"
           apiKey={apiKey}
           onPlaceSelected={(place) => {
             if (place && place.geometry && place.geometry.location) {

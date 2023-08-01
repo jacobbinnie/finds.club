@@ -3,9 +3,11 @@ import clsx from "clsx";
 
 interface SuggestionsProps {
   suggestions: MapboxFeatures[];
+  tab: "BUY" | "SELL";
+  handleSelect: (tab: "BUY" | "SELL", selected: MapboxFeatures) => void;
 }
 
-function Suggestions({ suggestions }: SuggestionsProps) {
+function Suggestions({ suggestions, tab, handleSelect }: SuggestionsProps) {
   return (
     <div className="w-full max-w-[900px]">
       <ul
@@ -19,10 +21,13 @@ function Suggestions({ suggestions }: SuggestionsProps) {
         {suggestions.map((suggestion) => (
           <li
             className="w-full h-12 hover:bg-primary tracking-tighter hover:text-tertiary transition-all cursor-pointer flex items-center px-6"
-            // onClick={() => setSelectedSuggestion(suggestion)}
+            onClick={() => handleSelect(tab, suggestion)}
             key={suggestion.properties.mapbox_id}
           >
-            {suggestion.properties.name}
+            {suggestion.properties.name},{" "}
+            {suggestion.properties.context.locality
+              ? suggestion.properties.context.locality.name
+              : suggestion.properties.context.region.name}
           </li>
         ))}
       </ul>

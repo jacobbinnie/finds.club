@@ -116,7 +116,7 @@ function FilterBar({ tab }: FilterBarProps) {
     >
       {/* BEDS */}
       <div className="flex flex-col gap-1">
-        <p className="font-medium tracking-tighter text-small">Bedrooms</p>
+        <p className="font-regular tracking-tighter text-small">Bedrooms</p>
         <div className="flex gap-3 items-center">
           <Dropdown
             options={["Any", "1", "2", "3", "4", "5"]}
@@ -140,7 +140,7 @@ function FilterBar({ tab }: FilterBarProps) {
 
       {/* BATHS */}
       <div className="flex flex-col gap-1">
-        <p className="font-medium tracking-tighter text-small">Bathrooms</p>
+        <p className="font-regular tracking-tighter text-small">Bathrooms</p>
         <div className="flex gap-3 items-center">
           <Dropdown
             options={["Any", "1", "2", "3", "4", "5"]}
@@ -164,7 +164,7 @@ function FilterBar({ tab }: FilterBarProps) {
 
       {/* PRICES */}
       <div className="flex flex-col gap-1">
-        <p className="font-medium tracking-tighter text-small">Price</p>
+        <p className="font-regular tracking-tighter text-small">Price</p>
         <div className="flex gap-3 items-center">
           <Dropdown
             options={["Any", ...Object.keys(pricesJson.prices)]}
@@ -192,7 +192,7 @@ function FilterBar({ tab }: FilterBarProps) {
 
       {/* Ownership */}
       <div className="flex flex-col gap-1">
-        <p className="font-medium tracking-tighter text-small">
+        <p className="font-regular tracking-tighter text-small">
           Ownership type
         </p>
         <div className="flex gap-3">
@@ -213,13 +213,13 @@ function FilterBar({ tab }: FilterBarProps) {
       </div>
 
       <div className="flex flex-col gap-[5px]">
-        <p className="font-medium tracking-tighter text-small">Search terms</p>
+        <p className="font-regular tracking-tighter text-small">Search terms</p>
         <Input />
       </div>
 
       {/* New Builds */}
       <div className="flex flex-col gap-1">
-        <p className="font-medium tracking-tighter text-small">New builds</p>
+        <p className="font-regular tracking-tighter text-small">New builds</p>
         <div className="flex gap-3">
           <Dropdown
             options={["Show", "Hide", "Only"]}

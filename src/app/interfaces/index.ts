@@ -4,6 +4,11 @@ interface MapboxCoordinate {
 }
 
 interface MapboxContext {
+  locality?: {
+    mapbox_id: string;
+    name: string;
+    wikidata_id: string;
+  };
   district?: {
     mapbox_id: string;
     name: string;

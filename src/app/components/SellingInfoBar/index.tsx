@@ -15,20 +15,22 @@ function SellingInfoBar({ tab }: SellingInfoBarProps) {
     >
       <div className="flex justify-center items-center gap-1">
         <CheckCircleIcon className="w-4 text-tertiary" />
-        <p className="text-small text-center tracking-tighter font-medium text-tertiary">
+        <p className="text-small text-center tracking-tighter font-regular text-tertiary">
           $5 to list. No commission.
         </p>
       </div>
+
       <div className="flex justify-center items-center gap-1">
         <CheckCircleIcon className="w-4 text-tertiary" />
-        <p className="text-small text-center tracking-tighter font-medium text-tertiary">
+        <p className="text-small text-center tracking-tighter font-regular text-tertiary">
           Live chat with buyers.
         </p>
       </div>
+
       <div className="flex justify-center items-center gap-1 col-span-1 sm:col-span-2 md:col-span-1">
         <CheckCircleIcon className="w-4 text-tertiary" />
-        <p className="text-small text-center tracking-tighter font-medium text-tertiary">
-          Deal done.
+        <p className="text-small text-center tracking-tighter font-regular text-tertiary">
+          Sell - stress free.
         </p>
       </div>
     </div>
