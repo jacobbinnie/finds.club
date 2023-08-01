@@ -110,13 +110,13 @@ function FilterBar({ tab }: FilterBarProps) {
   return (
     <div
       className={clsx(
-        tab === "BUY" ? "py-8" : "h-0 py-0 overflow-hidden",
-        "w-full rounded-lg bg-white px-6 grid gap-x-3 gap-y-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 shadow-lg transition-all"
+        tab === "BUY" ? "py-8 mt-3" : "h-0 py-0 mt-0 overflow-hidden",
+        "w-full rounded-lg bg-white px-6 gap-x-3 grid gap-y-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 shadow-lg transition-all duration-500"
       )}
     >
       {/* BEDS */}
       <div className="flex flex-col gap-1">
-        <p className="font-regular tracking-tighter text-small">Bedrooms</p>
+        <p className="font-medium tracking-tighter text-small">Bedrooms</p>
         <div className="flex gap-3 items-center">
           <Dropdown
             options={["Any", "1", "2", "3", "4", "5"]}
@@ -140,7 +140,7 @@ function FilterBar({ tab }: FilterBarProps) {
 
       {/* BATHS */}
       <div className="flex flex-col gap-1">
-        <p className="font-regular tracking-tighter text-small">Bathrooms</p>
+        <p className="font-medium tracking-tighter text-small">Bathrooms</p>
         <div className="flex gap-3 items-center">
           <Dropdown
             options={["Any", "1", "2", "3", "4", "5"]}
@@ -164,7 +164,7 @@ function FilterBar({ tab }: FilterBarProps) {
 
       {/* PRICES */}
       <div className="flex flex-col gap-1">
-        <p className="font-regular tracking-tighter text-small">Price</p>
+        <p className="font-medium tracking-tighter text-small">Price</p>
         <div className="flex gap-3 items-center">
           <Dropdown
             options={["Any", ...Object.keys(pricesJson.prices)]}
@@ -192,7 +192,7 @@ function FilterBar({ tab }: FilterBarProps) {
 
       {/* Ownership */}
       <div className="flex flex-col gap-1">
-        <p className="font-regular tracking-tighter text-small">
+        <p className="font-medium tracking-tighter text-small">
           Ownership type
         </p>
         <div className="flex gap-3">
@@ -213,13 +213,13 @@ function FilterBar({ tab }: FilterBarProps) {
       </div>
 
       <div className="flex flex-col gap-[5px]">
-        <p className="font-regular tracking-tighter text-small">Search terms</p>
+        <p className="font-medium tracking-tighter text-small">Search terms</p>
         <Input />
       </div>
 
       {/* New Builds */}
       <div className="flex flex-col gap-1">
-        <p className="font-regular tracking-tighter text-small">New builds</p>
+        <p className="font-medium tracking-tighter text-small">New builds</p>
         <div className="flex gap-3">
           <Dropdown
             options={["Show", "Hide", "Only"]}

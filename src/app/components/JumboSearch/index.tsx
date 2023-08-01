@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import Suggestions from "../Suggestions";
 import { MapPinIcon } from "@heroicons/react/24/solid";
 import FilterBar from "../FilterBar";
+import SellingInfoBar from "../SellingInfoBar";
 
 const JumboSearch: React.FC = () => {
   const [tab, setTab] = useState<"BUY" | "SELL">("BUY");
@@ -35,14 +36,14 @@ const JumboSearch: React.FC = () => {
   }, [addressesQuery]);
 
   return (
-    <div className="flex flex-col w-full relative items-center gap-3 max-w-[900px]">
+    <div className="flex flex-col w-full relative items-center max-w-[900px]">
       <div className="w-full">
         <div
           className={clsx(
             placesStreetsSuggestions.length > 0 || addressSuggestions.length > 0
               ? "rounded-t-lg"
               : "rounded-lg",
-            "w-full flex-col shadow-lg transition-all h-48 overflow-hidden flex max-w-[900px] focus:outline-none"
+            "w-full flex-col shadow-lg transition-all h-44 overflow-hidden flex max-w-[900px] focus:outline-none"
           )}
         >
           <div className="flex w-full h-1/2 bg-white">
@@ -99,6 +100,7 @@ const JumboSearch: React.FC = () => {
         />
       </div>
       <FilterBar tab={tab} />
+      <SellingInfoBar tab={tab} />
     </div>
   );
 };
