@@ -17,7 +17,7 @@ function SelectedPlacesDisplay({
         key={selectedPlace.id}
         className="bg-primary flex px-3 py-1 rounded-2xl shadow-lg gap-3"
       >
-        <p className="text-sm tracking-tighter text-tertiary">
+        <p className="text-small tracking-tighter text-tertiary">
           {selectedPlace.properties.name},{" "}
           {selectedPlace.properties.feature_type === "street"
             ? selectedPlace.properties.context.locality
