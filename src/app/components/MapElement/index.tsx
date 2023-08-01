@@ -36,7 +36,7 @@ function MapElement({ apiKey }: MapElementProps) {
       >
         <div
           onClick={() => setIsMapHidden(!isMapHidden)}
-          className="px-3 z-20 cursor-pointer h-8 flex items-center absolute top-2 right-2 rounded-md bg-primary text-tertiary text-sm font-bold"
+          className="px-3 z-20 cursor-pointer h-8 flex items-center absolute top-2 right-2 rounded-md bg-primary text-tertiary text-small font-bold"
         >
           {isMapHidden ? "Expand map" : "Hide map"}
         </div>

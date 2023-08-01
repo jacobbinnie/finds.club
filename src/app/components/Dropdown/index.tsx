@@ -1,78 +1,70 @@
-import clsx from "clsx";
-import { useState } from "react";
+import { Fragment } from "react";
+import { Menu, Transition } from "@headlessui/react";
+import { ChevronDownIcon } from "@heroicons/react/20/solid";
+import { CategoryType } from "@/app/interfaces";
 
 interface DropdownProps {
-  value: string;
-  // eslint-disable-next-line no-unused-vars
-  setValue: (priceString: string) => void;
   options: string[];
-  includePlus?: boolean;
+  selectedOption: string;
+  type: "MIN" | "MAX" | "N/A";
+  category: CategoryType;
+  handleUpdateCallback: (
+    option: string,
+    type: "MIN" | "MAX" | "N/A",
+    category: CategoryType
+  ) => void;
 }
 
-function Dropdown({ value, setValue, options, includePlus }: DropdownProps) {
-  const [open, setOpen] = useState(false);
-
-  const mappedOptions = options.map((option) => {
-    return (
-      <li key={option}>
-        <a
-          onClick={() => {
-            setValue(option);
-            setOpen(false);
-          }}
-          className="flex items-center cursor-pointer font-medium px-4 h-8 opacity-80 transition-all text-primary hover:bg-gray-200 bg-gray-300"
-        >
-          {option}
-          {includePlus && " +"}
-        </a>
-      </li>
-    );
-  });
+function Dropdown({
+  options,
+  selectedOption,
+  handleUpdateCallback,
+  category,
+  type,
+}: DropdownProps) {
+  const renderOptions = () => {
+    return options.map((option) => (
+      <Menu.Item key={option}>
+        {({ active }) => (
+          <a
+            onClick={() => handleUpdateCallback(option, type, category)}
+            className={`${
+              active ? "bg-gray-100 text-gray-900" : "text-gray-700"
+            } block px-4 py-2 text-small cursor-pointer tracking-tighter`}
+          >
+            {option}
+          </a>
+        )}
+      </Menu.Item>
+    ));
+  };
 
   return (
-    <div className="relative">
-      <button
-        onClick={() => setOpen((prev) => !prev)}
-        id="dropdownDefaultButton"
-        data-dropdown-toggle="dropdown"
-        className="text-primary w-full flex grow transition-all bg-transparent border-2 border-gray-300 focus:outline-none font-medium rounded-md text-sm px-3 text-center h-10 items-center justify-between"
-        type="button"
-      >
-        {value}
-        {includePlus && " +"}
-        <svg
-          className="w-2.5 h-2.5 ml-2.5"
-          aria-hidden="true"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 10 6"
-        >
-          <path
-            className="stroke-primary"
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="m1 1 4 4 4-4"
+    <Menu as="div" className="relative inline-block text-left w-full">
+      <div>
+        <Menu.Button className="inline-flex w-full justify-between gap-x-1.5 tracking-tighter rounded-md px-3 py-2 text-small font-medium text-primary shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
+          {selectedOption}
+          <ChevronDownIcon
+            className="-mr-1 h-5 w-5 text-gray-400"
+            aria-hidden="true"
           />
-        </svg>
-      </button>
-
-      <div
-        id="dropdown"
-        className={clsx(
-          open ? "block" : "hidden",
-          "z-10 max-h-60 transition-all absolute top-10 left-0 rounded-md overflow-y-scroll overflow-x-hidden no-scrollbar w-full"
-        )}
-      >
-        <ul
-          className="text-sm text-primary"
-          aria-labelledby="dropdownDefaultButton"
-        >
-          {mappedOptions}
-        </ul>
+        </Menu.Button>
       </div>
-    </div>
+
+      <Transition
+        as={Fragment}
+        enter="transition ease-out duration-100"
+        enterFrom="transform opacity-0 scale-95"
+        enterTo="transform opacity-100 scale-100"
+        leave="transition ease-in duration-75"
+        leaveFrom="transform opacity-100 scale-100"
+        leaveTo="transform opacity-0 scale-95"
+      >
+        <Menu.Items className="absolute max-h-52 overflow-scroll no-scrollbar right-0 z-10 mt-2 w-full origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+          <div className="py-1">{renderOptions()}</div>
+        </Menu.Items>
+      </Transition>
+    </Menu>
   );
 }
 
