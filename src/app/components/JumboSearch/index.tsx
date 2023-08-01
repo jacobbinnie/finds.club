@@ -35,6 +35,10 @@ const JumboSearch: React.FC = () => {
       (!addressesQuery && setAddressSuggestions([]));
   }, [addressesQuery]);
 
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+  }, [tab]);
+
   return (
     <div className="flex flex-col w-full relative items-center max-w-[900px]">
       <div className="w-full">

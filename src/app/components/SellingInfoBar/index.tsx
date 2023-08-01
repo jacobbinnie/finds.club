@@ -9,8 +9,8 @@ function SellingInfoBar({ tab }: SellingInfoBarProps) {
   return (
     <div
       className={clsx(
-        tab === "SELL" ? "mt-3 py-8" : "h-0 mt-0 y-0 overflow-hidden",
-        "w-full rounded-lg bg-accent px-6 grid gap-x-3 gap-y-6 sm:grid-cols-2 md:grid-cols-3 shadow-lg transition-all duration-300"
+        tab === "SELL" ? "mt-3 py-4 sm:py-8" : "h-0 mt-0 y-0 overflow-hidden",
+        "w-full rounded-lg bg-accent px-6 grid gap-x-3 gap-y-3 sm:gap-y-6 sm:grid-cols-2 md:grid-cols-3 shadow-lg transition-all duration-300"
       )}
     >
       <div className="flex justify-center items-center gap-1">
