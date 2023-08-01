@@ -19,8 +19,10 @@ function SelectedPlacesDisplay({
       >
         <p className="text-sm tracking-tighter text-tertiary">
           {selectedPlace.properties.name},{" "}
-          {selectedPlace.properties.context.locality
-            ? selectedPlace.properties.context.locality.name
+          {selectedPlace.properties.feature_type === "street"
+            ? selectedPlace.properties.context.locality
+              ? selectedPlace.properties.context.locality?.name
+              : selectedPlace.properties.context.place.name
             : selectedPlace.properties.context.region.name}
         </p>
         <XCircleIcon

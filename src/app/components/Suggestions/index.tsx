@@ -25,8 +25,10 @@ function Suggestions({ suggestions, tab, handleSelect }: SuggestionsProps) {
             key={suggestion.properties.mapbox_id}
           >
             {suggestion.properties.name},{" "}
-            {suggestion.properties.context.locality
-              ? suggestion.properties.context.locality.name
+            {suggestion.properties.feature_type === "street"
+              ? suggestion.properties.context.locality
+                ? suggestion.properties.context.locality?.name
+                : suggestion.properties.context.place.name
               : suggestion.properties.context.region.name}
           </li>
         ))}

@@ -13,7 +13,7 @@ const usePlacesStreets = (searchQuery: string | undefined) => {
     setLoading(true);
     setError(null);
 
-    const updatedEndpoint = `${MAPBOX_ENDPOINT}?q=${searchQuery}&country=nz&proximity=ip&types=street%2Cplace&access_token=${MAPBOX_ACCESS_TOKEN}`;
+    const updatedEndpoint = `${MAPBOX_ENDPOINT}?q=${searchQuery}&country=nz&proximity=ip&types=street%2Cplace%2Clocality&access_token=${MAPBOX_ACCESS_TOKEN}`;
 
     if (searchQuery && searchQuery.length > 2) {
       try {
