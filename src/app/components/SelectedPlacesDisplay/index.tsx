@@ -23,6 +23,8 @@ function SelectedPlacesDisplay({
             ? selectedPlace.properties.context.locality
               ? selectedPlace.properties.context.locality?.name
               : selectedPlace.properties.context.place.name
+            : selectedPlace.properties.feature_type === "place"
+            ? selectedPlace.properties.context.country.name
             : selectedPlace.properties.context.region.name}
         </p>
         <XCircleIcon

@@ -28,10 +28,12 @@ const JumboSearch: React.FC = () => {
   ) => {
     if (tab === "BUY") {
       setPlacesStreetsQuery("");
-      setSelectedPlacesStreets((prev: MapboxFeatures[] | []) => [
-        ...prev,
-        selected,
-      ]);
+      if (!selectedPlacesStreets.find((entry) => entry.id === selected.id)) {
+        setSelectedPlacesStreets((prev: MapboxFeatures[] | []) => [
+          ...prev,
+          selected,
+        ]);
+      }
     } else {
       setSelectedAddress(selected);
     }
@@ -76,21 +78,21 @@ const JumboSearch: React.FC = () => {
   }, [tab]);
 
   return (
-    <div className="flex flex-col w-full relative items-center max-w-[900px]">
+    <div className="flex flex-col w-full relative items-center max-w-[800px]">
       <div className="w-full">
         <div
           className={clsx(
             placesStreetsSuggestions.length > 0 || addressSuggestions.length > 0
               ? "rounded-t-lg"
               : "rounded-lg",
-            "w-full flex-col shadow-lg transition-all h-44 overflow-hidden flex max-w-[900px] focus:outline-none"
+            "w-full flex-col shadow-lg transition-all h-36 overflow-hidden flex max-w-[900px] focus:outline-none"
           )}
         >
           <div className="flex w-full h-1/2 bg-white">
             <div
               className={clsx(
                 tab === "BUY" ? "border-accent" : "border-tertiary",
-                "w-1/2 flex cursor-pointer border-b-[5px] font-regular h-full tracking-tighter text-primary transition-all duration-300 ease-out justify-center items-center"
+                "w-1/2 flex cursor-pointer border-b-4 font-regular h-full tracking-tighter text-primary transition-all duration-300 ease-out justify-center items-center"
               )}
               onClick={() => {
                 resetQueries();
@@ -103,7 +105,7 @@ const JumboSearch: React.FC = () => {
             <div
               className={clsx(
                 tab === "SELL" ? "border-accent" : "border-tertiary",
-                "w-1/2 flex cursor-pointer border-b-[5px] font-regular h-full tracking-tighter text-primary transition-all duration-300 justify-center items-center"
+                "w-1/2 flex cursor-pointer border-b-4 font-regular h-full tracking-tighter text-primary transition-all duration-300 justify-center items-center"
               )}
               onClick={() => {
                 resetQueries();
@@ -119,7 +121,7 @@ const JumboSearch: React.FC = () => {
             <input
               placeholder={
                 tab === "BUY"
-                  ? "Enter a suburb or street"
+                  ? "Enter suburb / street / road"
                   : "Enter your property address"
               }
               className="w-full h-3/5 px-6 font-normal tracking-tighter placeholder:text-gray-300 focus:outline-none"
@@ -149,6 +151,27 @@ const JumboSearch: React.FC = () => {
       />
       <FilterBar tab={tab} />
       <SellingInfoBar tab={tab} />
+
+      <div
+        className={clsx(
+          tab === "SELL" ? "mt-10" : "mt-0 hidden",
+          "w-full flex justify-between items-start max-w-[800px] transition-all"
+        )}
+      >
+        <div className="flex flex-col">
+          <p className="tracking-tighter font-bold text-xl">Get listed today</p>
+          <p className="text-[10px] tracking-tighter">
+            Enter your property address
+          </p>
+        </div>
+
+        <div className="bg-white h-min px-3 py-1 mt-1 rounded-md shadow-lg flex items-center justify-center gap-1">
+          <p className="text-[10px] tracking-tighter">
+            Kiwi owned and operated
+          </p>
+          <p className="text-[10px] mt-[1px]">🇳🇿</p>
+        </div>
+      </div>
     </div>
   );
 };

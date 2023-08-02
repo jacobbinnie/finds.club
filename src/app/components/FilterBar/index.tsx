@@ -1,7 +1,12 @@
 import { useState } from "react";
 import Dropdown from "../Dropdown";
 import pricesJson from "../../utils/housePrices.json";
-import { CategoryType, NewBuildsType, OwnershipType } from "@/app/interfaces";
+import {
+  CategoryType,
+  NewBuildsType,
+  OwnershipType,
+  PropertyType,
+} from "@/app/interfaces";
 import clsx from "clsx";
 import Checkbox from "../Checkbox";
 import Input from "../Input";
@@ -45,6 +50,8 @@ function FilterBar({ tab }: FilterBarProps) {
   );
 
   const [newBuilds, setNewBuilds] = useState<NewBuildsType>("Show");
+
+  const [propertyType, setPropertyType] = useState<PropertyType | "Any">("Any");
 
   const handleUpdateCallback = (
     option: string,
@@ -100,6 +107,14 @@ function FilterBar({ tab }: FilterBarProps) {
 
       case "NEWBUILDS":
         setNewBuilds(option as NewBuildsType);
+        break;
+
+      case "PROPERTYTYPE":
+        if (option === "Any") {
+          setPropertyType("Any");
+        } else {
+          setPropertyType(option as PropertyType);
+        }
         break;
 
       default:
@@ -190,24 +205,65 @@ function FilterBar({ tab }: FilterBarProps) {
         </div>
       </div>
 
-      {/* Ownership */}
+      <div className="flex w-full gap-3">
+        {/* Ownership */}
+        <div className="flex flex-col gap-1 w-full">
+          <p className="font-regular tracking-tighter text-small">
+            Ownership type
+          </p>
+          <div className="flex gap-3">
+            <Dropdown
+              options={[
+                "Any",
+                "Freehold",
+                "Cross Lease",
+                "Unit Title",
+                "Leasehold",
+              ]}
+              selectedOption={ownershipType}
+              handleUpdateCallback={handleUpdateCallback}
+              type="N/A"
+              category="OWNERSHIP"
+            />
+          </div>
+        </div>
+
+        {/* New Builds */}
+        <div className="flex flex-col gap-1">
+          <p className="font-regular tracking-tighter text-small">New builds</p>
+          <div className="flex gap-3">
+            <Dropdown
+              options={["Show", "Hide", "Only"]}
+              selectedOption={newBuilds}
+              handleUpdateCallback={handleUpdateCallback}
+              type="N/A"
+              category="NEWBUILDS"
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* Property Type */}
       <div className="flex flex-col gap-1">
         <p className="font-regular tracking-tighter text-small">
-          Ownership type
+          Property Type
         </p>
         <div className="flex gap-3">
           <Dropdown
             options={[
               "Any",
-              "Freehold",
-              "Cross Lease",
-              "Unit Title",
-              "Leasehold",
+              "Apartment",
+              "House",
+              "Lifetyle Dwelling",
+              "Lifestyle Land",
+              "Section",
+              "Townhouse",
+              "Unit",
             ]}
-            selectedOption={ownershipType}
+            selectedOption={propertyType}
             handleUpdateCallback={handleUpdateCallback}
             type="N/A"
-            category="OWNERSHIP"
+            category="PROPERTYTYPE"
           />
         </div>
       </div>
@@ -217,23 +273,9 @@ function FilterBar({ tab }: FilterBarProps) {
         <Input />
       </div>
 
-      {/* New Builds */}
-      <div className="flex flex-col gap-1">
-        <p className="font-regular tracking-tighter text-small">New builds</p>
-        <div className="flex gap-3">
-          <Dropdown
-            options={["Show", "Hide", "Only"]}
-            selectedOption={newBuilds}
-            handleUpdateCallback={handleUpdateCallback}
-            type="N/A"
-            category="NEWBUILDS"
-          />
-        </div>
-      </div>
-
       <Checkbox title="Needs renovation" />
 
-      <div className="flex w-full transition-all md:col-span-2 items-center justify-end">
+      <div className="flex w-full transition-all items-end md:col-span-2 justify-end">
         <button className="inline-flex w-full tracking-tighter items-center justify-center px-4 h-10 text-small transition-all hover:px-10 hover:shadow-lg rounded-md text-tertiary bg-primary group focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 hover:bg-accent">
           Search
         </button>

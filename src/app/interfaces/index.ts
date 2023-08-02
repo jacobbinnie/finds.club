@@ -78,7 +78,8 @@ export type CategoryType =
   | "BATHS"
   | "PRICE"
   | "OWNERSHIP"
-  | "NEWBUILDS";
+  | "NEWBUILDS"
+  | "PROPERTYTYPE";
 
 export type OwnershipType =
   | "Freehold"
@@ -87,3 +88,12 @@ export type OwnershipType =
   | "Leasehold";
 
 export type NewBuildsType = "Show" | "Hide" | "Only";
+
+export type PropertyType =
+  | "Apartment"
+  | "House"
+  | "Lifestyle Dwelling"
+  | "Lifestyle Land"
+  | "Section"
+  | "Townhouse"
+  | "Unit";
