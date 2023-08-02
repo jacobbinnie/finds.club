@@ -1,9 +1,6 @@
 import clsx from "clsx";
-import { useState } from "react";
-import { GoogleMap } from "@react-google-maps/api";
-import Search from "../Search";
-import Script from "next/script";
-
+import { useEffect, useRef, useState } from "react";
+import mapboxgl from "mapbox-gl";
 interface MapElementProps {
   apiKey: string;
 }
@@ -15,51 +12,42 @@ function MapElement({ apiKey }: MapElementProps) {
     lng: 174.772339,
     zoom: 10,
   });
-  const [isLoaded, setIsLoaded] = useState(false);
 
-  function handleUpdateLocation(lat: number, lng: number, zoom: number) {
-    isMapHidden && setIsMapHidden(false);
-    setMapLocation({ lat, lng, zoom });
-  }
+  // function handleUpdateLocation(lat: number, lng: number, zoom: number) {
+  //   isMapHidden && setIsMapHidden(false);
+  //   setMapLocation({ lat, lng, zoom });
+  // }
+
+  const mapNode = useRef(null);
+
+  useEffect(() => {
+    const node = mapNode.current;
+
+    if (typeof window === "undefined" || node === null) return;
+
+    const mapboxMap = new mapboxgl.Map({
+      container: node,
+      accessToken: apiKey,
+      style: "mapbox://styles/jacobbinnie/clkt9g77a004w01pp11bb3hbd",
+      center: [mapLocation.lng, mapLocation.lat],
+      zoom: mapLocation.zoom,
+      attributionControl: false,
+    });
+
+    return () => {
+      mapboxMap.remove();
+    };
+  }, []);
 
   return (
-    <div className="w-full flex-col flex justify-between items-center px-6 lg:px-8 pt-8">
-      <Script
-        src={`https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=places&`}
-        onLoad={() => setIsLoaded(true)}
-      />
+    <div className="w-full overflow-hidden">
       <div
+        ref={mapNode}
         className={clsx(
           isMapHidden ? "h-[100px]" : "h-[calc(100vh-400px)]",
-          "w-full overflow-hidden bg-gray-300 transition-all relative rounded-lg shadow-lg flex justify-center items-center"
+          "w-full"
         )}
-      >
-        <div
-          onClick={() => setIsMapHidden(!isMapHidden)}
-          className="px-3 z-20 cursor-pointer h-8 flex items-center absolute top-2 right-2 rounded-md bg-primary text-tertiary text-small font-bold"
-        >
-          {isMapHidden ? "Expand map" : "Hide map"}
-        </div>
-
-        {isLoaded && (
-          <GoogleMap
-            mapContainerStyle={{ height: "100%", width: "100%" }}
-            mapContainerClassName="map-container"
-            center={{ lat: mapLocation.lat, lng: mapLocation.lng }}
-            options={{
-              mapId: process.env.NEXT_PUBLIC_MAP_ID || "",
-              disableDefaultUI: true,
-              zoomControl: true,
-              zoom: mapLocation.zoom,
-              tilt: 45,
-              keyboardShortcuts: false,
-            }}
-          />
-        )}
-      </div>
-      {isLoaded && (
-        <Search apiKey={apiKey} handleUpdateLocation={handleUpdateLocation} />
-      )}
+      />
     </div>
   );
 }

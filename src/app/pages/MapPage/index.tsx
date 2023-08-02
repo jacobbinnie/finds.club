@@ -1,23 +1,17 @@
-import ActionBar from "@/app/components/ActionBar";
-import FilterBar from "@/app/components/FilterBar";
 import MapElement from "@/app/components/MapElement";
 import NavBar from "@/app/components/NavBar";
-import PropertyGrid from "@/app/components/PropertyGrid";
 
 function MapPage() {
-  const GOOGLE_API_KEY = process.env.NEXT_PUBLIC_GOOGLE_API_KEY;
+  const MAPBOX_ACCESS_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
 
-  if (GOOGLE_API_KEY === undefined) {
-    return <p>Loading API Key</p>;
+  if (MAPBOX_ACCESS_TOKEN === undefined) {
+    return <p>Loading Access Token</p>;
   }
 
   return (
     <div className="bg-tertiary w-full h-full min-h-screen">
       <NavBar />
-      <ActionBar />
-      <MapElement apiKey={GOOGLE_API_KEY} />
-      <FilterBar />
-      <PropertyGrid />
+      <MapElement apiKey={MAPBOX_ACCESS_TOKEN} />
     </div>
   );
 }
