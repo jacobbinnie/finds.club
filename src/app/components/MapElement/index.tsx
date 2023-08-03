@@ -40,7 +40,7 @@ function MapElement({ selectedProperty, mapPosition }: MapElementProps) {
       <div
         ref={mapNode}
         className={clsx(
-          isMapHidden ? "h-[100px]" : "h-[calc(100vh-200px)]",
+          isMapHidden ? "h-[100px]" : "h-[calc(100vh-300px)]",
           "w-full transition-all"
         )}
       />
