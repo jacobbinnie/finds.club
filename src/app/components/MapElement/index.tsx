@@ -36,14 +36,20 @@ function MapElement({ selectedProperty, mapPosition }: MapElementProps) {
   }, []);
 
   return (
-    <div className="w-full overflow-hidden">
+    <div className="w-full relative overflow-hidden h-100%">
       <div
         ref={mapNode}
         className={clsx(
-          isMapHidden ? "h-[100px]" : "h-[calc(100vh-400px)]",
-          "w-full"
+          isMapHidden ? "h-[100px]" : "h-[calc(100vh-200px)]",
+          "w-full transition-all"
         )}
       />
+      <div
+        onClick={() => setIsMapHidden(!isMapHidden)}
+        className="px-3 z-20 cursor-pointer h-8 flex items-center absolute top-2 right-2 rounded-md bg-accent shadow-lg text-tertiary text-small font-regular tracking-tighter"
+      >
+        {isMapHidden ? "Expand map" : "Hide map"}
+      </div>
     </div>
   );
 }

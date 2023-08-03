@@ -45,10 +45,11 @@ const JumboSearch: React.FC = () => {
         ]);
       }
     } else {
+      console.log(selected);
       setSelectedProperty({
         lat: selected.geometry.coordinates[1],
         lng: selected.geometry.coordinates[0],
-        zoom: 16,
+        zoom: 18,
         mapboxId: selected.id,
       });
       setPage("MAP");
