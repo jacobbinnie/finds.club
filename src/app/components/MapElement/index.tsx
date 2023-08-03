@@ -9,8 +9,10 @@ interface MapElementProps {
   mapPosition: MapPosition;
 }
 
-async function MapElement({ selectedProperty, mapPosition }: MapElementProps) {
+function MapElement({ selectedProperty, mapPosition }: MapElementProps) {
   const [isMapHidden, setIsMapHidden] = useState(false);
+
+  const position = selectedProperty ?? mapPosition;
 
   const mapNode = useRef(null);
 
@@ -23,8 +25,8 @@ async function MapElement({ selectedProperty, mapPosition }: MapElementProps) {
       container: node,
       accessToken: access_token,
       style: "mapbox://styles/jacobbinnie/clkt9g77a004w01pp11bb3hbd",
-      center: [mapPosition.lng, mapPosition.lat],
-      zoom: mapPosition.zoom,
+      center: [position.lng, position.lat],
+      zoom: position.zoom,
       attributionControl: false,
     });
 

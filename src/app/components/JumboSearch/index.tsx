@@ -8,6 +8,8 @@ import FilterBar from "../FilterBar";
 import SellingInfoBar from "../SellingInfoBar";
 import { MapboxFeatures } from "@/app/interfaces";
 import SelectedPlacesDisplay from "../SelectedPlacesDisplay";
+import { useLocation } from "@/app/providers/LocationProvider";
+import { useRoute } from "@/app/providers/RouteProvider";
 
 const JumboSearch: React.FC = () => {
   const [tab, setTab] = useState<"BUY" | "SELL">("BUY");
@@ -18,9 +20,17 @@ const JumboSearch: React.FC = () => {
     MapboxFeatures[]
   >([]);
 
-  const [selectedAddress, setSelectedAddress] = useState<MapboxFeatures | null>(
-    null
-  );
+  const { setSelectedProperty } = useLocation();
+  const { setPage } = useRoute();
+
+  const resetQueries = () => {
+    setAddressesQuery("");
+    setPlacesStreetsQuery("");
+  };
+
+  const resetSelected = () => {
+    setSelectedPlacesStreets([]);
+  };
 
   const handleUpdateSelected = (
     tab: "BUY" | "SELL",
@@ -35,7 +45,14 @@ const JumboSearch: React.FC = () => {
         ]);
       }
     } else {
-      setSelectedAddress(selected);
+      setSelectedProperty({
+        lat: selected.geometry.coordinates[1],
+        lng: selected.geometry.coordinates[0],
+        zoom: 16,
+        mapboxId: selected.id,
+      });
+      setPage("MAP");
+      resetQueries();
     }
   };
 
@@ -56,16 +73,6 @@ const JumboSearch: React.FC = () => {
     setData: setAddressSuggestions,
     loading: addressLoading,
   } = useAddresses(addressesQuery);
-
-  const resetQueries = () => {
-    setAddressesQuery("");
-    setPlacesStreetsQuery("");
-  };
-
-  const resetSelected = () => {
-    setSelectedAddress(null);
-    setSelectedPlacesStreets([]);
-  };
 
   useEffect(() => {
     (placesStreetsQuery && placesStreetsQuery.length < 3) ||

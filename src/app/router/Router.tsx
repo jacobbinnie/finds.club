@@ -1,10 +1,10 @@
 "use client";
-import { useState } from "react";
 import Home from "../pages/Home";
 import MapPage from "../pages/MapPage";
+import { useRoute } from "../providers/RouteProvider";
 
 function Router() {
-  const [page, setPage] = useState<"HOME" | "MAP">("MAP");
+  const { page } = useRoute();
 
   switch (page) {
     case "MAP":

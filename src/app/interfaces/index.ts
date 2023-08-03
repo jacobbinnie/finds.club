@@ -1,7 +1,4 @@
-interface MapboxCoordinate {
-  longitude: number;
-  latitude: number;
-}
+type MapboxCoordinate = number[];
 
 interface MapboxContext {
   locality?: {
