@@ -31,6 +31,10 @@ function Suggestions({ suggestions, tab, handleSelect }: SuggestionsProps) {
                 : suggestion.properties.context.place.name
               : suggestion.properties.feature_type === "place"
               ? suggestion.properties.context.country.name
+              : suggestion.properties.feature_type === "address"
+              ? suggestion.properties.context.locality
+                ? suggestion.properties.context.locality?.name
+                : suggestion.properties.context.place.name
               : suggestion.properties.context.region.name}
           </li>
         ))}

@@ -3,7 +3,7 @@ import usePlacesStreets from "@/app/hooks/usePlacesStreets";
 import clsx from "clsx";
 import React, { useEffect, useState } from "react";
 import Suggestions from "../Suggestions";
-import { MapPinIcon } from "@heroicons/react/24/solid";
+import { ArrowPathIcon, MapPinIcon } from "@heroicons/react/24/solid";
 import FilterBar from "../FilterBar";
 import SellingInfoBar from "../SellingInfoBar";
 import { MapboxFeatures } from "@/app/interfaces";
@@ -48,10 +48,14 @@ const JumboSearch: React.FC = () => {
   const {
     data: placesStreetsSuggestions,
     setData: setPlacesStreetsSuggestions,
+    loading: placesStreetsLoading,
   } = usePlacesStreets(placesStreetsQuery);
 
-  const { data: addressSuggestions, setData: setAddressSuggestions } =
-    useAddresses(addressesQuery);
+  const {
+    data: addressSuggestions,
+    setData: setAddressSuggestions,
+    loading: addressLoading,
+  } = useAddresses(addressesQuery);
 
   const resetQueries = () => {
     setAddressesQuery("");
@@ -117,7 +121,22 @@ const JumboSearch: React.FC = () => {
             </div>
           </div>
           <div className="flex bg-white justify-center h-1/2 px-6 items-center">
-            <MapPinIcon width={16} />
+            <MapPinIcon
+              width={16}
+              className={clsx(
+                addressLoading || placesStreetsLoading ? "hidden" : "block",
+                "transition-all"
+              )}
+            />
+            <ArrowPathIcon
+              width={16}
+              className={clsx(
+                addressLoading || placesStreetsLoading
+                  ? "block animate-spin"
+                  : "hidden",
+                "transition-all"
+              )}
+            />
             <input
               placeholder={
                 tab === "BUY"
@@ -155,7 +174,7 @@ const JumboSearch: React.FC = () => {
       <div
         className={clsx(
           tab === "SELL" ? "mt-10" : "mt-0 hidden",
-          "w-full flex justify-between items-start max-w-[800px] transition-all"
+          "w-full flex justify-between items-center max-w-[800px] transition-all"
         )}
       >
         <div className="flex flex-col">
@@ -165,7 +184,7 @@ const JumboSearch: React.FC = () => {
           </p>
         </div>
 
-        <div className="bg-white h-min px-3 py-1 mt-1 rounded-md shadow-lg flex items-center justify-center gap-1">
+        <div className="bg-white h-min px-3 py-1 rounded-md shadow-lg flex items-center justify-center gap-1">
           <p className="text-[10px] tracking-tighter">
             Kiwi owned and operated
           </p>
