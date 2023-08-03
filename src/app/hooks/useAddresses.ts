@@ -1,41 +1,36 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import { MapboxFeatures, isValidMapboxResponse } from "../interfaces";
-
-const MAPBOX_ACCESS_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN || "";
-const MAPBOX_ENDPOINT = process.env.NEXT_PUBLIC_MAPBOX_ENDPOINT || "";
 
 const useAddresses = (searchQuery: string | undefined) => {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [data, setData] = useState<MapboxFeatures[]>([]);
 
-  const suggestAddress = useCallback(async () => {
+  useEffect(() => {
     setLoading(true);
     setError(null);
 
-    const updatedEndpoint = `${MAPBOX_ENDPOINT}?q=${searchQuery}&country=nz&proximity=ip&types=address&access_token=${MAPBOX_ACCESS_TOKEN}`;
-
     if (searchQuery && searchQuery.length > 2) {
-      try {
-        const response = await fetch(updatedEndpoint);
-        const data = await response.json();
-
-        if (isValidMapboxResponse(data)) {
-          setData(data.features);
-        } else {
-          setError("Received data is not in the expected format.");
-        }
-      } catch (error) {
-        setError("An error occurred while fetching data.");
-      } finally {
-        setLoading(false);
-      }
+      fetch(`/api/suggest-address?q=${searchQuery}`)
+        .then((response) => response.json())
+        .then((data) => {
+          if (isValidMapboxResponse(data)) {
+            setData(data.features);
+          } else {
+            setError("Received data is not in the expected format.");
+          }
+        })
+        .catch(() => {
+          setError("An error occurred while fetching data.");
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    } else {
+      setLoading(false);
+      setData([]);
     }
   }, [searchQuery]);
-
-  useEffect(() => {
-    suggestAddress();
-  }, [suggestAddress]);
 
   return { error, loading, data, setData };
 };
