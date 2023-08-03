@@ -2,17 +2,14 @@ import clsx from "clsx";
 import { useEffect, useRef, useState } from "react";
 import mapboxgl from "mapbox-gl";
 import { MapPosition, SelectedProperty } from "@/app/interfaces";
+
+const access_token = process.env.NEXT_PUBLIC_MAPBOX_MAP_TOKEN || "";
 interface MapElementProps {
-  apiKey: string;
   selectedProperty: SelectedProperty | null;
   mapPosition: MapPosition;
 }
 
-async function MapElement({
-  apiKey,
-  selectedProperty,
-  mapPosition,
-}: MapElementProps) {
+async function MapElement({ selectedProperty, mapPosition }: MapElementProps) {
   const [isMapHidden, setIsMapHidden] = useState(false);
 
   const mapNode = useRef(null);
@@ -24,7 +21,7 @@ async function MapElement({
 
     const mapboxMap = new mapboxgl.Map({
       container: node,
-      accessToken: apiKey,
+      accessToken: access_token,
       style: "mapbox://styles/jacobbinnie/clkt9g77a004w01pp11bb3hbd",
       center: [mapPosition.lng, mapPosition.lat],
       zoom: mapPosition.zoom,

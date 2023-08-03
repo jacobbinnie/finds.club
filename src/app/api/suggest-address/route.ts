@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
 const MAPBOX_ACCESS_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN || "";
-const MAPBOX_ENDPOINT = process.env.NEXT_PUBLIC_MAPBOX_ENDPOINT || "";
+const MAPBOX_ENDPOINT = process.env.NEXT_PUBLIC_MAPBOX_GEOCODE_ENDPOINT || "";
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
