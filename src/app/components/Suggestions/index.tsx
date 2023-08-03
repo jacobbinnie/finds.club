@@ -8,7 +8,6 @@ interface SuggestionsProps {
 }
 
 function Suggestions({ suggestions, tab, handleSelect }: SuggestionsProps) {
-  console.log(suggestions);
   return (
     <div className="w-full max-w-[900px]">
       <ul

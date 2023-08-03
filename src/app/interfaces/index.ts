@@ -97,3 +97,13 @@ export type PropertyType =
   | "Section"
   | "Townhouse"
   | "Unit";
+
+export interface MapPosition {
+  lat: number;
+  lng: number;
+  zoom: number;
+}
+
+export interface SelectedProperty extends MapPosition {
+  mapboxId: string;
+}
