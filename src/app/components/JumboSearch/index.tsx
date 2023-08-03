@@ -178,7 +178,10 @@ const JumboSearch: React.FC = () => {
         )}
       >
         <div className="flex flex-col">
-          <p className="tracking-tighter font-bold text-xl">Get listed today</p>
+          <p className="tracking-tighter flex font-bold text-xl">
+            Get listed today &nbsp; 🚀
+          </p>
+
           <p className="text-[10px] tracking-tighter">
             Enter your property address
           </p>
