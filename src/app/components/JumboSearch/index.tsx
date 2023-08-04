@@ -89,7 +89,7 @@ const JumboSearch: React.FC = () => {
   }, [tab]);
 
   return (
-    <div className="flex flex-col w-full relative items-center max-w-[800px]">
+    <div className="flex flex-col w-full relative items-center max-w-[900px]">
       <div className="w-full">
         <div
           className={clsx(
@@ -181,7 +181,7 @@ const JumboSearch: React.FC = () => {
       <div
         className={clsx(
           tab === "SELL" ? "mt-10" : "mt-0 hidden",
-          "w-full flex justify-between items-center max-w-[800px] transition-all"
+          "w-full flex justify-between items-center max-w-[900px] transition-all"
         )}
       >
         <div className="flex flex-col">

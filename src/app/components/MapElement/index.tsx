@@ -2,7 +2,7 @@ import clsx from "clsx";
 import { useEffect, useRef, useState } from "react";
 import mapboxgl from "mapbox-gl";
 import { MapPosition, SelectedProperty } from "@/app/interfaces";
-import { CubeTransparentIcon } from "@heroicons/react/24/solid";
+import { ArrowPathIcon } from "@heroicons/react/24/solid";
 
 const access_token = process.env.NEXT_PUBLIC_MAPBOX_MAP_TOKEN || "";
 interface MapElementProps {
@@ -65,10 +65,10 @@ function MapElement({ selectedProperty, mapPosition }: MapElementProps) {
         "w-full relative overflow-hidden h-100% flex"
       )}
     >
-      <CubeTransparentIcon
+      <ArrowPathIcon
         className={clsx(
           mapLoaded && "hidden",
-          "absolute top-1/2 left-1/2 w-6 animate-spin text-primary"
+          "absolute top-[calc(50%-2%)] left-[calc(50vw-2vw)] w-6 animate-spin text-accent"
         )}
       />
       <div

@@ -1,5 +1,6 @@
 import MapElement from "@/app/components/MapElement";
 import NavBar from "@/app/components/NavBar";
+import SelectedPropertyDetails from "@/app/components/SelectedPropertyDetails";
 import { useLocation } from "@/app/providers/LocationProvider";
 import { useEffect } from "react";
 
@@ -21,6 +22,11 @@ function MapPage() {
         selectedProperty={selectedProperty}
         mapPosition={mapPosition}
       />
+      <div className="w-full flex justify-center pt-10">
+        <div className="flex flex-col w-full max-w-[900px]">
+          <SelectedPropertyDetails addressDetails={selectedProperty} />
+        </div>
+      </div>
     </div>
   );
 }
