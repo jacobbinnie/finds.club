@@ -102,5 +102,5 @@ export interface MapPosition {
 }
 
 export interface SelectedProperty extends MapPosition {
-  mapboxId: string;
+  address: MapboxFeatures;
 }

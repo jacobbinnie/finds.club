@@ -2,6 +2,7 @@ import clsx from "clsx";
 import { useEffect, useRef, useState } from "react";
 import mapboxgl from "mapbox-gl";
 import { MapPosition, SelectedProperty } from "@/app/interfaces";
+import { CubeTransparentIcon } from "@heroicons/react/24/solid";
 
 const access_token = process.env.NEXT_PUBLIC_MAPBOX_MAP_TOKEN || "";
 interface MapElementProps {
@@ -11,8 +12,11 @@ interface MapElementProps {
 
 function MapElement({ selectedProperty, mapPosition }: MapElementProps) {
   const [isMapHidden, setIsMapHidden] = useState(false);
-
-  const position = selectedProperty ?? mapPosition;
+  const [isOffCenter, setIsOffCenter] = useState(false);
+  const [position, setPosition] = useState<MapPosition>(
+    selectedProperty ?? mapPosition
+  );
+  const [mapLoaded, setMapLoaded] = useState(false);
 
   const mapNode = useRef(null);
 
@@ -20,6 +24,10 @@ function MapElement({ selectedProperty, mapPosition }: MapElementProps) {
     const node = mapNode.current;
 
     if (typeof window === "undefined" || node === null) return;
+
+    if (mapNode.current !== null) {
+      mapNode.current;
+    }
 
     const mapboxMap = new mapboxgl.Map({
       container: node,
@@ -30,17 +38,43 @@ function MapElement({ selectedProperty, mapPosition }: MapElementProps) {
       attributionControl: false,
     });
 
+    document.getElementById("reposition")?.addEventListener("click", () => {
+      mapboxMap.flyTo({
+        center: [position.lng, position.lat],
+        zoom: position.zoom,
+        essential: true,
+      });
+      setIsOffCenter(false);
+    });
+
+    mapboxMap.on("load", () => setMapLoaded(true));
+
+    mapboxMap.on("moveend", () => {
+      setIsOffCenter(true);
+    });
+
     return () => {
       mapboxMap.remove();
     };
   }, []);
 
   return (
-    <div className="w-full relative overflow-hidden h-100%">
+    <div
+      className={clsx(
+        mapLoaded ? "bg-transparent" : "bg-gray-400 animate-pulse",
+        "w-full relative overflow-hidden h-100% flex"
+      )}
+    >
+      <CubeTransparentIcon
+        className={clsx(
+          mapLoaded && "hidden",
+          "absolute top-1/2 left-1/2 w-6 animate-spin text-primary"
+        )}
+      />
       <div
         ref={mapNode}
         className={clsx(
-          isMapHidden ? "h-[100px]" : "h-[calc(100vh-300px)]",
+          isMapHidden ? "h-[100px] w-full" : "h-[calc(400px)]",
           "w-full transition-all"
         )}
       />
@@ -49,6 +83,16 @@ function MapElement({ selectedProperty, mapPosition }: MapElementProps) {
         className="px-3 z-20 cursor-pointer h-8 flex items-center absolute top-2 right-2 rounded-md bg-accent shadow-lg text-tertiary text-small font-regular tracking-tighter"
       >
         {isMapHidden ? "Expand map" : "Hide map"}
+      </div>
+
+      <div
+        id="reposition"
+        className={clsx(
+          isOffCenter ? (!isMapHidden ? "block" : "hidden") : "hidden",
+          "px-3 z-20 cursor-pointer h-8 flex items-center absolute bottom-2 right-2 rounded-md bg-accent shadow-lg text-tertiary text-small font-regular tracking-tighter"
+        )}
+      >
+        Re-center
       </div>
     </div>
   );
