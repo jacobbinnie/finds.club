@@ -6,7 +6,11 @@ import Suggestions from "../Suggestions";
 import { ArrowPathIcon, MapPinIcon } from "@heroicons/react/24/solid";
 import FilterBar from "../FilterBar";
 import SellingInfoBar from "../SellingInfoBar";
-import { MapboxFeatures } from "@/app/interfaces";
+import {
+  AddressableAddress,
+  MapboxFeatures,
+  isAddressableAddress,
+} from "@/app/interfaces";
 import SelectedPlacesDisplay from "../SelectedPlacesDisplay";
 import { useLocation } from "@/app/providers/LocationProvider";
 import { useRoute } from "@/app/providers/RouteProvider";
@@ -34,25 +38,26 @@ const JumboSearch: React.FC = () => {
 
   const handleUpdateSelected = (
     tab: "BUY" | "SELL",
-    selected: MapboxFeatures
+    selected: MapboxFeatures | AddressableAddress
   ) => {
     if (tab === "BUY") {
       setPlacesStreetsQuery("");
-      if (!selectedPlacesStreets.find((entry) => entry.id === selected.id)) {
+      if (
+        !selectedPlacesStreets.find(
+          (entry) => entry.id === (selected as MapboxFeatures).id
+        )
+      ) {
         setSelectedPlacesStreets((prev: MapboxFeatures[] | []) => [
           ...prev,
-          selected,
+          selected as MapboxFeatures,
         ]);
       }
     } else {
-      setSelectedProperty({
-        lat: selected.geometry.coordinates[1],
-        lng: selected.geometry.coordinates[0],
-        zoom: 18,
-        address: selected,
-      });
-      setPage("MAP");
-      resetQueries();
+      if (isAddressableAddress(selected)) {
+        setSelectedProperty(selected as AddressableAddress);
+        setPage("MAP");
+        resetQueries();
+      }
     }
   };
 

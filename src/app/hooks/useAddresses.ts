@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
-import { MapboxFeatures, isValidMapboxResponse } from "../interfaces";
+import { AddressableAddress, isAddressableAddressArray } from "../interfaces";
 
 const useAddresses = (searchQuery: string | undefined) => {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
-  const [data, setData] = useState<MapboxFeatures[]>([]);
+  const [data, setData] = useState<AddressableAddress[]>([]);
 
   useEffect(() => {
     setLoading(true);
@@ -14,8 +14,8 @@ const useAddresses = (searchQuery: string | undefined) => {
       fetch(`/api/suggest-address?q=${searchQuery}`)
         .then((response) => response.json())
         .then((data) => {
-          if (isValidMapboxResponse(data)) {
-            setData(data.features);
+          if (isAddressableAddressArray(data)) {
+            setData(data);
           } else {
             setError("Received data is not in the expected format.");
           }

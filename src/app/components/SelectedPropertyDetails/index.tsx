@@ -12,10 +12,8 @@ function SelectedPropertyDetails({
     <div className="w-full px-6 flex flex-col gap-3">
       <ListedStatus />
       <h1 className="font-bold tracking-tighter text-3xl">
-        {addressDetails.address.properties.name},{" "}
-        {addressDetails.address.properties.context.locality
-          ? addressDetails.address.properties.context.locality?.name
-          : addressDetails.address.properties.context.place.name}
+        {addressDetails.street_number} {addressDetails.street},{" "}
+        {addressDetails.locality}
       </h1>
     </div>
   );

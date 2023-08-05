@@ -13,9 +13,12 @@ interface MapElementProps {
 function MapElement({ selectedProperty, mapPosition }: MapElementProps) {
   const [isMapHidden, setIsMapHidden] = useState(false);
   const [isOffCenter, setIsOffCenter] = useState(false);
-  const [position, setPosition] = useState<MapPosition>(
-    selectedProperty ?? mapPosition
-  );
+
+  const initialPosition = selectedProperty
+    ? { lat: selectedProperty.lat, lng: selectedProperty.lon, zoom: 18 }
+    : mapPosition;
+
+  const [position, setPosition] = useState<MapPosition>(initialPosition);
   const [mapLoaded, setMapLoaded] = useState(false);
 
   const mapNode = useRef(null);

@@ -101,6 +101,52 @@ export interface MapPosition {
   zoom: number;
 }
 
-export interface SelectedProperty extends MapPosition {
-  address: MapboxFeatures;
+export interface SelectedProperty extends AddressableAddress {}
+
+export interface AddressableAddress {
+  street_number: string;
+  street: string;
+  locality: string;
+  city: string;
+  region: string;
+  postcode: string;
+  meshblock: string;
+  lon: number;
+  lat: number;
+  formatted: string;
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function isAddressableAddress(data: any): data is AddressableAddress {
+  return (
+    typeof data === "object" &&
+    data !== null &&
+    "street_number" in data &&
+    "street" in data &&
+    "locality" in data &&
+    "city" in data &&
+    "region" in data &&
+    "postcode" in data &&
+    "meshblock" in data &&
+    "lon" in data &&
+    "lat" in data &&
+    "formatted" in data
+  );
+}
+
+export function isAddressableAddressArray(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  data: any
+): data is AddressableAddress[] {
+  if (!Array.isArray(data)) {
+    return false;
+  }
+
+  for (const item of data) {
+    if (!isAddressableAddress(item)) {
+      return false;
+    }
+  }
+
+  return true;
 }
