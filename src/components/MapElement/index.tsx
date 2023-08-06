@@ -39,7 +39,6 @@ function MapElement({
     ? { lat: selectedProperty.lat, lng: selectedProperty.lon, zoom: 18 }
     : mapPosition;
 
-  const [position, setPosition] = useState<MapPosition>(initialPosition);
   const [mapLoaded, setMapLoaded] = useState(false);
 
   const mapNode = useRef(null);
@@ -68,14 +67,19 @@ function MapElement({
 
   useEffect(() => {
     currentMap?.flyTo({
-      center: [position.lat, position.lng],
-      zoom: position.zoom,
+      center: [mapPosition.lat, mapPosition.lng],
+      zoom: mapPosition.zoom,
     });
-  }, [position]);
+  }, [mapPosition]);
 
   useEffect(() => {
-    setPosition(mapPosition);
-  }, [mapPosition]);
+    if (selectedProperty) {
+      currentMap?.flyTo({
+        center: [selectedProperty?.lon, selectedProperty?.lat],
+        zoom: 18,
+      });
+    }
+  }, [selectedProperty]);
 
   const handleSelect = (
     searchType: "places" | "addresses",
@@ -138,8 +142,8 @@ function MapElement({
       container: node,
       accessToken: access_token,
       style: "mapbox://styles/jacobbinnie/clkt9g77a004w01pp11bb3hbd",
-      center: [position.lng, position.lat],
-      zoom: position.zoom,
+      center: [initialPosition.lng, initialPosition.lat],
+      zoom: initialPosition.zoom,
       attributionControl: false,
     });
 
@@ -147,8 +151,8 @@ function MapElement({
 
     document.getElementById("reposition")?.addEventListener("click", () => {
       mapboxMap.flyTo({
-        center: [position.lng, position.lat],
-        zoom: position.zoom,
+        center: [initialPosition.lng, initialPosition.lat],
+        zoom: initialPosition.zoom,
         essential: true,
       });
       setIsOffCenter(false);
