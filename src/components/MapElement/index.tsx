@@ -81,6 +81,15 @@ function MapElement({
     }
   }, [selectedProperty]);
 
+  const reposition = () => {
+    if (selectedProperty) {
+      currentMap?.flyTo({
+        center: [selectedProperty?.lon, selectedProperty?.lat],
+        zoom: 18,
+      });
+    }
+  };
+
   const handleSelect = (
     searchType: "places" | "addresses",
     suggestion: MapboxFeatures | AddressableAddress
@@ -149,15 +158,6 @@ function MapElement({
 
     setCurrentMap(mapboxMap);
 
-    document.getElementById("reposition")?.addEventListener("click", () => {
-      mapboxMap.flyTo({
-        center: [initialPosition.lng, initialPosition.lat],
-        zoom: initialPosition.zoom,
-        essential: true,
-      });
-      setIsOffCenter(false);
-    });
-
     mapboxMap.on("load", () => setMapLoaded(true));
 
     mapboxMap.on("moveend", () => {
@@ -188,7 +188,7 @@ function MapElement({
           isMapHidden
             ? "h-[100px]"
             : fullScreen
-            ? "h-[calc(100vh-96px)]"
+            ? "h-[calc(100vh-175px)] sm:h-[calc(100vh-96px)]"
             : "h-[calc(400px)]",
           "w-full transition-all"
         )}
@@ -201,7 +201,7 @@ function MapElement({
       </div>
 
       <div
-        id="reposition"
+        onClick={reposition}
         className={clsx(
           fullScreen
             ? "hidden"

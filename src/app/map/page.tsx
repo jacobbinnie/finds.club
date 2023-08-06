@@ -14,7 +14,7 @@ function MapPage() {
   }, [selectedProperty]);
 
   return (
-    <div className="bg-tertiary w-full h-full min-h-screen">
+    <div className="bg-tertiary w-full h-full">
       <NavBar />
       <MapElement
         selectedProperty={selectedProperty}
