@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import mapboxgl from "mapbox-gl";
 import { MapPosition, SelectedProperty } from "@/interfaces";
 import { ArrowPathIcon } from "@heroicons/react/24/solid";
+import MapSearch from "../MapSearch";
 
 const access_token = process.env.NEXT_PUBLIC_MAPBOX_MAP_TOKEN || "";
 interface MapElementProps {
@@ -132,6 +133,11 @@ function MapElement({
           </p>
         </div>
       </div>
+
+      <MapSearch
+        isMapHidden={isMapHidden}
+        selectedProperty={selectedProperty ? true : false}
+      />
     </div>
   );
 }
