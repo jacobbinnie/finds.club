@@ -188,7 +188,7 @@ function MapElement({
           isMapHidden
             ? "h-[100px]"
             : fullScreen
-            ? "supports-[height:100cqh]:h-[calc(100cqh-96px)] supports-[height:100svh]:h-[calc(100svh-96px)]"
+            ? "supports-[height:100cqh]:h-[calc(100cqh-64px)] supports-[height:100svh]:h-[calc(100svh-64px)]"
             : "h-[calc(400px)]",
           "w-full transition-all"
         )}
