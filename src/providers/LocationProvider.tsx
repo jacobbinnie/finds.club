@@ -6,12 +6,14 @@ interface LocationContextValues {
   selectedProperty: SelectedProperty | null;
   mapPosition: MapPosition;
   setSelectedProperty: (selectedProperty: SelectedProperty | null) => void;
+  setMapPosition: (mapPosition: MapPosition) => void;
 }
 
 const LocationContext = createContext<LocationContextValues>({
   selectedProperty: null,
   mapPosition: { lat: -36.789211, lng: 174.772339, zoom: 10 },
   setSelectedProperty: () => {},
+  setMapPosition: () => {},
 });
 
 interface LocationProviderOptions {
@@ -32,6 +34,7 @@ export const LocationProvider = ({ children }: LocationProviderOptions) => {
     selectedProperty,
     mapPosition,
     setSelectedProperty,
+    setMapPosition,
   };
 
   return (

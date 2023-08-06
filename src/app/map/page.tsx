@@ -6,7 +6,8 @@ import { useLocation } from "@/providers/LocationProvider";
 import { useEffect } from "react";
 
 function MapPage() {
-  const { selectedProperty, mapPosition } = useLocation();
+  const { selectedProperty, mapPosition, setMapPosition, setSelectedProperty } =
+    useLocation();
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
@@ -18,6 +19,8 @@ function MapPage() {
       <MapElement
         selectedProperty={selectedProperty}
         mapPosition={mapPosition}
+        setMapPosition={setMapPosition}
+        setSelectedProperty={setSelectedProperty}
         fullScreen={selectedProperty ? false : true}
       />
       {selectedProperty && (

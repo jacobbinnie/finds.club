@@ -2,14 +2,24 @@
 import clsx from "clsx";
 import { useEffect, useRef, useState } from "react";
 import mapboxgl from "mapbox-gl";
-import { MapPosition, SelectedProperty } from "@/interfaces";
+import {
+  AddressableAddress,
+  MapPosition,
+  MapboxFeatures,
+  SelectedProperty,
+} from "@/interfaces";
 import { ArrowPathIcon } from "@heroicons/react/24/solid";
 import MapSearch from "../MapSearch";
+import { useLocation } from "@/providers/LocationProvider";
+import usePlacesStreets from "@/hooks/usePlacesStreets";
+import useAddresses from "@/hooks/useAddresses";
 
 const access_token = process.env.NEXT_PUBLIC_MAPBOX_MAP_TOKEN || "";
 interface MapElementProps {
   selectedProperty: SelectedProperty | null;
   mapPosition: MapPosition;
+  setMapPosition: (mapPosition: MapPosition) => void;
+  setSelectedProperty: (selectedProperty: SelectedProperty | null) => void;
   fullScreen?: boolean;
 }
 
@@ -17,7 +27,11 @@ function MapElement({
   selectedProperty,
   mapPosition,
   fullScreen,
+  setMapPosition,
+  setSelectedProperty,
 }: MapElementProps) {
+  const [currentMap, setCurrentMap] = useState<mapboxgl.Map | null>(null);
+
   const [isMapHidden, setIsMapHidden] = useState(false);
   const [isOffCenter, setIsOffCenter] = useState(false);
 
@@ -29,6 +43,87 @@ function MapElement({
   const [mapLoaded, setMapLoaded] = useState(false);
 
   const mapNode = useRef(null);
+
+  const [placesStreetsQuery, setPlacesStreetsQuery] = useState<string>("");
+  const [addressesQuery, setAddressesQuery] = useState<string>("");
+
+  const [searchType, setSearchType] = useState<"places" | "addresses">(
+    "places"
+  );
+
+  const [isSearching, setIsSearching] = useState(false);
+
+  const handleUpdateIsSearching = (value: boolean) => {
+    setIsSearching(value);
+    resetQueries();
+  };
+
+  const handleUpdateQuery = (query: string) => {
+    if (searchType === "places") {
+      setPlacesStreetsQuery(query);
+    } else {
+      setAddressesQuery(query);
+    }
+  };
+
+  useEffect(() => {
+    currentMap?.flyTo({
+      center: [position.lat, position.lng],
+      zoom: position.zoom,
+    });
+  }, [position]);
+
+  useEffect(() => {
+    setPosition(mapPosition);
+  }, [mapPosition]);
+
+  const handleSelect = (
+    searchType: "places" | "addresses",
+    suggestion: MapboxFeatures | AddressableAddress
+  ) => {
+    if (searchType === "places") {
+      setMapPosition({
+        lat: (suggestion as MapboxFeatures).geometry.coordinates[0],
+        lng: (suggestion as MapboxFeatures).geometry.coordinates[1],
+        zoom: 15,
+      });
+    } else {
+      setSelectedProperty(suggestion as AddressableAddress);
+    }
+    resetQueries();
+    setIsSearching(false);
+  };
+
+  const resetQueries = () => {
+    setAddressesQuery("");
+    setPlacesStreetsQuery("");
+  };
+
+  const {
+    data: placesStreetsSuggestions,
+    setData: setPlacesStreetsSuggestions,
+    loading: placesStreetsLoading,
+  } = usePlacesStreets(placesStreetsQuery);
+
+  const {
+    data: addressSuggestions,
+    setData: setAddressSuggestions,
+    loading: addressLoading,
+  } = useAddresses(addressesQuery);
+
+  useEffect(() => {
+    (placesStreetsQuery && placesStreetsQuery.length < 3) ||
+      (!placesStreetsQuery && setPlacesStreetsSuggestions([]));
+  }, [placesStreetsQuery]);
+
+  useEffect(() => {
+    (addressesQuery && addressesQuery.length < 3) ||
+      (!addressesQuery && setAddressSuggestions([]));
+  }, [addressesQuery]);
+
+  useEffect(() => {
+    resetQueries();
+  }, [searchType]);
 
   useEffect(() => {
     const node = mapNode.current;
@@ -47,6 +142,8 @@ function MapElement({
       zoom: position.zoom,
       attributionControl: false,
     });
+
+    setCurrentMap(mapboxMap);
 
     document.getElementById("reposition")?.addEventListener("click", () => {
       mapboxMap.flyTo({
@@ -137,6 +234,22 @@ function MapElement({
       <MapSearch
         isMapHidden={isMapHidden}
         selectedProperty={selectedProperty ? true : false}
+        suggestions={
+          searchType === "places"
+            ? placesStreetsSuggestions
+            : addressSuggestions
+        }
+        searchType={searchType}
+        setSearchType={setSearchType}
+        queryLoading={
+          searchType === "places" ? placesStreetsLoading : addressLoading
+        }
+        handleUpdateQuery={handleUpdateQuery}
+        placesStreetsQuery={placesStreetsQuery}
+        addressesQuery={addressesQuery}
+        isSearching={isSearching}
+        handleUpdateIsSearching={handleUpdateIsSearching}
+        handleSelect={handleSelect}
       />
     </div>
   );
