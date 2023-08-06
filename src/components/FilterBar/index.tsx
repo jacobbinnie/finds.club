@@ -6,7 +6,7 @@ import {
   NewBuildsType,
   OwnershipType,
   PropertyType,
-} from "@/app/interfaces";
+} from "@/interfaces";
 import clsx from "clsx";
 import Checkbox from "../Checkbox";
 import Input from "../Input";

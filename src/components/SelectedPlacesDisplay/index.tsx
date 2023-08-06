@@ -1,4 +1,4 @@
-import { MapboxFeatures } from "@/app/interfaces";
+import { MapboxFeatures } from "@/interfaces";
 import { XCircleIcon } from "@heroicons/react/24/solid";
 import clsx from "clsx";
 

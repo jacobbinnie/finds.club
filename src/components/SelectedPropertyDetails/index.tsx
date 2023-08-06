@@ -1,4 +1,4 @@
-import { SelectedProperty } from "@/app/interfaces";
+import { SelectedProperty } from "@/interfaces";
 import ListedStatus from "../ListedStatus";
 
 interface SelectedPropertyDetailsProps {

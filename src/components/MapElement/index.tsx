@@ -1,16 +1,22 @@
+"use client";
 import clsx from "clsx";
 import { useEffect, useRef, useState } from "react";
 import mapboxgl from "mapbox-gl";
-import { MapPosition, SelectedProperty } from "@/app/interfaces";
+import { MapPosition, SelectedProperty } from "@/interfaces";
 import { ArrowPathIcon } from "@heroicons/react/24/solid";
 
 const access_token = process.env.NEXT_PUBLIC_MAPBOX_MAP_TOKEN || "";
 interface MapElementProps {
   selectedProperty: SelectedProperty | null;
   mapPosition: MapPosition;
+  fullScreen?: boolean;
 }
 
-function MapElement({ selectedProperty, mapPosition }: MapElementProps) {
+function MapElement({
+  selectedProperty,
+  mapPosition,
+  fullScreen,
+}: MapElementProps) {
   const [isMapHidden, setIsMapHidden] = useState(false);
   const [isOffCenter, setIsOffCenter] = useState(false);
 
@@ -77,7 +83,11 @@ function MapElement({ selectedProperty, mapPosition }: MapElementProps) {
       <div
         ref={mapNode}
         className={clsx(
-          isMapHidden ? "h-[100px] w-full" : "h-[calc(400px)]",
+          isMapHidden
+            ? "h-[100px]"
+            : fullScreen
+            ? "h-[calc(100vh-96px)]"
+            : "h-[calc(400px)]",
           "w-full transition-all"
         )}
       />
@@ -91,11 +101,36 @@ function MapElement({ selectedProperty, mapPosition }: MapElementProps) {
       <div
         id="reposition"
         className={clsx(
-          isOffCenter ? (!isMapHidden ? "block" : "hidden") : "hidden",
+          fullScreen
+            ? "hidden"
+            : isOffCenter
+            ? !isMapHidden
+              ? "block"
+              : "hidden"
+            : "hidden",
           "px-3 z-20 cursor-pointer h-8 flex items-center absolute bottom-2 right-2 rounded-md bg-accent shadow-lg text-tertiary text-small font-regular tracking-tighter"
         )}
       >
         Re-center
+      </div>
+
+      <div
+        className={clsx(
+          !isMapHidden ? "block" : "hidden",
+          "gap-1 z-20 flex flex-col absolute bottom-2 left-2 text-tertiary text-small font-regular transition-all tracking-tighter"
+        )}
+      >
+        <div className="flex gap-3 bg-white px-3 py-1 rounded-lg items-center w-min shadow-lg">
+          <div className="w-4 h-4 bg-accent rounded-full border-[1px] border-secondary" />
+          <p className="text-small text-primary tracking-tighter">Listed</p>
+        </div>
+
+        <div className="flex gap-3 bg-white px-3 py-1 rounded-lg items-center shadow-lg">
+          <div className="w-4 h-4 bg-openToSelling rounded-full border-[1px] border-secondary" />
+          <p className="text-small text-primary tracking-tighter">
+            Open to selling
+          </p>
+        </div>
       </div>
     </div>
   );

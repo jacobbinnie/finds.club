@@ -1,3 +1,4 @@
+import { LocationProvider } from "@/providers/LocationProvider";
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
@@ -16,7 +17,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" style={{ scrollBehavior: "smooth" }}>
-      <body className={inter.className}>{children}</body>
+      <LocationProvider>
+        <body className={inter.className}>{children}</body>
+      </LocationProvider>
     </html>
   );
 }

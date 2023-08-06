@@ -1,5 +1,6 @@
-import useAddresses from "@/app/hooks/useAddresses";
-import usePlacesStreets from "@/app/hooks/usePlacesStreets";
+"use client";
+import useAddresses from "@/hooks/useAddresses";
+import usePlacesStreets from "@/hooks/usePlacesStreets";
 import clsx from "clsx";
 import React, { useEffect, useState } from "react";
 import Suggestions from "../Suggestions";
@@ -10,10 +11,10 @@ import {
   AddressableAddress,
   MapboxFeatures,
   isAddressableAddress,
-} from "@/app/interfaces";
+} from "@/interfaces";
 import SelectedPlacesDisplay from "../SelectedPlacesDisplay";
-import { useLocation } from "@/app/providers/LocationProvider";
-import { useRoute } from "@/app/providers/RouteProvider";
+import { useLocation } from "@/providers/LocationProvider";
+import { useRouter } from "next/navigation";
 
 const JumboSearch: React.FC = () => {
   const [tab, setTab] = useState<"BUY" | "SELL">("BUY");
@@ -25,7 +26,7 @@ const JumboSearch: React.FC = () => {
   >([]);
 
   const { setSelectedProperty } = useLocation();
-  const { setPage } = useRoute();
+  const { push } = useRouter();
 
   const resetQueries = () => {
     setAddressesQuery("");
@@ -55,7 +56,7 @@ const JumboSearch: React.FC = () => {
     } else {
       if (isAddressableAddress(selected)) {
         setSelectedProperty(selected as AddressableAddress);
-        setPage("MAP");
+        push("/map");
         resetQueries();
       }
     }

@@ -1,5 +1,5 @@
-import JumboSearch from "@/app/components/JumboSearch";
-import NavBar from "../../components/NavBar";
+import JumboSearch from "@/components/JumboSearch";
+import NavBar from "@/components/NavBar";
 
 function Home() {
   return (

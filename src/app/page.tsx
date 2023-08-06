@@ -1,13 +1,5 @@
-import { LocationProvider } from "./providers/LocationProvider";
-import { RouteProvider } from "./providers/RouteProvider";
-import Router from "./router/Router";
+import Home from "./home";
 
-export default function Home() {
-  return (
-    <RouteProvider>
-      <LocationProvider>
-        <Router />
-      </LocationProvider>
-    </RouteProvider>
-  );
+export default function Page() {
+  return <Home />;
 }

@@ -2,7 +2,7 @@ import {
   AddressableAddress,
   MapboxFeatures,
   isAddressableAddressArray,
-} from "@/app/interfaces";
+} from "@/interfaces";
 import clsx from "clsx";
 
 interface SuggestionsProps {

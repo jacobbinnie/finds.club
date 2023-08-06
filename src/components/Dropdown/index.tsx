@@ -1,7 +1,7 @@
 import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
-import { CategoryType } from "@/app/interfaces";
+import { CategoryType } from "@/interfaces";
 
 interface DropdownProps {
   options: string[];

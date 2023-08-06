@@ -16,6 +16,7 @@ module.exports = {
         secondary: "#6b7280",
         tertiary: "#f5f5f5",
         accent: "#00d688",
+        openToSelling: "#d68800",
       },
       boxShadow: {
         "t-sm": "0 -1px 2px 0 rgba(0, 0, 0, 0.05)",
