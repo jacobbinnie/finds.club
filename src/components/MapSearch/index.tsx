@@ -9,25 +9,64 @@ interface MapSearchProps {
 
 function MapSearch({ isMapHidden, selectedProperty }: MapSearchProps) {
   const [isSearching, setIsSearching] = useState(false);
+  const [searchType, setSearchType] = useState<"places" | "addresses">(
+    "places"
+  );
 
   return (
     <div
       className={clsx(
-        selectedProperty ? "hidden" : !isMapHidden ? "block" : "hidden",
-        "gap-1 z-20 flex flex-col absolute bottom-2 right-2 text-tertiary text-small font-regular transition-all tracking-tighter"
+        selectedProperty
+          ? "hidden"
+          : !isMapHidden
+          ? isSearching
+            ? "w-full sm:w-96"
+            : "w-36 rounded-lg"
+          : "hidden w-0",
+        "gap-1 px-2 z-20 rounded-lg flex flex-col absolute top-2 text-tertiary text-small font-regular transition-all tracking-tighter"
       )}
     >
       <div
         className={clsx(
-          isSearching ? "w-full" : "w-min",
-          "flex gap-3 bg-white px-3 py-1 rounded-lg items-center w-full transition-all shadow-lg"
+          isSearching ? "flex" : "hidden",
+          "w-full bg-white rounded-t-lg overflow-hidden shadow-lg"
+        )}
+      >
+        <p
+          onClick={() => setSearchType("places")}
+          className={clsx(
+            searchType === "places"
+              ? "bg-accent text-tertiary"
+              : "bg-white text-primary",
+            "text-small px-3 py-1 text-center w-1/2 tracking-tighter cursor-pointer transition-all"
+          )}
+        >
+          Places
+        </p>
+        <p
+          onClick={() => setSearchType("addresses")}
+          className={clsx(
+            searchType === "addresses"
+              ? "bg-accent text-tertiary"
+              : "bg-white text-primary",
+            "text-small px-3 text-center py-1 w-1/2 tracking-tighter cursor-pointer transition-all duration-300"
+          )}
+        >
+          Addresses
+        </p>
+      </div>
+
+      <div
+        className={clsx(
+          isSearching ? "rounded-b-lg" : "rounded-lg",
+          "flex px-3 py-1 bg-white shadow-lg"
         )}
       >
         <p
           onClick={() => setIsSearching(true)}
           className={clsx(
             isSearching ? "hidden" : "block",
-            "text-small text-primary tracking-tighter cursor-pointer"
+            "text-small text-primary w-full tracking-tighter cursor-pointer"
           )}
         >
           Search...
@@ -36,15 +75,19 @@ function MapSearch({ isMapHidden, selectedProperty }: MapSearchProps) {
           onClick={() => setIsSearching(false)}
           className={clsx(
             isSearching ? "block" : "hidden",
-            "w-6 text-primary cursor-pointer"
+            "w-5 text-gray-300 cursor-pointer"
           )}
         />
         <input
           className={clsx(
             isSearching ? "block" : "hidden",
-            "text-small text-primary tracking-tighter transition-all focus:outline-none focus:"
+            "text-small placeholder:text-gray-300 bg-transparent text-primary px-3 tracking-tighter transition-all focus:outline-none focus:"
           )}
-          placeholder="Enter a suburb / street / road"
+          placeholder={
+            searchType === "places"
+              ? "Search suburbs and streets"
+              : "Search addresses"
+          }
         />
       </div>
     </div>
