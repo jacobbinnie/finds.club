@@ -276,7 +276,7 @@ function FilterBar({ tab }: FilterBarProps) {
       <Checkbox title="Needs renovation" />
 
       <div className="flex w-full transition-all items-end md:col-span-2 justify-end">
-        <button className="inline-flex w-full tracking-tighter items-center justify-center px-4 h-10 text-small transition-all hover:px-10 hover:shadow-lg rounded-md text-tertiary bg-primary group focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 hover:bg-accent">
+        <button className="inline-flex w-full tracking-tighter items-center justify-center px-4 py-1 text-small transition-all hover:px-10 hover:shadow-lg rounded-md text-tertiary bg-primary group focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 hover:bg-accent">
           Search
         </button>
       </div>

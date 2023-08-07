@@ -30,7 +30,7 @@ function Dropdown({
             onClick={() => handleUpdateCallback(option, type, category)}
             className={`${
               active ? "bg-gray-100 text-gray-900" : "text-gray-700"
-            } block px-4 py-2 text-small cursor-pointer tracking-tighter`}
+            } block px-4 py-1 text-small cursor-pointer tracking-tighter`}
           >
             {option}
           </a>
@@ -44,7 +44,7 @@ function Dropdown({
       as="div"
       className="relative inline-block text-left w-full transition-all"
     >
-      <Menu.Button className="inline-flex w-full transition-all justify-between gap-x-1.5 tracking-tighter rounded-md px-3 py-2 text-small font-regular text-primary shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
+      <Menu.Button className="inline-flex w-full transition-all justify-between gap-x-1.5 tracking-tighter rounded-md px-3 py-1 text-small font-regular text-primary shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
         {selectedOption}
         <ChevronDownIcon
           className="-mr-1 h-5 w-5 text-gray-400"
