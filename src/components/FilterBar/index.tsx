@@ -126,7 +126,7 @@ function FilterBar({ tab }: FilterBarProps) {
     <div
       className={clsx(
         tab === "BUY" ? "py-8 mt-3" : "h-0 py-0 mt-0 overflow-hidden",
-        "w-full rounded-lg bg-white px-6 gap-x-3 grid gap-y-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 shadow-lg transition-all duration-500"
+        "w-full rounded-lg bg-white px-6 gap-x-3 grid gap-y-5 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 shadow-lg transition-all duration-500"
       )}
     >
       {/* BEDS */}
