@@ -23,8 +23,12 @@ function NavBar() {
       href: "/pricing",
     },
     {
-      title: "for services",
+      title: "services",
       href: "/services",
+    },
+    {
+      title: "my properties",
+      href: "/my-properties",
     },
   ];
 
