@@ -31,7 +31,7 @@ function SellingInfoBar({ tab }: SellingInfoBarProps) {
         <div className="flex justify-left md:justify-center transition-all gap-3 col-span-1">
           <CheckCircleIcon className="w-4 text-tertiary" />
           <p className="text-small text-left tracking-tighter font-regular text-tertiary">
-            No commission.
+            No contracts. No commission.
           </p>
         </div>
       </div>
