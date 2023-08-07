@@ -10,7 +10,6 @@ import {
 } from "@/interfaces";
 import { ArrowPathIcon } from "@heroicons/react/24/solid";
 import MapSearch from "../MapSearch";
-import { useLocation } from "@/providers/LocationProvider";
 import usePlacesStreets from "@/hooks/usePlacesStreets";
 import useAddresses from "@/hooks/useAddresses";
 
@@ -188,7 +187,7 @@ function MapElement({
           isMapHidden
             ? "h-[100px]"
             : fullScreen
-            ? "supports-[height:100cqh]:h-[calc(100cqh-64px)] supports-[height:100svh]:h-[calc(100svh-64px)]"
+            ? "supports-[height:100cqh]:h-[calc(100cqh-65px)] supports-[height:100svh]:h-[calc(100svh-65px)]"
             : "h-[calc(400px)]",
           "w-full transition-all"
         )}
