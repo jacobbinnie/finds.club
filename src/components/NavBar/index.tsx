@@ -71,7 +71,7 @@ function NavBar() {
         <div
           className={clsx(
             isSliderOpen ? "flex" : "hidden",
-            "w-full flex-col justify-center items-center gap-8 h-full"
+            "w-full flex-col justify-center items-center gap-6 h-full"
           )}
         >
           {renderMobileMenuItems()}
