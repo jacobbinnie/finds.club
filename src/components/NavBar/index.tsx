@@ -2,12 +2,16 @@
 import { Bars3Icon } from "@heroicons/react/24/solid";
 import clsx from "clsx";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function NavBar() {
   const isSignedIn = true;
   const [isSliderOpen, setIsSliderOpen] = useState(false);
   const pathname = usePathname();
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+  }, [isSliderOpen]);
 
   const menuItems = [
     {
@@ -65,16 +69,22 @@ function NavBar() {
       <div
         className={clsx(
           isSliderOpen ? "w-full" : "w-0",
-          "top-0 fixed overscroll-none right-0 h-[100vh] bg-accent z-30 transition-all"
+          "top-0 fixed overscroll-none right-0 h-[100vh] bg-accent z-20 transition-all"
+        )}
+      />
+      <div
+        className={clsx(
+          isSliderOpen ? "w-full" : "w-0",
+          "top-0 fixed overscroll-none right-0 h-screen bg-accent z-30 transition-all"
         )}
       >
         <div
           className={clsx(
             isSliderOpen ? "flex" : "hidden",
-            "w-full flex-col justify-center items-center gap-6 h-full"
+            "w-full flex-col justify-between px-6 py-6 gap-6 h-full"
           )}
         >
-          {renderMobileMenuItems()}
+          <div className="flex flex-col gap-3">{renderMobileMenuItems()}</div>
           <a
             key={"Back"}
             className="text-5xl text-primary cursor-pointer hover:tracking-tight tracking-tighter font-bold hover:primary transition-all"
