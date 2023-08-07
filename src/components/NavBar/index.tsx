@@ -46,7 +46,7 @@ function NavBar() {
     return filteredItems.map((item) => (
       <a
         key={item.title}
-        className="text-5xl text-tertiary hover:text-primary hover:tracking-tight tracking-tighter font-bold hover:primary transition-all"
+        className="text-5xl rounded-lg text-tertiary hover:text-primary hover:tracking-tight tracking-tighter font-bold hover:primary transition-all"
         href={item.href}
       >
         {item.title}
@@ -59,7 +59,7 @@ function NavBar() {
       <div
         className={clsx(
           isSliderOpen ? "w-full" : "w-0",
-          "top-0 fixed right-0 h-screen bg-accent z-30 transition-all"
+          "top-0 fixed overscroll-none right-0 h-[100vh] bg-accent z-30 transition-all"
         )}
       >
         <div
