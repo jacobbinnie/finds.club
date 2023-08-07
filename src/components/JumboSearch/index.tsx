@@ -108,8 +108,10 @@ const JumboSearch: React.FC = () => {
           <div className="flex w-full h-1/2 bg-white">
             <div
               className={clsx(
-                tab === "BUY" ? "border-accent" : "border-tertiary",
-                "w-1/2 flex cursor-pointer border-b-4 font-regular h-full tracking-tighter text-primary transition-all duration-300 ease-out justify-center items-center"
+                tab === "BUY"
+                  ? "bg-accent text-tertiary"
+                  : "bg-white text-primary",
+                "w-1/2 flex cursor-pointer border-b-4 font-regular h-full tracking-tighter transition-all duration-300 ease-out justify-center items-center"
               )}
               onClick={() => {
                 resetQueries();
@@ -121,7 +123,9 @@ const JumboSearch: React.FC = () => {
             </div>
             <div
               className={clsx(
-                tab === "SELL" ? "border-accent" : "border-tertiary",
+                tab === "SELL"
+                  ? "bg-accent text-tertiary"
+                  : "bg-white text-primary",
                 "w-1/2 flex cursor-pointer border-b-4 font-regular h-full tracking-tighter text-primary transition-all duration-300 justify-center items-center"
               )}
               onClick={() => {
