@@ -29,7 +29,9 @@ function NavBar() {
   ];
 
   const renderDesktopMenuItems = () => {
-    return menuItems.map((item) => (
+    const filteredItems = menuItems.filter((item) => item.title !== "home");
+
+    return filteredItems.map((item) => (
       <a
         key={item.title}
         className="text-small text-secondary hover:text-accent"
