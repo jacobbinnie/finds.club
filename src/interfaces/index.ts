@@ -1,3 +1,5 @@
+import { Database } from "../../database.types";
+
 type MapboxCoordinate = number[];
 
 interface MapboxContext {
@@ -149,4 +151,18 @@ export function isAddressableAddressArray(
   }
 
   return true;
+}
+
+export type Property = Database["public"]["Tables"]["property"]["Row"];
+export type PropertyFeatures =
+  Database["public"]["Tables"]["property_features"]["Row"];
+export type PropertyPricing =
+  Database["public"]["Tables"]["property_pricing"]["Row"];
+export type ListingStatus =
+  Database["public"]["Tables"]["listing_status"]["Row"];
+
+export interface PropertyWithRelationships extends Property {
+  property_features: PropertyFeatures;
+  property_pricing: PropertyPricing;
+  listing_status: ListingStatus;
 }
