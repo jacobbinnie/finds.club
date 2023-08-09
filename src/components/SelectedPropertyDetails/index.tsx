@@ -4,11 +4,13 @@ import ListedStatus from "../ListedStatus";
 interface SelectedPropertyDetailsProps {
   addressDetails: SelectedProperty;
   propertyData: PropertyWithRelationships | null | undefined;
+  loading: boolean;
 }
 
 function SelectedPropertyDetails({
   addressDetails,
   propertyData,
+  loading,
 }: SelectedPropertyDetailsProps) {
   return (
     <div className="w-full px-6 flex flex-col gap-3">
@@ -24,7 +26,7 @@ function SelectedPropertyDetails({
         {addressDetails.locality}
       </h1>
 
-      {propertyData === undefined && (
+      {loading && (
         <div role="status" className="max-w-sm animate-pulse">
           <div className="h-6 bg-gray-200 rounded-full w-full mb-4"></div>
           <div className="h-6 bg-gray-200 rounded-full  max-w-[360px] mb-2.5"></div>

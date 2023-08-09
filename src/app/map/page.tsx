@@ -69,6 +69,7 @@ function MapPage() {
         <div className="w-full flex justify-center pt-10">
           <div className="flex flex-col w-full max-w-[900px]">
             <SelectedPropertyDetails
+              loading={loading}
               addressDetails={selectedProperty}
               propertyData={propertyData}
             />
