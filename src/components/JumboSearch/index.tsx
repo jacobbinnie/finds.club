@@ -131,7 +131,7 @@ const JumboSearch: React.FC = () => {
                 setTab("BUY");
               }}
             >
-              I'm buying
+              Search listings
             </div>
             <div
               className={clsx(
@@ -146,7 +146,7 @@ const JumboSearch: React.FC = () => {
                 setTab("SELL");
               }}
             >
-              I'm selling
+              Find property
             </div>
           </div>
           <div className="flex bg-white justify-center h-1/2 px-6 items-center">
@@ -169,8 +169,8 @@ const JumboSearch: React.FC = () => {
             <input
               placeholder={
                 tab === "BUY"
-                  ? "Enter suburb / street / road"
-                  : "Enter your property address"
+                  ? "Enter suburbs / streets.."
+                  : "Enter an address.."
               }
               className="w-full h-3/5 px-6 font-normal tracking-tighter placeholder:text-gray-300 focus:outline-none"
               autoComplete="shipping address-line1"

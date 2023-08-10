@@ -187,9 +187,17 @@ function MapElement({
     if (currentMap) {
       setTimeout(() => {
         currentMap.resize();
-      }, 1000);
+      }, 250);
     }
   }, [fullScreen]);
+
+  window.addEventListener("resize", () => {
+    if (currentMap) {
+      setTimeout(() => {
+        currentMap.resize();
+      }, 250);
+    }
+  });
 
   return (
     <div

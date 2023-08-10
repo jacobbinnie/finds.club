@@ -122,7 +122,7 @@ function MapSearch({
             "text-small px-3 py-1 text-center w-1/2 tracking-tighter cursor-pointer transition-all"
           )}
         >
-          Places
+          Search suburbs
         </p>
         <p
           onClick={() => setSearchType("addresses")}
@@ -133,7 +133,7 @@ function MapSearch({
             "text-small px-3 text-center py-1 w-1/2 tracking-tighter cursor-pointer transition-all duration-300"
           )}
         >
-          Addresses
+          Find property
         </p>
       </div>
 
@@ -185,8 +185,8 @@ function MapSearch({
             )}
             placeholder={
               searchType === "places"
-                ? "Search suburbs and streets"
-                : "Search addresses"
+                ? "Enter a suburb or street.."
+                : "Enter an address.."
             }
           />
         </div>
