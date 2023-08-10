@@ -183,6 +183,14 @@ function MapElement({
     };
   }, []);
 
+  useEffect(() => {
+    if (currentMap) {
+      setTimeout(() => {
+        currentMap.resize();
+      }, 1000);
+    }
+  }, [fullScreen]);
+
   return (
     <div
       className={clsx(
