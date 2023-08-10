@@ -98,11 +98,12 @@ function MapSearch({
   return (
     <div
       className={clsx(
-        !isMapHidden
-          ? isSearching
-            ? "w-full sm:w-96"
-            : "w-36 rounded-lg"
-          : "hidden w-0",
+        isSearching
+          ? "w-full sm:w-96"
+          : isMapHidden
+          ? "hidden w-0"
+          : "w-36 rounded-lg",
+
         "gap-1 px-2 z-20 rounded-lg flex flex-col absolute top-2 text-tertiary text-small font-regular transition-all tracking-tighter"
       )}
     >

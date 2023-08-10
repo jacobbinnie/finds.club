@@ -22,7 +22,7 @@ function ListedStatus({ loading, status }: ListedStatusProps) {
           : displayStatus === "Open to selling"
           ? "bg-openToSelling"
           : "bg-gray-300",
-        "w-min min-w-24 items-center whitespace-nowrap px-3 rounded-2xl h-6 flex justify-center tracking-tighter"
+        "w-min min-w-24 items-center whitespace-nowrap px-3 rounded-2xl h-8 flex justify-center tracking-tighter"
       )}
     >
       {loading ? (

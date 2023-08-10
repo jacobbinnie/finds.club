@@ -37,7 +37,7 @@ function Suggestions({ suggestions, tab, handleSelect }: SuggestionsProps) {
               <>
                 {(suggestion as AddressableAddress).street_number}{" "}
                 {(suggestion as AddressableAddress).street},{" "}
-                {(suggestion as AddressableAddress).locality},{" "}
+                {(suggestion as AddressableAddress).locality}{" "}
               </>
             ) : (
               <>
