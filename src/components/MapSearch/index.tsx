@@ -56,7 +56,7 @@ function MapSearchSuggestions({
               <>
                 {(suggestion as AddressableAddress).street_number}{" "}
                 {(suggestion as AddressableAddress).street},{" "}
-                {(suggestion as AddressableAddress).locality},{" "}
+                {(suggestion as AddressableAddress).locality}{" "}
               </>
             ) : (
               <>
@@ -98,9 +98,7 @@ function MapSearch({
   return (
     <div
       className={clsx(
-        selectedProperty
-          ? "hidden"
-          : !isMapHidden
+        !isMapHidden
           ? isSearching
             ? "w-full sm:w-96"
             : "w-36 rounded-lg"

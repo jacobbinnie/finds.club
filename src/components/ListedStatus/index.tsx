@@ -1,15 +1,15 @@
 import clsx from "clsx";
 
 interface ListedStatusProps {
-  status: string | undefined;
+  status: string | null;
 }
 
 function ListedStatus({ status }: ListedStatusProps) {
   const displayStatus =
-    status === undefined || status === "NOT_LISTED"
+    status === null || status === "NOT_LISTED"
       ? "Not Listed"
       : status === "OPEN"
-      ? "Open"
+      ? "Open to selling"
       : "Listed";
 
   return (
@@ -17,7 +17,7 @@ function ListedStatus({ status }: ListedStatusProps) {
       className={clsx(
         displayStatus === "Listed"
           ? "bg-accent"
-          : displayStatus === "Open"
+          : displayStatus === "Open to selling"
           ? "bg-openToSelling"
           : "bg-gray-300",
         "w-min whitespace-nowrap px-3 rounded-2xl h-6 flex justify-center tracking-tighter"

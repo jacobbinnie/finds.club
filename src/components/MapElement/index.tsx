@@ -27,14 +27,13 @@ interface MapElementProps {
 
 function MapElement({
   selectedProperty,
-  baseAddress,
   mapPosition,
   fullScreen,
   setMapPosition,
   setSelectedProperty,
 }: MapElementProps) {
   const [currentMap, setCurrentMap] = useState<mapboxgl.Map | null>(null);
-  const { push } = useRouter();
+  const { replace } = useRouter();
 
   const [isMapHidden, setIsMapHidden] = useState(false);
   const [isOffCenter, setIsOffCenter] = useState(false);
@@ -110,7 +109,7 @@ function MapElement({
       const locality = (suggestion as AddressableAddress).locality;
       const region = (suggestion as AddressableAddress).region;
       setSelectedProperty(suggestion as AddressableAddress);
-      push(
+      replace(
         encodeURI(
           `/map?number=${number}&street=${street}&locality=${locality}&region=${region}`
         )

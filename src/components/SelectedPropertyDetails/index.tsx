@@ -18,7 +18,7 @@ function SelectedPropertyDetails({
         status={
           propertyData?.listing_status.status
             ? propertyData?.listing_status.status
-            : "NOT_LISTED"
+            : null
         }
       />
       <h1 className="font-bold tracking-tighter text-3xl">
