@@ -8,7 +8,7 @@ export async function GET(request: NextRequest) {
 
   const updatedEndpoint = `https://api.addressable.dev/v2/autocomplete?api_key=${ADDRESSABLE_API_KEY}&country_code=NZ&type=number&q=${q}`;
 
-  const res = await fetch(updatedEndpoint);
+  const res = await fetch(updatedEndpoint, { cache: "force-cache" });
 
   return new NextResponse(res.body, { status: res.status });
 }

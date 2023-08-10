@@ -8,7 +8,7 @@ import {
   isAddressableAddressArray,
 } from "@/interfaces";
 import { useLocation } from "@/providers/LocationProvider";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 
 function MapPage() {
@@ -25,7 +25,7 @@ function MapPage() {
   const locality = searchParams.get("locality");
   const region = searchParams.get("region");
 
-  const fetchProperty = async () => {
+  const fetchProperty = useCallback(async () => {
     if (number && street && locality && region) {
       setLoading(true);
       fetch(
@@ -58,22 +58,25 @@ function MapPage() {
           }
         });
     }
-  };
+  }, [number, street, locality, region]);
 
-  const fetchAddressLocation = (searchQuery: string) => {
-    if (number && street && locality && region) {
-      fetch(`/api/suggest-address?q=${searchQuery}`)
-        .then((response) => response.json())
-        .then((data) => {
-          if (isAddressableAddressArray(data)) {
-            setSelectedProperty(data[0]);
-          }
-        })
-        .catch(() => {
-          console.debug("Error fetching address location");
-        });
-    }
-  };
+  const fetchAddressLocation = useCallback(
+    (searchQuery: string) => {
+      if (number && street && locality && region) {
+        fetch(`/api/suggest-address?q=${searchQuery}`)
+          .then((response) => response.json())
+          .then((data) => {
+            if (isAddressableAddressArray(data)) {
+              setSelectedProperty(data[0]);
+            }
+          })
+          .catch(() => {
+            console.debug("Error fetching address location");
+          });
+      }
+    },
+    [number, street, locality, region]
+  );
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
