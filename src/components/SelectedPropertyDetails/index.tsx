@@ -15,6 +15,7 @@ function SelectedPropertyDetails({
   return (
     <div className="w-full px-6 flex flex-col gap-3">
       <ListedStatus
+        loading={loading}
         status={
           propertyData?.listing_status.status
             ? propertyData?.listing_status.status
