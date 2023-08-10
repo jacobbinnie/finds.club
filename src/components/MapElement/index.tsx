@@ -98,6 +98,8 @@ function MapElement({
     suggestion: MapboxFeatures | AddressableAddress
   ) => {
     if (searchType === "places") {
+      setSelectedProperty(null);
+      replace("/map");
       setMapPosition({
         lat: (suggestion as MapboxFeatures).geometry.coordinates[0],
         lng: (suggestion as MapboxFeatures).geometry.coordinates[1],
