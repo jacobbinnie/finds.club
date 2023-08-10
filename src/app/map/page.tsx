@@ -3,9 +3,13 @@ import MapElement from "@/components/MapElement";
 import NavBar from "@/components/NavBar";
 import SelectedPropertyDetails from "@/components/SelectedPropertyDetails";
 
-import { PropertyWithRelationships } from "@/interfaces";
+import {
+  PropertyWithRelationships,
+  isAddressableAddressArray,
+} from "@/interfaces";
 import { useLocation } from "@/providers/LocationProvider";
 import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 
 function MapPage() {
   const { selectedProperty, mapPosition, setMapPosition, setSelectedProperty } =
@@ -15,11 +19,17 @@ function MapPage() {
   >(undefined);
   const [loading, setLoading] = useState(false);
 
+  const searchParams = useSearchParams();
+  const number = searchParams.get("number");
+  const street = searchParams.get("street");
+  const locality = searchParams.get("locality");
+  const region = searchParams.get("region");
+
   const fetchProperty = async () => {
-    if (selectedProperty) {
+    if (number && street && locality && region) {
       setLoading(true);
       fetch(
-        `/api/get-property?number=${selectedProperty?.street_number}&street=${selectedProperty?.street}&locality=${selectedProperty?.locality}&region=${selectedProperty?.region}`
+        `/api/get-property?number=${number}&street=${street}&locality=${locality}&region=${region}`
       )
         .then((response) => {
           if (!response.ok) {
@@ -50,27 +60,49 @@ function MapPage() {
     }
   };
 
+  const fetchAddressLocation = (searchQuery: string) => {
+    if (number && street && locality && region) {
+      fetch(`/api/suggest-address?q=${searchQuery}`)
+        .then((response) => response.json())
+        .then((data) => {
+          if (isAddressableAddressArray(data)) {
+            setSelectedProperty(data[0]);
+          }
+        })
+        .catch(() => {
+          console.debug("Error fetching address location");
+        });
+    }
+  };
+
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
     fetchProperty();
-  }, [selectedProperty]);
+  }, [number, street, locality, region]);
+
+  useEffect(() => {
+    if (!selectedProperty) {
+      fetchAddressLocation(`${number} ${street}, ${locality}, ${region}`);
+    }
+  }, [number, street, locality, region]);
 
   return (
     <div className="bg-tertiary w-full h-full">
       <NavBar />
       <MapElement
         selectedProperty={selectedProperty}
+        baseAddress={{ number, street, locality, region }}
         mapPosition={mapPosition}
         setMapPosition={setMapPosition}
         setSelectedProperty={setSelectedProperty}
-        fullScreen={selectedProperty ? false : true}
+        fullScreen={number && street && locality && region ? false : true}
       />
-      {selectedProperty && (
+      {number && street && locality && region && (
         <div className="w-full flex justify-center pt-10">
           <div className="flex flex-col w-full max-w-[900px]">
             <SelectedPropertyDetails
               loading={loading}
-              addressDetails={selectedProperty}
+              baseAddress={{ number, street, locality, region }}
               propertyData={propertyData}
             />
           </div>

@@ -25,8 +25,9 @@ const JumboSearch: React.FC = () => {
     MapboxFeatures[]
   >([]);
 
-  const { setSelectedProperty } = useLocation();
   const { push } = useRouter();
+
+  const { setSelectedProperty } = useLocation();
 
   const resetQueries = () => {
     setAddressesQuery("");
@@ -55,9 +56,20 @@ const JumboSearch: React.FC = () => {
       }
     } else {
       if (isAddressableAddress(selected)) {
-        setSelectedProperty(selected as AddressableAddress);
-        push("/map");
-        resetQueries();
+        const number = (selected as AddressableAddress).street_number;
+        const street = (selected as AddressableAddress).street;
+        const locality = (selected as AddressableAddress).locality;
+        const region = (selected as AddressableAddress).region;
+
+        if (number && street && locality && region) {
+          setSelectedProperty(selected);
+          push(
+            encodeURI(
+              `/map?number=${number}&street=${street}&locality=${locality}&region=${region}`
+            )
+          );
+          resetQueries();
+        }
       }
     }
   };

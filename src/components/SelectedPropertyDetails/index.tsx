@@ -1,14 +1,14 @@
-import { PropertyWithRelationships, SelectedProperty } from "@/interfaces";
+import { BaseAddress, PropertyWithRelationships } from "@/interfaces";
 import ListedStatus from "../ListedStatus";
 
 interface SelectedPropertyDetailsProps {
-  addressDetails: SelectedProperty;
+  baseAddress: BaseAddress | null;
   propertyData: PropertyWithRelationships | null | undefined;
   loading: boolean;
 }
 
 function SelectedPropertyDetails({
-  addressDetails,
+  baseAddress,
   propertyData,
   loading,
 }: SelectedPropertyDetailsProps) {
@@ -22,8 +22,7 @@ function SelectedPropertyDetails({
         }
       />
       <h1 className="font-bold tracking-tighter text-3xl">
-        {addressDetails.street_number} {addressDetails.street},{" "}
-        {addressDetails.locality}
+        {baseAddress?.number} {baseAddress?.street}, {baseAddress?.locality}
       </h1>
 
       {loading && (

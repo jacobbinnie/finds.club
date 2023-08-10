@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import mapboxgl from "mapbox-gl";
 import {
   AddressableAddress,
+  BaseAddress,
   MapPosition,
   MapboxFeatures,
   SelectedProperty,
@@ -12,10 +13,12 @@ import { ArrowPathIcon } from "@heroicons/react/24/solid";
 import MapSearch from "../MapSearch";
 import usePlacesStreets from "@/hooks/usePlacesStreets";
 import useAddresses from "@/hooks/useAddresses";
+import { useRouter } from "next/navigation";
 
 const access_token = process.env.NEXT_PUBLIC_MAPBOX_MAP_TOKEN || "";
 interface MapElementProps {
   selectedProperty: SelectedProperty | null;
+  baseAddress: BaseAddress | null;
   mapPosition: MapPosition;
   setMapPosition: (mapPosition: MapPosition) => void;
   setSelectedProperty: (selectedProperty: SelectedProperty | null) => void;
@@ -24,12 +27,14 @@ interface MapElementProps {
 
 function MapElement({
   selectedProperty,
+  baseAddress,
   mapPosition,
   fullScreen,
   setMapPosition,
   setSelectedProperty,
 }: MapElementProps) {
   const [currentMap, setCurrentMap] = useState<mapboxgl.Map | null>(null);
+  const { push } = useRouter();
 
   const [isMapHidden, setIsMapHidden] = useState(false);
   const [isOffCenter, setIsOffCenter] = useState(false);
@@ -100,7 +105,16 @@ function MapElement({
         zoom: 15,
       });
     } else {
+      const number = (suggestion as AddressableAddress).street_number;
+      const street = (suggestion as AddressableAddress).street;
+      const locality = (suggestion as AddressableAddress).locality;
+      const region = (suggestion as AddressableAddress).region;
       setSelectedProperty(suggestion as AddressableAddress);
+      push(
+        encodeURI(
+          `/map?number=${number}&street=${street}&locality=${locality}&region=${region}`
+        )
+      );
     }
     resetQueries();
     setIsSearching(false);

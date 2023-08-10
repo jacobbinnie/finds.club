@@ -136,6 +136,13 @@ export function isAddressableAddress(data: any): data is AddressableAddress {
   );
 }
 
+export interface BaseAddress {
+  number: string | null;
+  street: string | null;
+  locality: string | null;
+  region: string | null;
+}
+
 export function isAddressableAddressArray(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data: any
