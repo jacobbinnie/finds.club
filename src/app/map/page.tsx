@@ -42,6 +42,7 @@ function MapPage() {
   }, []);
 
   const fetchProperty = useCallback(async () => {
+    setClaimStatus(null);
     if (number && street && locality && region) {
       setLoading(true);
       fetch(

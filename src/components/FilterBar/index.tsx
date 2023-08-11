@@ -53,6 +53,8 @@ function FilterBar({ tab }: FilterBarProps) {
 
   const [propertyType, setPropertyType] = useState<PropertyType | "Any">("Any");
 
+  const [parking, setParking] = useState<number | "Any">("Any");
+
   const handleUpdateCallback = (
     option: string,
     type: "MIN" | "MAX" | "N/A",
@@ -114,6 +116,14 @@ function FilterBar({ tab }: FilterBarProps) {
           setPropertyType("Any");
         } else {
           setPropertyType(option as PropertyType);
+        }
+        break;
+
+      case "PARKING":
+        if (option === "Any") {
+          setParking("Any");
+        } else {
+          setParking(parseInt(option));
         }
         break;
 
@@ -231,15 +241,13 @@ function FilterBar({ tab }: FilterBarProps) {
         {/* New Builds */}
         <div className="flex flex-col gap-1">
           <p className="font-regular tracking-tighter text-small">New builds</p>
-          <div className="flex gap-3">
-            <Dropdown
-              options={["Show", "Hide", "Only"]}
-              selectedOption={newBuilds}
-              handleUpdateCallback={handleUpdateCallback}
-              type="N/A"
-              category="NEWBUILDS"
-            />
-          </div>
+          <Dropdown
+            options={["Show", "Hide", "Only"]}
+            selectedOption={newBuilds}
+            handleUpdateCallback={handleUpdateCallback}
+            type="N/A"
+            category="NEWBUILDS"
+          />
         </div>
       </div>
 
@@ -268,6 +276,19 @@ function FilterBar({ tab }: FilterBarProps) {
         </div>
       </div>
 
+      <div className="flex flex-col w-full gap-1">
+        <p className="font-regular tracking-tighter text-small">
+          Parking Spaces (min)
+        </p>
+        <Dropdown
+          options={["Any", "1", "2", "3", "4", "5"]}
+          selectedOption={parking.toString()}
+          handleUpdateCallback={handleUpdateCallback}
+          type="N/A"
+          category="PARKING"
+        />
+      </div>
+
       <div className="flex flex-col gap-[5px]">
         <p className="font-regular tracking-tighter text-small">Search terms</p>
         <Input />
@@ -275,7 +296,7 @@ function FilterBar({ tab }: FilterBarProps) {
 
       <Checkbox title="Needs renovation" />
 
-      <div className="flex w-full transition-all items-end md:col-span-2 justify-end">
+      <div className="flex w-full transition-all items-end sm:col-span-2 md:col-span-1 justify-end">
         <button className="inline-flex w-full tracking-tighter items-center justify-center px-4 py-1 text-small transition-all hover:px-10 hover:shadow-lg rounded-md text-tertiary bg-primary group focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 hover:bg-accent">
           Search
         </button>

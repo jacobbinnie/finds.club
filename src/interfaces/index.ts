@@ -78,7 +78,8 @@ export type CategoryType =
   | "PRICE"
   | "OWNERSHIP"
   | "NEWBUILDS"
-  | "PROPERTYTYPE";
+  | "PROPERTYTYPE"
+  | "PARKING";
 
 export type OwnershipType =
   | "Freehold"
