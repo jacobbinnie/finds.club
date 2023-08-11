@@ -173,3 +173,21 @@ export interface PropertyWithRelationships extends Property {
   property_pricing: PropertyPricing;
   listing_status: ListingStatus;
 }
+
+export type ClaimStatusType = "UNCLAIMED" | "CLAIMED" | null;
+
+export interface ClaimStatus {
+  status: ClaimStatusType;
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function isClaimStatus(data: any): data is ClaimStatus {
+  return (
+    typeof data === "object" &&
+    data !== null &&
+    "status" in data &&
+    (data.status === "UNCLAIMED" ||
+      data.status === "CLAIMED" ||
+      data.status === null)
+  );
+}

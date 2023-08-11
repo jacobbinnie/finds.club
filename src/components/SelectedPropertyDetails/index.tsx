@@ -1,28 +1,38 @@
-import { BaseAddress, PropertyWithRelationships } from "@/interfaces";
+import {
+  BaseAddress,
+  ClaimStatusType,
+  PropertyWithRelationships,
+} from "@/interfaces";
 import ListedStatus from "../ListedStatus";
 import PropertyFeaturesCore from "../PropertyFeaturesCore";
+import ClaimStatus from "../ClaimStatus";
 
 interface SelectedPropertyDetailsProps {
   baseAddress: BaseAddress | null;
   propertyData: PropertyWithRelationships | null | undefined;
   loading: boolean;
+  claimStatus: ClaimStatusType;
 }
 
 function SelectedPropertyDetails({
   baseAddress,
   propertyData,
   loading,
+  claimStatus,
 }: SelectedPropertyDetailsProps) {
   return (
     <div className="w-full px-6 flex flex-col gap-3 h-screen">
-      <ListedStatus
-        loading={loading}
-        status={
-          propertyData?.listing_status.status
-            ? propertyData?.listing_status.status
-            : null
-        }
-      />
+      <div className="w-full flex justify-between">
+        <ListedStatus
+          loading={loading}
+          status={
+            propertyData?.listing_status.status
+              ? propertyData?.listing_status.status
+              : null
+          }
+        />
+        <ClaimStatus loading={loading} status={claimStatus} />
+      </div>
       <h1 className="font-bold tracking-tighter text-3xl">
         {baseAddress?.number} {baseAddress?.street}, {baseAddress?.locality}
       </h1>

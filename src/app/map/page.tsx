@@ -4,8 +4,10 @@ import NavBar from "@/components/NavBar";
 import SelectedPropertyDetails from "@/components/SelectedPropertyDetails";
 
 import {
+  ClaimStatusType,
   PropertyWithRelationships,
   isAddressableAddressArray,
+  isClaimStatus,
 } from "@/interfaces";
 import { useLocation } from "@/providers/LocationProvider";
 import { useCallback, useEffect, useState } from "react";
@@ -18,12 +20,26 @@ function MapPage() {
     PropertyWithRelationships | null | undefined
   >(undefined);
   const [loading, setLoading] = useState(false);
+  const [claimStatus, setClaimStatus] = useState<ClaimStatusType>(null);
 
   const searchParams = useSearchParams();
   const number = searchParams.get("number");
   const street = searchParams.get("street");
   const locality = searchParams.get("locality");
   const region = searchParams.get("region");
+
+  const fetchClaimStatus = useCallback(async (propertyId: string) => {
+    fetch(`/api/get-property-claim?propertyId=${propertyId}`)
+      .then((status) => status.json())
+      .then((data) => {
+        if (isClaimStatus(data)) {
+          setClaimStatus(data.status);
+          setLoading(false);
+        } else {
+          setLoading(false);
+        }
+      });
+  }, []);
 
   const fetchProperty = useCallback(async () => {
     if (number && street && locality && region) {
@@ -46,7 +62,7 @@ function MapPage() {
               const data = JSON.parse(text); // Attempt to parse the text as JSON
               if (data !== null && data !== undefined) {
                 setPropertyData(data);
-                setLoading(false);
+                fetchClaimStatus((data as PropertyWithRelationships).id);
               } else {
                 setPropertyData(null);
                 setLoading(false);
@@ -107,6 +123,7 @@ function MapPage() {
               loading={loading}
               baseAddress={{ number, street, locality, region }}
               propertyData={propertyData}
+              claimStatus={claimStatus}
             />
           </div>
         </div>

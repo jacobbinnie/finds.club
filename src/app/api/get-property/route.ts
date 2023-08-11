@@ -14,6 +14,7 @@ export async function GET(request: NextRequest) {
     .from("property")
     .select(
       `
+    id,
     full_address,
     street_number,
     street,

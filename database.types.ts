@@ -34,6 +34,34 @@ export interface Database {
           }
         ]
       }
+      profile: {
+        Row: {
+          created_at: string
+          first_name: string | null
+          id: string
+          last_name: string | null
+        }
+        Insert: {
+          created_at?: string
+          first_name?: string | null
+          id: string
+          last_name?: string | null
+        }
+        Update: {
+          created_at?: string
+          first_name?: string | null
+          id?: string
+          last_name?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "profile_id_fkey"
+            columns: ["id"]
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
       property: {
         Row: {
           city: string
@@ -75,6 +103,37 @@ export interface Database {
           street_number?: string
         }
         Relationships: []
+      }
+      property_claim: {
+        Row: {
+          created_at: string
+          id: string
+          owner_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          id: string
+          owner_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          owner_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "property_claim_id_fkey"
+            columns: ["id"]
+            referencedRelation: "property"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "property_claim_owner_id_fkey"
+            columns: ["owner_id"]
+            referencedRelation: "profile"
+            referencedColumns: ["id"]
+          }
+        ]
       }
       property_features: {
         Row: {
