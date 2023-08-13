@@ -1,6 +1,6 @@
 "use client";
 import MapElement from "@/components/MapElement";
-import NavBar from "@/components/NavBar";
+import NavBar from "@/components/HeaderNav";
 import SelectedPropertyDetails from "@/components/SelectedPropertyDetails";
 
 import {

@@ -4,8 +4,7 @@ import clsx from "clsx";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
-function NavBar() {
-  const isSignedIn = true;
+function HeaderNav() {
   const [isSliderOpen, setIsSliderOpen] = useState(false);
   const pathname = usePathname();
 
@@ -112,25 +111,31 @@ function NavBar() {
         </div>
 
         <div className="flex items-center gap-6">
-          {isSignedIn ? (
-            <div className="flex items-center gap-6 list-none lg:ml-auto">
-              <button className="inline-flex tracking-tighter items-center justify-center px-4 py-1 text-small transition-all hover:px-10 hover:shadow-lg rounded-md text-tertiary bg-primary group focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 hover:bg-accent">
-                Messages
-              </button>
-              <button className="block py-2 text-small text-gray-500 md:mt-0 hover:text-accent focus:outline-none focus:shadow-outline">
-                <div className="w-6 h-6 rounded-full bg-accent" />
-              </button>
-            </div>
-          ) : (
-            <div className="inline-flex items-center gap-2 list-none lg:ml-auto">
-              <button className="block px-4 py-2 mt-2 text-small text-gray-500 md:mt-0 hover:text-accent focus:outline-none focus:shadow-outline">
+          {/* {profile ? ( */}
+          <div className="flex items-center gap-6 list-none lg:ml-auto">
+            <button className="inline-flex tracking-tighter items-center justify-center px-4 py-1 text-small transition-all hover:px-10 hover:shadow-lg rounded-md text-tertiary bg-primary group focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 hover:bg-accent">
+              Messages
+            </button>
+            <button className="block py-2 text-small text-gray-500 md:mt-0 hover:text-accent focus:outline-none focus:shadow-outline">
+              <div className="w-6 h-6 rounded-full bg-accent" />
+            </button>
+          </div>
+          {/* ) : ( */}
+          {/* <div className="flex items-center gap-6">
+              <button
+                onClick={() => push("/login")}
+                className="text-small text-secondary hover:text-accent transition-all whitespace-nowrap"
+              >
                 Sign in
               </button>
-              <button className="inline-flex items-center justify-center px-4 h-8 text-small font-bold transition-all hover:px-10 hover:shadow-lg rounded-md text-tertiary bg-primary group focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 hover:text-primary hover:bg-accent">
+              <button
+                onClick={() => push("/login")}
+                className="inline-flex whitespace-nowrap tracking-tighter items-center justify-center px-4 py-1 text-small transition-all hover:px-10 hover:shadow-lg rounded-md text-tertiary bg-primary group focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 hover:bg-accent"
+              >
                 Sign up
               </button>
-            </div>
-          )}
+            </div> */}
+          {/* )} */}
 
           <Bars3Icon
             onClick={() => setIsSliderOpen(true)}
@@ -142,4 +147,4 @@ function NavBar() {
   );
 }
 
-export default NavBar;
+export default HeaderNav;

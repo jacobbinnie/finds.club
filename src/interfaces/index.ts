@@ -1,4 +1,4 @@
-import { Database } from "../../database.types";
+import { Database } from "@/libs/database.types";
 
 type MapboxCoordinate = number[];
 
@@ -192,3 +192,5 @@ export function isClaimStatus(data: any): data is ClaimStatus {
       data.status === null)
   );
 }
+
+export type Profile = Database["public"]["Tables"]["profile"]["Row"];
