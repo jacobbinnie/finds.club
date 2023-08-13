@@ -1,14 +1,20 @@
 "use client";
 
+import { useSupabase } from "@/providers/SupabaseProvider";
+import { supabase } from "@/utils/supabase";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-
-import { supabase } from "@/utils/supabase";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
+
+  const { currentSession } = useSupabase();
+
+  if (currentSession) {
+    console.log(currentSession.user.email);
+  }
 
   const handleSignUp = async () => {
     await supabase.auth.signUp({

@@ -2,6 +2,7 @@ import { LocationProvider } from "@/providers/LocationProvider";
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { SupabaseProvider } from "@/providers/SupabaseProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,9 +18,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" style={{ scrollBehavior: "smooth" }}>
-      <LocationProvider>
-        <body className={inter.className}>{children}</body>
-      </LocationProvider>
+      <SupabaseProvider>
+        <LocationProvider>
+          <body className={inter.className}>{children}</body>
+        </LocationProvider>
+      </SupabaseProvider>
     </html>
   );
 }
