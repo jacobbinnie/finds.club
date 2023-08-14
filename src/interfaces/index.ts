@@ -175,10 +175,11 @@ export interface PropertyWithRelationships extends Property {
   listing_status: ListingStatus;
 }
 
-export type ClaimStatusType = "UNCLAIMED" | "CLAIMED_AUTH_USER" | "CLAIMED";
+export type ClaimStatusType = "UNCLAIMED" | "CLAIMED_USER" | "CLAIMED";
 
 export interface ClaimStatus {
   status: ClaimStatusType;
+  profile?: string; // Adding the profile field as an optional string
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -189,7 +190,8 @@ export function isClaimStatus(data: any): data is ClaimStatus {
     "status" in data &&
     (data.status === "UNCLAIMED" ||
       data.status === "CLAIMED" ||
-      data.status === null)
+      data.status === "CLAIMED_USER") &&
+    (data.profile === undefined || typeof data.profile === "string")
   );
 }
 
