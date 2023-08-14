@@ -25,7 +25,13 @@ export const SupabaseProvider = ({ children }: SupabaseProviderOptions) => {
   useEffect(() => {
     supabase.auth.onAuthStateChange((_event, session) => {
       if (session?.user) {
-        setCurrentSession(session);
+        supabase
+          .from("profile")
+          .select("*")
+          .single()
+          .then(({ data }) => {
+            setProfile(data);
+          });
       } else {
         setProfile(null);
       }
