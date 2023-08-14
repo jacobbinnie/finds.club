@@ -108,17 +108,17 @@ export interface Database {
         Row: {
           created_at: string
           id: string
-          owner_id: string | null
+          owner_id: string
         }
         Insert: {
           created_at?: string
           id: string
-          owner_id?: string | null
+          owner_id: string
         }
         Update: {
           created_at?: string
           id?: string
-          owner_id?: string | null
+          owner_id?: string
         }
         Relationships: [
           {

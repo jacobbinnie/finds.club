@@ -45,8 +45,8 @@ function HeaderNav() {
     return filteredItems.map((item) => (
       <a
         key={item.title}
-        className="text-small text-secondary hover:text-accent"
-        href={item.href}
+        className="text-small text-secondary hover:text-accent cursor-pointer transition-all"
+        onClick={() => push(item.href)}
       >
         {item.title}
       </a>
@@ -60,7 +60,7 @@ function HeaderNav() {
       <a
         key={item.title}
         className="text-5xl rounded-lg text-tertiary hover:text-primary hover:tracking-tight tracking-tighter font-bold hover:primary transition-all"
-        href={item.href}
+        onClick={() => push(item.href)}
       >
         {item.title}
       </a>

@@ -175,7 +175,7 @@ export interface PropertyWithRelationships extends Property {
   listing_status: ListingStatus;
 }
 
-export type ClaimStatusType = "UNCLAIMED" | "CLAIMED" | null;
+export type ClaimStatusType = "UNCLAIMED" | "CLAIMED_AUTH_USER" | "CLAIMED";
 
 export interface ClaimStatus {
   status: ClaimStatusType;

@@ -16,17 +16,11 @@ export async function GET(request: NextRequest) {
     .eq("id", propertyId)
     .single();
 
-  if (property_claim === null) {
-    return new NextResponse(JSON.stringify({ status: null }));
-  } else if (property_claim) {
-    if (property_claim.owner_id === null) {
-      return new NextResponse(JSON.stringify({ status: "UNCLAIMED" }), {
-        status: 200,
-      });
-    } else {
-      return new NextResponse(JSON.stringify({ status: "CLAIMED" }), {
-        status: 200,
-      });
-    }
+  if (property_claim === null && property_claim === undefined) {
+    return new NextResponse(JSON.stringify({ status: "UNCLAIMED" }));
+  } else {
+    return new NextResponse(JSON.stringify({ status: "CLAIMED" }), {
+      status: 200,
+    });
   }
 }

@@ -20,7 +20,7 @@ function MapPage() {
     PropertyWithRelationships | null | undefined
   >(undefined);
   const [loading, setLoading] = useState(false);
-  const [claimStatus, setClaimStatus] = useState<ClaimStatusType>(null);
+  const [claimStatus, setClaimStatus] = useState<ClaimStatusType>("UNCLAIMED");
 
   const searchParams = useSearchParams();
   const number = searchParams.get("number");
@@ -42,7 +42,7 @@ function MapPage() {
   }, []);
 
   const fetchProperty = useCallback(async () => {
-    setClaimStatus(null);
+    setClaimStatus("UNCLAIMED");
     if (number && street && locality && region) {
       setLoading(true);
       fetch(

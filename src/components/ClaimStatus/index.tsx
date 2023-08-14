@@ -23,7 +23,11 @@ function ClaimStatus({ loading, status }: ClaimStatusProps) {
         <ViewfinderCircleIcon className="w-4 h-4 animate-spin" />
       ) : (
         <h1 className="text-small">
-          {status === "CLAIMED" ? "Property claimed" : "Claim property"}
+          {status === "CLAIMED"
+            ? "Property claimed"
+            : status === "CLAIMED_AUTH_USER"
+            ? "You claimed this property"
+            : "Claim property"}
         </h1>
       )}
     </div>
