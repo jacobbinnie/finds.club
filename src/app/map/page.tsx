@@ -12,7 +12,6 @@ import {
 import { useLocation } from "@/providers/LocationProvider";
 import { useCallback, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { useSupabase } from "@/providers/SupabaseProvider";
 
 function MapPage() {
   const { selectedProperty, mapPosition, setMapPosition, setSelectedProperty } =
@@ -25,8 +24,6 @@ function MapPage() {
   const [loading, setLoading] = useState(false);
   const [claimStatus, setClaimStatus] = useState<ClaimStatusType>("UNCLAIMED");
 
-  const { profile } = useSupabase();
-
   const searchParams = useSearchParams();
   const number = searchParams.get("number");
   const street = searchParams.get("street");
@@ -38,14 +35,7 @@ function MapPage() {
       .then((status) => status.json())
       .then((data) => {
         if (isClaimStatus(data)) {
-          if (data.profile && data.profile === profile?.id) {
-            setClaimStatus(data.status);
-          } else if (
-            data.status === "CLAIMED" ||
-            data.status === "CLAIMED_USER"
-          ) {
-            setClaimStatus("CLAIMED");
-          }
+          setClaimStatus(data.status);
           setLoading(false);
         } else {
           setLoading(false);
