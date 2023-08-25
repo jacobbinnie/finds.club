@@ -1,7 +1,6 @@
 "use client";
 import MapElement from "@/components/MapElement";
 import NavBar from "@/components/HeaderNav";
-import SelectedPropertyDetails from "@/components/SelectedPropertyDetails";
 
 import {
   ClaimStatusType,
@@ -11,9 +10,10 @@ import {
 } from "@/interfaces";
 import { useLocation } from "@/providers/LocationProvider";
 import { useCallback, useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useParams } from "next/navigation";
+import Profile from "@/components/Profile";
 
-function MapPage() {
+function Home() {
   const { selectedProperty, mapPosition, setMapPosition, setSelectedProperty } =
     useLocation();
 
@@ -22,29 +22,34 @@ function MapPage() {
   >(undefined);
 
   const [loading, setLoading] = useState(false);
-  const [claimStatus, setClaimStatus] = useState<ClaimStatusType>("UNCLAIMED");
+  const [username, setUsername] = useState<string>();
+  const [invalidUsername, setInvalidUsername] = useState(false);
 
   const searchParams = useSearchParams();
-  const number = searchParams.get("number");
+  const params = useParams();
+
+  const usernamePattern = /^(?![-.])[\w.-]{3,20}(?<![-.])$/;
+
+  function isValidUsername(username: string) {
+    return usernamePattern.test(username);
+  }
+
+  useEffect(() => {
+    if (params.user) {
+      isValidUsername(params.user.toString())
+        ? setUsername(params.user.toString())
+        : setInvalidUsername(true);
+    }
+  }, [params]);
+
+  console.log(username, invalidUsername);
+
+  const number = searchParams.get("username");
   const street = searchParams.get("street");
   const locality = searchParams.get("locality");
   const region = searchParams.get("region");
 
-  const fetchClaimStatus = useCallback(async (propertyId: string) => {
-    fetch(`/api/get-property-claim?propertyId=${propertyId}`)
-      .then((status) => status.json())
-      .then((data) => {
-        if (isClaimStatus(data)) {
-          setClaimStatus(data.status);
-          setLoading(false);
-        } else {
-          setLoading(false);
-        }
-      });
-  }, []);
-
   const fetchProperty = useCallback(async () => {
-    setClaimStatus("UNCLAIMED");
     if (number && street && locality && region) {
       setLoading(true);
       fetch(
@@ -65,7 +70,6 @@ function MapPage() {
               const data = JSON.parse(text); // Attempt to parse the text as JSON
               if (data !== null && data !== undefined) {
                 setPropertyData(data);
-                fetchClaimStatus((data as PropertyWithRelationships).id);
               } else {
                 setPropertyData(null);
                 setLoading(false);
@@ -111,28 +115,19 @@ function MapPage() {
   return (
     <div className="bg-tertiary w-full h-full">
       <NavBar />
-      <MapElement
-        selectedProperty={selectedProperty}
-        baseAddress={{ number, street, locality, region }}
-        mapPosition={mapPosition}
-        setMapPosition={setMapPosition}
-        setSelectedProperty={setSelectedProperty}
-        fullScreen={number && street && locality && region ? false : true}
-      />
-      {number && street && locality && region && (
-        <div className="w-full flex justify-center pt-10">
-          <div className="flex flex-col w-full max-w-[900px]">
-            <SelectedPropertyDetails
-              loading={loading}
-              baseAddress={{ number, street, locality, region }}
-              propertyData={propertyData}
-              claimStatus={claimStatus}
-            />
-          </div>
-        </div>
-      )}
+      <div className="flex flex-col sm:flex-row w-full transition-all">
+        <MapElement
+          selectedProperty={selectedProperty}
+          baseAddress={{ number, street, locality, region }}
+          mapPosition={mapPosition}
+          setMapPosition={setMapPosition}
+          setSelectedProperty={setSelectedProperty}
+          fullScreen={number && street && locality && region ? false : true}
+        />
+        <Profile loading={loading} username={username} />
+      </div>
     </div>
   );
 }
 
-export default MapPage;
+export default Home;

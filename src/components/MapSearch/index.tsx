@@ -12,7 +12,6 @@ import clsx from "clsx";
 import { Dispatch, SetStateAction } from "react";
 
 interface MapSearchProps {
-  isMapHidden: boolean;
   selectedProperty: boolean;
   suggestions: (MapboxFeatures | AddressableAddress)[];
   searchType: "places" | "addresses";
@@ -82,7 +81,6 @@ function MapSearchSuggestions({
 }
 
 function MapSearch({
-  isMapHidden,
   selectedProperty,
   suggestions,
   searchType,
@@ -98,11 +96,7 @@ function MapSearch({
   return (
     <div
       className={clsx(
-        isSearching
-          ? "w-full sm:w-96"
-          : isMapHidden
-          ? "hidden w-0"
-          : "w-36 rounded-lg",
+        isSearching ? "w-full sm:w-96" : "w-36 rounded-lg",
 
         "gap-1 px-2 z-20 rounded-lg flex flex-col absolute top-2 text-tertiary text-small font-regular transition-all tracking-tighter"
       )}
@@ -203,7 +197,6 @@ function MapSearch({
 
       <MapSearchSuggestions
         suggestions={suggestions}
-        isMapHidden={isMapHidden}
         selectedProperty={selectedProperty}
         searchType={searchType}
         queryLoading={queryLoading}

@@ -35,9 +35,6 @@ function MapElement({
   const [currentMap, setCurrentMap] = useState<mapboxgl.Map | null>(null);
   const { replace } = useRouter();
 
-  const [isMapHidden, setIsMapHidden] = useState(false);
-  const [isOffCenter, setIsOffCenter] = useState(false);
-
   const initialPosition = selectedProperty
     ? { lat: selectedProperty.lat, lng: selectedProperty.lon, zoom: 18 }
     : mapPosition;
@@ -84,14 +81,14 @@ function MapElement({
     }
   }, [selectedProperty]);
 
-  const reposition = () => {
-    if (selectedProperty) {
-      currentMap?.flyTo({
-        center: [selectedProperty?.lon, selectedProperty?.lat],
-        zoom: 18,
-      });
-    }
-  };
+  // const reposition = () => {
+  //   if (selectedProperty) {
+  //     currentMap?.flyTo({
+  //       center: [selectedProperty?.lon, selectedProperty?.lat],
+  //       zoom: 18,
+  //     });
+  //   }
+  // };
 
   const handleSelect = (
     searchType: "places" | "addresses",
@@ -174,10 +171,6 @@ function MapElement({
 
     mapboxMap.on("load", () => setMapLoaded(true));
 
-    mapboxMap.on("moveend", () => {
-      setIsOffCenter(true);
-    });
-
     return () => {
       mapboxMap.remove();
     };
@@ -214,59 +207,10 @@ function MapElement({
       />
       <div
         ref={mapNode}
-        className={clsx(
-          isMapHidden
-            ? "h-[100px]"
-            : fullScreen
-            ? "supports-[height:100cqh]:h-[calc(100cqh-65px)] supports-[height:100svh]:h-[calc(100svh-65px)]"
-            : "h-[calc(400px)]",
-          "w-full transition-all"
-        )}
+        className="w-full transition-all h-[400px] sm:h-full"
       />
-      <div
-        onClick={() => setIsMapHidden(!isMapHidden)}
-        className="px-3 z-20 cursor-pointer h-8 flex items-center absolute top-2 right-2 rounded-md bg-accent shadow-lg text-tertiary text-small font-regular tracking-tighter"
-      >
-        {isMapHidden ? "Expand map" : "Hide map"}
-      </div>
-
-      <div
-        onClick={reposition}
-        className={clsx(
-          fullScreen
-            ? "hidden"
-            : isOffCenter
-            ? !isMapHidden
-              ? "block"
-              : "hidden"
-            : "hidden",
-          "px-3 z-20 cursor-pointer h-8 flex items-center absolute bottom-2 right-2 rounded-md bg-accent shadow-lg text-tertiary text-small font-regular tracking-tighter"
-        )}
-      >
-        Re-center
-      </div>
-
-      <div
-        className={clsx(
-          !isMapHidden ? "block" : "hidden",
-          "gap-1 z-20 flex flex-col absolute bottom-2 left-2 text-tertiary text-small font-regular transition-all tracking-tighter"
-        )}
-      >
-        <div className="flex gap-3 bg-white px-3 py-1 rounded-lg items-center w-min shadow-lg">
-          <div className="w-4 h-4 bg-accent rounded-full border-[1px] border-secondary" />
-          <p className="text-small text-primary tracking-tighter">Listed</p>
-        </div>
-
-        <div className="flex gap-3 bg-white px-3 py-1 rounded-lg items-center shadow-lg">
-          <div className="w-4 h-4 bg-openToSelling rounded-full border-[1px] border-secondary" />
-          <p className="text-small text-primary tracking-tighter">
-            Open to selling
-          </p>
-        </div>
-      </div>
 
       <MapSearch
-        isMapHidden={isMapHidden}
         selectedProperty={selectedProperty ? true : false}
         suggestions={
           searchType === "places"

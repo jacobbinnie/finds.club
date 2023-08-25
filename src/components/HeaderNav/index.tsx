@@ -21,22 +21,6 @@ function HeaderNav() {
       title: "home",
       href: "/",
     },
-    {
-      title: "map",
-      href: "/map",
-    },
-    {
-      title: "pricing",
-      href: "/pricing",
-    },
-    {
-      title: "services",
-      href: "/services",
-    },
-    {
-      title: "my properties",
-      href: "/my-properties",
-    },
   ];
 
   const renderDesktopMenuItems = () => {
@@ -105,7 +89,7 @@ function HeaderNav() {
             href="/"
           >
             <span className="lg:text-lg font-bold lowercase focus:ring-0">
-              Lettrbox
+              finds.club
             </span>
           </a>
         </div>

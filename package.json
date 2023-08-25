@@ -1,5 +1,5 @@
 {
-  "name": "lettrbox",
+  "name": "finds.club",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -37,7 +37,7 @@
     "typescript": "^5.1.6"
   },
   "main": "index.js",
-  "repository": "https://github.com/jacobbinnie/lettrbox.git",
+  "repository": "https://github.com/jacobbinnie/finds.club.git",
   "author": "hello@jacobbinnie.com",
   "license": "MIT"
 }
