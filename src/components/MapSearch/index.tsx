@@ -96,7 +96,9 @@ function MapSearch({
   return (
     <div
       className={clsx(
-        isSearching ? "w-full sm:w-96" : "w-36 rounded-lg",
+        isSearching
+          ? "w-full sm:w-full max-w-[500px]"
+          : "w-44 rounded-lg max-w-[500px]",
 
         "gap-1 px-2 z-20 rounded-lg flex flex-col absolute top-2 text-tertiary text-small font-regular transition-all tracking-tighter"
       )}
@@ -116,7 +118,7 @@ function MapSearch({
             "text-small px-3 py-1 text-center w-1/2 tracking-tighter cursor-pointer transition-all"
           )}
         >
-          Search suburbs
+          Search
         </p>
         <p
           onClick={() => setSearchType("addresses")}
@@ -127,7 +129,7 @@ function MapSearch({
             "text-small px-3 text-center py-1 w-1/2 tracking-tighter cursor-pointer transition-all duration-300"
           )}
         >
-          Find property
+          Find user
         </p>
       </div>
 
@@ -145,10 +147,30 @@ function MapSearch({
           <MapPinIcon
             width={16}
             className={clsx(
-              queryLoading ? "hidden" : "block",
+              searchType === "places"
+                ? queryLoading
+                  ? "hidden"
+                  : "block"
+                : isSearching
+                ? "hidden"
+                : "block",
               "transition-all text-primary"
             )}
           />
+          <p
+            className={clsx(
+              !isSearching
+                ? "hidden"
+                : searchType === "addresses"
+                ? queryLoading
+                  ? "hidden"
+                  : "block"
+                : "hidden",
+              "transition-all text-primary font-bold mt-[-2px]"
+            )}
+          >
+            @
+          </p>
           <ArrowPathIcon
             width={16}
             className={clsx(
@@ -179,8 +201,8 @@ function MapSearch({
             )}
             placeholder={
               searchType === "places"
-                ? "Enter a suburb or street.."
-                : "Enter an address.."
+                ? "neighborhood, restaurant, cafe.."
+                : "michaelscott"
             }
           />
         </div>

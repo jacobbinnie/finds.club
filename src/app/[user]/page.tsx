@@ -42,8 +42,6 @@ function Home() {
     }
   }, [params]);
 
-  console.log(username, invalidUsername);
-
   const number = searchParams.get("username");
   const street = searchParams.get("street");
   const locality = searchParams.get("locality");

@@ -81,15 +81,6 @@ function MapElement({
     }
   }, [selectedProperty]);
 
-  // const reposition = () => {
-  //   if (selectedProperty) {
-  //     currentMap?.flyTo({
-  //       center: [selectedProperty?.lon, selectedProperty?.lat],
-  //       zoom: 18,
-  //     });
-  //   }
-  // };
-
   const handleSelect = (
     searchType: "places" | "addresses",
     suggestion: MapboxFeatures | AddressableAddress
@@ -202,7 +193,7 @@ function MapElement({
       <ArrowPathIcon
         className={clsx(
           mapLoaded && "hidden",
-          "absolute top-[calc(50%-2%)] left-[calc(50vw-2vw)] w-6 animate-spin text-accent"
+          "absolute top-[calc(50%-2%)] left-[calc(50%-2%)] w-6 animate-spin text-accent"
         )}
       />
       <div

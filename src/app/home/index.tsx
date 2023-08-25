@@ -1,4 +1,3 @@
-import JumboSearch from "@/components/JumboSearch";
 import NavBar from "@/components/HeaderNav";
 
 function Home() {
