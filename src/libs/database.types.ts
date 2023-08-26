@@ -9,211 +9,91 @@ export type Json =
 export interface Database {
   public: {
     Tables: {
-      listing_status: {
+      finds: {
         Row: {
           created_at: string
-          property_id: string
-          status: string
+          description: string | null
+          id: number
+          user_find: string
         }
         Insert: {
           created_at?: string
-          property_id: string
-          status: string
+          description?: string | null
+          id?: number
+          user_find: string
         }
         Update: {
           created_at?: string
-          property_id?: string
-          status?: string
+          description?: string | null
+          id?: number
+          user_find?: string
         }
         Relationships: [
           {
-            foreignKeyName: "listing_status_property_id_fkey"
-            columns: ["property_id"]
-            referencedRelation: "property"
+            foreignKeyName: "finds_id_fkey"
+            columns: ["id"]
+            referencedRelation: "places"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "finds_user_find_fkey"
+            columns: ["user_find"]
+            referencedRelation: "profile"
             referencedColumns: ["id"]
           }
         ]
       }
-      profile: {
+      places: {
         Row: {
           created_at: string
-          first_name: string | null
-          id: string
-          last_name: string | null
+          id: number
+          lat: string
+          lng: string
+          name: string
+          neighborhood: string
         }
         Insert: {
           created_at?: string
-          first_name?: string | null
-          id: string
-          last_name?: string | null
+          id: number
+          lat: string
+          lng: string
+          name: string
+          neighborhood: string
         }
         Update: {
           created_at?: string
-          first_name?: string | null
+          id?: number
+          lat?: string
+          lng?: string
+          name?: string
+          neighborhood?: string
+        }
+        Relationships: []
+      }
+      profile: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          username: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id: string
+          username: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
           id?: string
-          last_name?: string | null
+          username?: string
         }
         Relationships: [
           {
             foreignKeyName: "profile_id_fkey"
             columns: ["id"]
             referencedRelation: "users"
-            referencedColumns: ["id"]
-          }
-        ]
-      }
-      property: {
-        Row: {
-          city: string
-          created_at: string
-          full_address: string
-          id: string
-          latitude: number
-          locality: string
-          longitude: number
-          postcode: string
-          region: string
-          street: string
-          street_number: string
-        }
-        Insert: {
-          city: string
-          created_at?: string
-          full_address: string
-          id?: string
-          latitude: number
-          locality: string
-          longitude: number
-          postcode: string
-          region: string
-          street: string
-          street_number: string
-        }
-        Update: {
-          city?: string
-          created_at?: string
-          full_address?: string
-          id?: string
-          latitude?: number
-          locality?: string
-          longitude?: number
-          postcode?: string
-          region?: string
-          street?: string
-          street_number?: string
-        }
-        Relationships: []
-      }
-      property_claim: {
-        Row: {
-          created_at: string
-          id: string
-          owner_id: string
-        }
-        Insert: {
-          created_at?: string
-          id: string
-          owner_id: string
-        }
-        Update: {
-          created_at?: string
-          id?: string
-          owner_id?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "property_claim_id_fkey"
-            columns: ["id"]
-            referencedRelation: "property"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "property_claim_owner_id_fkey"
-            columns: ["owner_id"]
-            referencedRelation: "profile"
-            referencedColumns: ["id"]
-          }
-        ]
-      }
-      property_features: {
-        Row: {
-          baths: number | null
-          beds: number | null
-          created_at: string
-          floor_sqm: number | null
-          garage: boolean | null
-          id: string
-          land_sqm: number | null
-          living_areas: number | null
-          needs_renovation: boolean | null
-          new_build: boolean | null
-          ownership_type: string | null
-          parking: number | null
-          property_type: string | null
-        }
-        Insert: {
-          baths?: number | null
-          beds?: number | null
-          created_at?: string
-          floor_sqm?: number | null
-          garage?: boolean | null
-          id: string
-          land_sqm?: number | null
-          living_areas?: number | null
-          needs_renovation?: boolean | null
-          new_build?: boolean | null
-          ownership_type?: string | null
-          parking?: number | null
-          property_type?: string | null
-        }
-        Update: {
-          baths?: number | null
-          beds?: number | null
-          created_at?: string
-          floor_sqm?: number | null
-          garage?: boolean | null
-          id?: string
-          land_sqm?: number | null
-          living_areas?: number | null
-          needs_renovation?: boolean | null
-          new_build?: boolean | null
-          ownership_type?: string | null
-          parking?: number | null
-          property_type?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "property_features_id_fkey"
-            columns: ["id"]
-            referencedRelation: "property"
-            referencedColumns: ["id"]
-          }
-        ]
-      }
-      property_pricing: {
-        Row: {
-          asking_price: number | null
-          id: string
-          lower_range: number
-          upper_range: number
-        }
-        Insert: {
-          asking_price?: number | null
-          id: string
-          lower_range: number
-          upper_range: number
-        }
-        Update: {
-          asking_price?: number | null
-          id?: string
-          lower_range?: number
-          upper_range?: number
-        }
-        Relationships: [
-          {
-            foreignKeyName: "property_pricing_id_fkey"
-            columns: ["id"]
-            referencedRelation: "property"
             referencedColumns: ["id"]
           }
         ]

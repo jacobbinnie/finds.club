@@ -1,18 +1,14 @@
 "use client";
 import React, { createContext, useContext, useState } from "react";
-import { MapPosition, SelectedProperty } from "../interfaces";
+import { MapPosition } from "../interfaces";
 
 interface LocationContextValues {
-  selectedProperty: SelectedProperty | null;
   mapPosition: MapPosition;
-  setSelectedProperty: (selectedProperty: SelectedProperty | null) => void;
   setMapPosition: (mapPosition: MapPosition) => void;
 }
 
 const LocationContext = createContext<LocationContextValues>({
-  selectedProperty: null,
   mapPosition: { lat: 40.776676, lng: -73.971321, zoom: 10 },
-  setSelectedProperty: () => {},
   setMapPosition: () => {},
 });
 
@@ -21,9 +17,6 @@ interface LocationProviderOptions {
 }
 
 export const LocationProvider = ({ children }: LocationProviderOptions) => {
-  const [selectedProperty, setSelectedProperty] =
-    useState<SelectedProperty | null>(null);
-
   const [mapPosition, setMapPosition] = useState<MapPosition>({
     lat: 40.776676,
     lng: -73.971321,
@@ -31,9 +24,7 @@ export const LocationProvider = ({ children }: LocationProviderOptions) => {
   });
 
   const value = {
-    selectedProperty,
     mapPosition,
-    setSelectedProperty,
     setMapPosition,
   };
 

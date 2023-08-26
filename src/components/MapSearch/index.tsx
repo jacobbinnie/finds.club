@@ -1,9 +1,4 @@
 import {
-  AddressableAddress,
-  MapboxFeatures,
-  isAddressableAddressArray,
-} from "@/interfaces";
-import {
   ArrowPathIcon,
   MapPinIcon,
   XCircleIcon,
@@ -13,7 +8,6 @@ import { Dispatch, SetStateAction } from "react";
 
 interface MapSearchProps {
   selectedProperty: boolean;
-  suggestions: (MapboxFeatures | AddressableAddress)[];
   searchType: "places" | "addresses";
   setSearchType: Dispatch<SetStateAction<"places" | "addresses">>;
   queryLoading: boolean;
@@ -22,67 +16,15 @@ interface MapSearchProps {
   addressesQuery: string;
   isSearching: boolean;
   handleUpdateIsSearching: (value: boolean) => void;
-  handleSelect: (
-    tab: "places" | "addresses",
-    selected: MapboxFeatures | AddressableAddress
-  ) => void;
 }
 
-function MapSearchSuggestions({
-  suggestions,
-  handleSelect,
-  searchType,
-}: MapSearchProps) {
-  const isAddressableAddress = isAddressableAddressArray(suggestions);
-
-  return (
-    <div className="w-full max-w-[900px]">
-      <ul
-        className={clsx(
-          suggestions.length > 0
-            ? "h-full border-t-gray-300 border-t-[1px]"
-            : "py-0 h-0",
-          "w-full h-min flex flex-col max-w-[900px] bg-white transition-all shadow-lg rounded-b-lg"
-        )}
-      >
-        {suggestions.map((suggestion, index) => (
-          <li
-            className="w-full py-1 hover:bg-primary tracking-tighter text-primary hover:text-tertiary transition-all cursor-pointer flex items-center px-6"
-            onClick={() => handleSelect(searchType, suggestion)}
-            key={index}
-          >
-            {isAddressableAddress ? (
-              <>
-                {(suggestion as AddressableAddress).street_number}{" "}
-                {(suggestion as AddressableAddress).street},{" "}
-                {(suggestion as AddressableAddress).locality}{" "}
-              </>
-            ) : (
-              <>
-                {(suggestion as MapboxFeatures).properties.name},{" "}
-                {(suggestion as MapboxFeatures).properties.feature_type ===
-                "street"
-                  ? (suggestion as MapboxFeatures).properties.context.locality
-                      ?.name ||
-                    (suggestion as MapboxFeatures).properties.context.place.name
-                  : (suggestion as MapboxFeatures).properties.feature_type ===
-                    "place"
-                  ? (suggestion as MapboxFeatures).properties.context.country
-                      .name
-                  : (suggestion as MapboxFeatures).properties.context.region
-                      .name}
-              </>
-            )}
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
+function MapSearchSuggestions({ searchType }: MapSearchProps) {
+  return <div className="w-full max-w-[900px]"></div>;
 }
 
 function MapSearch({
   selectedProperty,
-  suggestions,
+
   searchType,
   setSearchType,
   queryLoading,
@@ -91,7 +33,6 @@ function MapSearch({
   addressesQuery,
   isSearching,
   handleUpdateIsSearching,
-  handleSelect,
 }: MapSearchProps) {
   return (
     <div
@@ -133,16 +74,7 @@ function MapSearch({
         </p>
       </div>
 
-      <div
-        className={clsx(
-          isSearching
-            ? suggestions.length > 0
-              ? "rounded-none"
-              : "rounded-b-lg"
-            : "rounded-lg",
-          "flex px-3 py-1 bg-white shadow-lg justify-between"
-        )}
-      >
+      <div className="flex px-3 py-1 bg-white shadow-lg justify-between">
         <div className="flex w-full">
           <MapPinIcon
             width={16}
@@ -218,7 +150,6 @@ function MapSearch({
       </div>
 
       <MapSearchSuggestions
-        suggestions={suggestions}
         selectedProperty={selectedProperty}
         searchType={searchType}
         queryLoading={queryLoading}
@@ -228,7 +159,6 @@ function MapSearch({
         addressesQuery={addressesQuery}
         handleUpdateIsSearching={handleUpdateIsSearching}
         isSearching={isSearching}
-        handleSelect={handleSelect}
       />
     </div>
   );
