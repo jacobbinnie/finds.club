@@ -1,5 +1,7 @@
 import { ProfileAndFinds } from "@/interfaces";
 import { ArrowPathIcon } from "@heroicons/react/24/solid";
+import Find from "../Find";
+import { profile } from "console";
 
 interface ProfileProps {
   profileAndFinds: ProfileAndFinds | null | undefined;
@@ -26,15 +28,19 @@ function Profile({ profileAndFinds, loading, invalidUsername }: ProfileProps) {
 
   const UserProfile = () => {
     return (
-      <>
+      <div className="flex flex-col items-center gap-3">
         <div className="w-36 h-36 mt-[-77px] transition-all sm:mt-10 z-10 shadow-lg bg-accent rounded-full" />
         <div className="w-full flex flex-col items-center gap-1">
           <h1 className="text-2xl tracking-tighter font-bold">
             @{profileAndFinds?.username}
           </h1>
           <p className="tracking-tighter">{profileAndFinds?.description}</p>
+          <p className="tracking-tighter font-bold">
+            {profileAndFinds?.finds.length} find
+            {profileAndFinds && profileAndFinds?.finds.length > 1 ? "s" : ""}
+          </p>
         </div>
-      </>
+      </div>
     );
   };
 
@@ -52,9 +58,18 @@ function Profile({ profileAndFinds, loading, invalidUsername }: ProfileProps) {
     DisplaySwitch = <UserProfile />;
   }
 
+  const renderFinds = () => {
+    if (profileAndFinds?.finds) {
+      return profileAndFinds?.finds.map((find, key) => {
+        return <Find key={key} find={find} />;
+      });
+    }
+  };
+
   return (
-    <div className="w-full sm:max-w-[500px] px-6 flex flex-col items-center gap-3 h-screen">
+    <div className="w-full sm:max-w-[500px] px-6 flex flex-col items-center gap-6 h-screen">
       {DisplaySwitch}
+      {renderFinds()}
     </div>
   );
 }

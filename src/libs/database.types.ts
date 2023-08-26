@@ -13,25 +13,31 @@ export interface Database {
         Row: {
           created_at: string
           description: string | null
-          id: number
+          id: string
+          place: string
+          rating: number
           user_find: string
         }
         Insert: {
           created_at?: string
           description?: string | null
-          id?: number
+          id?: string
+          place: string
+          rating: number
           user_find: string
         }
         Update: {
           created_at?: string
           description?: string | null
-          id?: number
+          id?: string
+          place?: string
+          rating?: number
           user_find?: string
         }
         Relationships: [
           {
-            foreignKeyName: "finds_id_fkey"
-            columns: ["id"]
+            foreignKeyName: "finds_place_fkey"
+            columns: ["place"]
             referencedRelation: "places"
             referencedColumns: ["id"]
           },
@@ -46,7 +52,7 @@ export interface Database {
       places: {
         Row: {
           created_at: string
-          id: number
+          id: string
           lat: string
           lng: string
           name: string
@@ -54,7 +60,7 @@ export interface Database {
         }
         Insert: {
           created_at?: string
-          id: number
+          id: string
           lat: string
           lng: string
           name: string
@@ -62,7 +68,7 @@ export interface Database {
         }
         Update: {
           created_at?: string
-          id?: number
+          id?: string
           lat?: string
           lng?: string
           name?: string

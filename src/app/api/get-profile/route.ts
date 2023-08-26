@@ -12,10 +12,15 @@ export async function GET(request: NextRequest) {
    username,
    description,
    finds (
-    id,
     created_at,
     description,
-    place_id:places(*)
+    rating,
+    place (
+      name,
+      neighborhood,
+      lat,
+      lng
+    )
    )
   `
     )

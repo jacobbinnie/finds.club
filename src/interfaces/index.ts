@@ -7,8 +7,8 @@ export type UserProfile = {
 
 type Place = Database["public"]["Tables"]["places"]["Row"];
 
-type Find = Database["public"]["Tables"]["finds"]["Row"] & {
-  place_id: Place;
+export type Find = Database["public"]["Tables"]["finds"]["Row"] & {
+  place: Place;
 };
 
 export interface ProfileAndFinds {
