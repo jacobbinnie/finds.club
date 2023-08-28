@@ -45,7 +45,7 @@ function MapSearch({
     >
       <div
         className={clsx(
-          isSearching ? "h-8" : "h-0",
+          isSearching ? "h-8 opacity-100" : "h-0 opacity-0",
           "w-full bg-white flex rounded-t-lg overflow-hidden shadow-lg transition-all"
         )}
       >
