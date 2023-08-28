@@ -27,7 +27,7 @@ export const LocationProvider = ({ children }: LocationProviderOptions) => {
   const [mapPosition, setMapPosition] = useState<MapPosition>({
     lat: 40.776676,
     lng: -73.971321,
-    zoom: 12,
+    zoom: 0,
   });
 
   const handleUpdateSelectedPoi = (value: PlacesFeature | null) => {

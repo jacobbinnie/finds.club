@@ -104,10 +104,27 @@ function MapElement({
           zoom: 15,
         });
       }
-      currentMarker?.setLngLat([
-        selectedPoi?.geometry.coordinates[0],
-        selectedPoi?.geometry.coordinates[1],
-      ]);
+      if (currentMarker) {
+        currentMarker?.setLngLat([
+          selectedPoi?.geometry.coordinates[0],
+          selectedPoi?.geometry.coordinates[1],
+        ]);
+      } else {
+        if (currentMap) {
+          const marker = new mapboxgl.Marker({
+            anchor: "bottom",
+            color: "#00d688",
+            scale: 0.75,
+          })
+            .setLngLat([
+              selectedPoi?.geometry.coordinates[0],
+              selectedPoi?.geometry.coordinates[1],
+            ])
+            .addTo(currentMap);
+
+          setCurrentMarker(marker);
+        }
+      }
     }
   }, [selectedPoi]);
 
@@ -127,20 +144,48 @@ function MapElement({
       center: [mapPosition.lng, mapPosition.lat],
       zoom: mapPosition.zoom,
       attributionControl: false,
+      logoPosition: "top-left",
     });
 
-    const marker = new mapboxgl.Marker({
-      anchor: "bottom",
-      color: "#00d688",
-      scale: 0.75,
-    })
-      .setLngLat([mapPosition.lng, mapPosition.lat])
-      .addTo(mapboxMap);
-
-    setCurrentMarker(marker);
-    setCurrentMap(mapboxMap);
-
     mapboxMap.on("load", () => setMapLoaded(true));
+
+    // At low zooms, complete a revolution every two minutes.
+    const secondsPerRevolution = 120;
+    // Above zoom level 5, do not rotate.
+    const maxSpinZoom = 5;
+    // Rotate at intermediate speeds between zoom levels 3 and 5.
+    const slowSpinZoom = 3;
+
+    let userInteracting = false;
+    const spinEnabled = true;
+
+    function spinGlobe() {
+      const zoom = mapboxMap.getZoom();
+      if (spinEnabled && !userInteracting && zoom < maxSpinZoom) {
+        let distancePerSecond = 360 / secondsPerRevolution;
+        if (zoom > slowSpinZoom) {
+          // Slow spinning at higher zooms
+          const zoomDif = (maxSpinZoom - zoom) / (maxSpinZoom - slowSpinZoom);
+          distancePerSecond *= zoomDif;
+        }
+        const center = mapboxMap.getCenter();
+        center.lng -= distancePerSecond;
+        // Smoothly animate the map over one second.
+        // When this animation is complete, it calls a 'moveend' event.
+        mapboxMap.easeTo({ center, duration: 1000, easing: (n) => n });
+      }
+    }
+
+    mapboxMap.on("mousedown", () => {
+      userInteracting = true;
+    });
+
+    mapboxMap.on("moveend", () => {
+      spinGlobe();
+    });
+
+    spinGlobe();
+    setCurrentMap(mapboxMap);
 
     return () => {
       mapboxMap.remove();
