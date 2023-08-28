@@ -6,7 +6,12 @@ import { MapPosition, SearchType } from "@/interfaces";
 import { ArrowPathIcon } from "@heroicons/react/24/solid";
 import MapSearch from "../MapSearch";
 import useSuggestPlaces from "@/hooks/useSuggestPlaces";
-import { PlacesSuggestion } from "@/interfaces/places";
+import {
+  PlacesFeature,
+  PlacesSuggestion,
+  isPlacesFeatureFullResponse,
+} from "@/interfaces/places";
+import { useLocation } from "@/providers/LocationProvider";
 
 const access_token = process.env.NEXT_PUBLIC_MAPBOX_MAP_TOKEN || "";
 interface MapElementProps {
@@ -21,12 +26,17 @@ function MapElement({
   setMapPosition,
 }: MapElementProps) {
   const [currentMap, setCurrentMap] = useState<mapboxgl.Map | null>(null);
+  const [currentMarker, setCurrentMarker] = useState<mapboxgl.Marker | null>(
+    null
+  );
   const [searchType, setSearchType] = useState<SearchType>("PLACES");
 
   const [placesQuery, setPlacesQuery] = useState("");
   const [profilesQuery, setProfilesQuery] = useState("");
 
   const [isSearching, setIsSearching] = useState(false);
+
+  const { handleUpdateSelectedPoi, selectedPoi } = useLocation();
 
   const resetQueries = () => {
     setProfilesQuery("");
@@ -45,10 +55,23 @@ function MapElement({
     }
   };
 
-  const handleSelect = (
+  const handleSelect = async (
     searchType: SearchType,
     suggestion: PlacesSuggestion
-  ) => {};
+  ) => {
+    if (searchType === "PLACES") {
+      fetch(`/api/get-place-details?q=${suggestion.mapbox_id}`)
+        .then((response) => response.json())
+        .then((data) => {
+          if (isPlacesFeatureFullResponse(data)) {
+            setIsSearching(false);
+            handleUpdateSelectedPoi(data.features[0]);
+          } else {
+            console.log("Something went wrong");
+          }
+        });
+    }
+  };
 
   const {
     data: placesSuggestions,
@@ -68,6 +91,27 @@ function MapElement({
   }, [mapPosition]);
 
   useEffect(() => {
+    if (selectedPoi) {
+      if (
+        selectedPoi?.geometry.coordinates[0] &&
+        selectedPoi?.geometry.coordinates[1]
+      ) {
+        currentMap?.flyTo({
+          center: [
+            selectedPoi.geometry.coordinates[0],
+            selectedPoi.geometry.coordinates[1],
+          ],
+          zoom: 15,
+        });
+      }
+      currentMarker?.setLngLat([
+        selectedPoi?.geometry.coordinates[0],
+        selectedPoi?.geometry.coordinates[1],
+      ]);
+    }
+  }, [selectedPoi]);
+
+  useEffect(() => {
     const node = mapNode.current;
 
     if (typeof window === "undefined" || node === null) return;
@@ -85,7 +129,12 @@ function MapElement({
       attributionControl: false,
     });
 
+    const marker = new mapboxgl.Marker()
+      .setLngLat([mapPosition.lng, mapPosition.lat])
+      .addTo(mapboxMap);
+
     setCurrentMap(mapboxMap);
+    setCurrentMarker(marker);
 
     mapboxMap.on("load", () => setMapLoaded(true));
 

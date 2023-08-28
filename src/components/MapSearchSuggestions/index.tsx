@@ -16,7 +16,7 @@ function MapSearchSuggestions({
   const isPlacesSuggestionsArray = isPlacesSuggestions(suggestions);
 
   return (
-    <div className="w-full max-w-[900px]">
+    <div className="w-full max-w-[900px] rounded-b-lg overflow-hidden">
       <ul
         className={clsx(
           suggestions.length > 0

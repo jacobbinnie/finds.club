@@ -56,6 +56,7 @@ export interface PlacesSuggestion {
 }
 
 export function isPlacesSuggestions(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   response: any
 ): response is PlacesSuggestion[] {
   if (Array.isArray(response)) {
@@ -75,6 +76,49 @@ export function isPlacesSuggestions(
       }
     }
 
+    return true;
+  }
+  return false;
+}
+
+type Coordinates = number[];
+
+export interface PlacesFeature {
+  type: string;
+  geometry: {
+    coordinates: Coordinates;
+    type: string;
+  };
+  properties: PlacesSuggestion;
+}
+
+export interface PlacesFeatureFullResponse {
+  type: string;
+  features: PlacesFeature[];
+  attribution: string;
+}
+
+export function isPlacesFeatureFullResponse(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  data: any
+): data is PlacesFeatureFullResponse {
+  if (
+    typeof data === "object" &&
+    data !== null &&
+    typeof data.type === "string" &&
+    Array.isArray(data.features) &&
+    typeof data.attribution === "string"
+  ) {
+    for (const feature of data.features) {
+      if (
+        typeof feature.type !== "string" ||
+        !Array.isArray(feature.geometry.coordinates) ||
+        typeof feature.geometry.type !== "string" ||
+        typeof feature.properties !== "object"
+      ) {
+        return false;
+      }
+    }
     return true;
   }
   return false;
