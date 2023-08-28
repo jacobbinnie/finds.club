@@ -175,6 +175,10 @@ function MapElement({
       userInteracting = true;
     });
 
+    mapboxMap.on("drag", () => {
+      userInteracting = true;
+    });
+
     mapboxMap.on("moveend", () => {
       spinGlobe();
     });
