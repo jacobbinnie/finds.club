@@ -1,3 +1,5 @@
+import { SearchType } from "@/interfaces";
+import { PlacesSuggestion, isPlacesSuggestions } from "@/interfaces/places";
 import {
   ArrowPathIcon,
   MapPinIcon,
@@ -5,32 +7,30 @@ import {
 } from "@heroicons/react/24/solid";
 import clsx from "clsx";
 import { Dispatch, SetStateAction } from "react";
+import MapSearchSuggestions from "../MapSearchSuggestions";
 
 interface MapSearchProps {
-  selectedProperty: boolean;
-  searchType: "places" | "addresses";
-  setSearchType: Dispatch<SetStateAction<"places" | "addresses">>;
+  suggestions: PlacesSuggestion[] | []; // TODO: Add profile suggestions
+  searchType: SearchType;
+  setSearchType: Dispatch<SetStateAction<SearchType>>;
   queryLoading: boolean;
   handleUpdateQuery: (query: string) => void;
-  placesStreetsQuery: string;
-  addressesQuery: string;
+  handleSelect: (searchType: SearchType, suggestion: PlacesSuggestion) => void;
+  placesQuery: string;
+  profilesQuery: string;
   isSearching: boolean;
   handleUpdateIsSearching: (value: boolean) => void;
 }
 
-function MapSearchSuggestions({ searchType }: MapSearchProps) {
-  return <div className="w-full max-w-[900px]"></div>;
-}
-
 function MapSearch({
-  selectedProperty,
-
+  suggestions,
   searchType,
   setSearchType,
   queryLoading,
   handleUpdateQuery,
-  placesStreetsQuery,
-  addressesQuery,
+  handleSelect,
+  placesQuery,
+  profilesQuery,
   isSearching,
   handleUpdateIsSearching,
 }: MapSearchProps) {
@@ -51,9 +51,9 @@ function MapSearch({
         )}
       >
         <p
-          onClick={() => setSearchType("places")}
+          onClick={() => setSearchType("PLACES")}
           className={clsx(
-            searchType === "places"
+            searchType === "PLACES"
               ? "bg-accent text-tertiary"
               : "bg-white text-primary",
             "text-small px-3 py-1 text-center w-1/2 tracking-tighter cursor-pointer transition-all"
@@ -62,9 +62,9 @@ function MapSearch({
           Search
         </p>
         <p
-          onClick={() => setSearchType("addresses")}
+          onClick={() => setSearchType("PROFILES")}
           className={clsx(
-            searchType === "addresses"
+            searchType === "PROFILES"
               ? "bg-accent text-tertiary"
               : "bg-white text-primary",
             "text-small px-3 text-center py-1 w-1/2 tracking-tighter cursor-pointer transition-all duration-300"
@@ -74,12 +74,21 @@ function MapSearch({
         </p>
       </div>
 
-      <div className="flex px-3 py-1 bg-white shadow-lg justify-between">
+      <div
+        className={clsx(
+          isSearching
+            ? suggestions.length > 0
+              ? "rounded-none"
+              : "rounded-b-lg"
+            : "rounded-lg",
+          "flex px-3 py-1 bg-white shadow-lg justify-between transition-all"
+        )}
+      >
         <div className="flex w-full">
           <MapPinIcon
             width={16}
             className={clsx(
-              searchType === "places"
+              searchType === "PLACES"
                 ? queryLoading
                   ? "hidden"
                   : "block"
@@ -93,7 +102,7 @@ function MapSearch({
             className={clsx(
               !isSearching
                 ? "hidden"
-                : searchType === "addresses"
+                : searchType === "PROFILES"
                 ? queryLoading
                   ? "hidden"
                   : "block"
@@ -122,9 +131,7 @@ function MapSearch({
           <input
             autoComplete="shipping address-line1"
             value={
-              searchType === "places"
-                ? placesStreetsQuery ?? ""
-                : addressesQuery ?? ""
+              searchType === "PLACES" ? placesQuery ?? "" : profilesQuery ?? ""
             }
             onChange={(e) => handleUpdateQuery(e.target.value)}
             className={clsx(
@@ -132,7 +139,7 @@ function MapSearch({
               "text-small w-full focus:border-none placeholder:text-gray-300 bg-transparent text-primary px-3 tracking-tighter transition-all focus:outline-none focus:"
             )}
             placeholder={
-              searchType === "places"
+              searchType === "PLACES"
                 ? "neighborhood, restaurant, cafe.."
                 : "michaelscott"
             }
@@ -150,15 +157,9 @@ function MapSearch({
       </div>
 
       <MapSearchSuggestions
-        selectedProperty={selectedProperty}
+        suggestions={suggestions}
         searchType={searchType}
-        queryLoading={queryLoading}
-        setSearchType={setSearchType}
-        handleUpdateQuery={handleUpdateQuery}
-        placesStreetsQuery={placesStreetsQuery}
-        addressesQuery={addressesQuery}
-        handleUpdateIsSearching={handleUpdateIsSearching}
-        isSearching={isSearching}
+        handleSelect={handleSelect}
       />
     </div>
   );

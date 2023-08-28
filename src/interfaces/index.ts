@@ -33,3 +33,5 @@ export interface MapPosition {
   lng: number;
   zoom: number;
 }
+
+export type SearchType = "PLACES" | "PROFILES";

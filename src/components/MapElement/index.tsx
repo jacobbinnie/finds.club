@@ -2,11 +2,11 @@
 import clsx from "clsx";
 import { useEffect, useRef, useState } from "react";
 import mapboxgl from "mapbox-gl";
-import { MapPosition } from "@/interfaces";
+import { MapPosition, SearchType } from "@/interfaces";
 import { ArrowPathIcon } from "@heroicons/react/24/solid";
 import MapSearch from "../MapSearch";
-
-import { useRouter } from "next/navigation";
+import useSuggestPlaces from "@/hooks/useSuggestPlaces";
+import { PlacesSuggestion } from "@/interfaces/places";
 
 const access_token = process.env.NEXT_PUBLIC_MAPBOX_MAP_TOKEN || "";
 interface MapElementProps {
@@ -21,6 +21,40 @@ function MapElement({
   setMapPosition,
 }: MapElementProps) {
   const [currentMap, setCurrentMap] = useState<mapboxgl.Map | null>(null);
+  const [searchType, setSearchType] = useState<SearchType>("PLACES");
+
+  const [placesQuery, setPlacesQuery] = useState("");
+  const [profilesQuery, setProfilesQuery] = useState("");
+
+  const [isSearching, setIsSearching] = useState(false);
+
+  const resetQueries = () => {
+    setProfilesQuery("");
+    setPlacesQuery("");
+  };
+
+  const handleUpdateIsSearching = (value: boolean) => {
+    setIsSearching(value);
+  };
+
+  const handleUpdateQuery = (query: string) => {
+    if (searchType === "PLACES") {
+      setPlacesQuery(query);
+    } else {
+      setProfilesQuery(query);
+    }
+  };
+
+  const handleSelect = (
+    searchType: SearchType,
+    suggestion: PlacesSuggestion
+  ) => {};
+
+  const {
+    data: placesSuggestions,
+    setData: setPlacesSuggestions,
+    loading: placesLoading,
+  } = useSuggestPlaces(placesQuery);
 
   const [mapLoaded, setMapLoaded] = useState(false);
 
@@ -61,6 +95,11 @@ function MapElement({
   }, []);
 
   useEffect(() => {
+    resetQueries();
+    setPlacesSuggestions([]);
+  }, [searchType, isSearching]);
+
+  useEffect(() => {
     if (currentMap) {
       setTimeout(() => {
         currentMap.resize();
@@ -94,25 +133,20 @@ function MapElement({
         className="w-full transition-all h-[400px] sm:h-full"
       />
 
-      {/* <MapSearch
-        selectedProperty={selectedProperty ? true : false}
-        suggestions={
-          searchType === "places"
-            ? placesStreetsSuggestions
-            : addressSuggestions
-        }
+      <MapSearch
+        suggestions={searchType === "PLACES" ? placesSuggestions : []}
         searchType={searchType}
         setSearchType={setSearchType}
         queryLoading={
-          searchType === "places" ? placesStreetsLoading : addressLoading
+          searchType === "PLACES" ? placesLoading : false // TODO: Add profile loading
         }
         handleUpdateQuery={handleUpdateQuery}
-        placesStreetsQuery={placesStreetsQuery}
-        addressesQuery={addressesQuery}
+        handleSelect={handleSelect}
+        placesQuery={placesQuery}
+        profilesQuery={profilesQuery}
         isSearching={isSearching}
         handleUpdateIsSearching={handleUpdateIsSearching}
-        handleSelect={handleSelect}
-      /> */}
+      />
     </div>
   );
 }
