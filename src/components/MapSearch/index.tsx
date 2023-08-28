@@ -40,7 +40,7 @@ function MapSearch({
         isSearching
           ? "w-full sm:w-full max-w-[500px]"
           : "w-44 rounded-lg max-w-[500px]",
-        "gap-1 px-2 z-20 rounded-lg flex flex-col absolute top-2 text-tertiary text-small font-regular transition-all tracking-tighter"
+        "gap-1 px-[6px] z-20 rounded-lg flex flex-col absolute top-[6px] text-tertiary text-small font-regular transition-all tracking-tighter"
       )}
     >
       <div
