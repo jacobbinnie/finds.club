@@ -1,4 +1,5 @@
 "use client";
+import "mapbox-gl/dist/mapbox-gl.css";
 import clsx from "clsx";
 import { useEffect, useRef, useState } from "react";
 import mapboxgl from "mapbox-gl";
@@ -7,7 +8,6 @@ import { ArrowPathIcon } from "@heroicons/react/24/solid";
 import MapSearch from "../MapSearch";
 import useSuggestPlaces from "@/hooks/useSuggestPlaces";
 import {
-  PlacesFeature,
   PlacesSuggestion,
   isPlacesFeatureFullResponse,
 } from "@/interfaces/places";
@@ -129,12 +129,16 @@ function MapElement({
       attributionControl: false,
     });
 
-    const marker = new mapboxgl.Marker()
+    const marker = new mapboxgl.Marker({
+      anchor: "bottom",
+      color: "#00d688",
+      scale: 0.75,
+    })
       .setLngLat([mapPosition.lng, mapPosition.lat])
       .addTo(mapboxMap);
 
-    setCurrentMap(mapboxMap);
     setCurrentMarker(marker);
+    setCurrentMap(mapboxMap);
 
     mapboxMap.on("load", () => setMapLoaded(true));
 
