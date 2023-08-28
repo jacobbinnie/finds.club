@@ -1,16 +1,16 @@
 import { Database } from "@/libs/database.types";
 
-export type UserProfile = {
-  username: Database["public"]["Tables"]["profile"]["Row"]["username"];
-  description: Database["public"]["Tables"]["profile"]["Row"]["description"];
-};
-
+export type Profile = Database["public"]["Tables"]["profile"]["Row"];
 type Place = Database["public"]["Tables"]["places"]["Row"];
 
 export type Find = Database["public"]["Tables"]["finds"]["Row"] & {
   place: Place;
 };
 
+export type UserProfile = {
+  username: Database["public"]["Tables"]["profile"]["Row"]["username"];
+  description: Database["public"]["Tables"]["profile"]["Row"]["description"];
+};
 export interface ProfileAndFinds {
   username: UserProfile["username"];
   description: UserProfile["description"];
