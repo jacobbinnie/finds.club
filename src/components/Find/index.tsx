@@ -2,9 +2,10 @@ import { Find } from "@/interfaces";
 
 interface FindProps {
   find: Find;
+  isReviewLayout?: boolean;
 }
 
-function Find({ find }: FindProps) {
+function Find({ find, isReviewLayout }: FindProps) {
   return (
     <div
       key={find.id}
@@ -23,7 +24,7 @@ function Find({ find }: FindProps) {
 
       <p className="text-sm tracking-tighter font-light">{find.description}</p>
 
-      <p className="tracking-tighter font-light text-sm text-gray-300">
+      <p className="tracking-tighter font-light text-sm text-gray-200">
         {new Date(find.created_at).toDateString()}
       </p>
     </div>

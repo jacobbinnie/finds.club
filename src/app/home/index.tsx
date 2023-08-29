@@ -16,7 +16,7 @@ function Home() {
               </p>
               <input
                 placeholder="michaelscott"
-                className="w-full h-12 text-lg bg-transparent font-normal tracking-tighter placeholder:text-gray-300 focus:outline-none"
+                className="w-full h-12 text-lg bg-transparent font-normal tracking-tighter placeholder:text-gray-200 focus:outline-none"
               />
             </div>
             <p className="font-bold bg-accent px-6 h-12 flex items-center rounded-lg w-min whitespace-nowrap text-2xl tracking-tighter transition-all">

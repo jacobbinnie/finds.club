@@ -2,6 +2,7 @@ import { PlacesFeature } from "@/interfaces/places";
 import {
   ArrowLeftCircleIcon,
   ArrowTopRightOnSquareIcon,
+  PlusCircleIcon,
 } from "@heroicons/react/24/solid";
 
 interface PlaceOverviewProps {
@@ -32,22 +33,30 @@ function PlaceOverview({
 
   return (
     <div className="w-full sm:max-w-[500px] p-6 gap-3 flex flex-col h-screen">
-      <div className="flex justify-between">
+      <div className="flex w-full justify-between">
         <ArrowLeftCircleIcon
-          className="w-6 h-6 text-primary cursor-pointer hover:text-gray-300 transition-all"
+          className="w-6 h-6 text-primary cursor-pointer hover:text-gray-200 transition-all"
           onClick={() => handleUpdateSelectedPoi(null)}
         />
-        {selectedPoi?.properties.full_address && (
-          <a
-            target="_blank"
-            href={urlMapString}
-            rel="noopener noreferrer"
-            className="bg-accent whitespace-nowrap flex justify-center items-center px-2 rounded-lg text-sm tracking-tighter cursor-pointer hover:bg-gray-300 transition-all"
-          >
-            Open in maps
-            <ArrowTopRightOnSquareIcon className="w-3 h-3 ml-1" />
-          </a>
-        )}
+
+        <div className="flex items-center gap-3 justify-between">
+          <div className="flex items-center group gap-1 hover:bg-accent transition-all cursor-pointer bg-gray-200 px-2 py-1 rounded-lg">
+            <p className="tracking-tighter text-sm">Add to finds</p>
+            <PlusCircleIcon className="w-5 h-5 text-primary group-hover:rotate-180 transition-all" />
+          </div>
+
+          {selectedPoi?.properties.full_address && (
+            <a
+              target="_blank"
+              href={urlMapString}
+              rel="noopener noreferrer"
+              className="bg-accent whitespace-nowrap flex justify-center items-center px-2 py-1 rounded-lg text-sm tracking-tighter cursor-pointer hover:bg-gray-200 transition-all"
+            >
+              Open in maps
+              <ArrowTopRightOnSquareIcon className="w-3 h-3 ml-1" />
+            </a>
+          )}
+        </div>
       </div>
 
       <div className="w-full flex flex-col gap-1">
@@ -62,7 +71,12 @@ function PlaceOverview({
       <div className="flex gap-3 flex-wrap">{renderPoiCategories()}</div>
 
       <div className="w-full mt-6">
-        <p className="tracking-tighter text-sm font-bold">Reviews</p>
+        <div className="w-full flex justify-between">
+          <p className="tracking-tighter text-sm font-bold">Reviews</p>
+          <p className="bg-accent px-2 flex items-center  rounded-lg text-sm font-bold tracking-tighter">
+            Overall 8.9
+          </p>
+        </div>
       </div>
     </div>
   );

@@ -20,7 +20,7 @@ function MapSearchSuggestions({
       <ul
         className={clsx(
           suggestions.length > 0
-            ? "h-full border-t-gray-300 border-t-[1px]"
+            ? "h-full border-t-gray-200 border-t-[1px]"
             : "py-0 h-0",
           "w-full max-w-[900px] bg-white transition-all shadow-lg rounded-b-lg"
         )}

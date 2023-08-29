@@ -122,7 +122,7 @@ function MapSearch({
             onClick={() => handleUpdateIsSearching(true)}
             className={clsx(
               isSearching ? "hidden" : "block",
-              "text-small px-3 text-gray-300 w-full tracking-tighter cursor-pointer"
+              "text-small px-3 text-gray-200 w-full tracking-tighter cursor-pointer"
             )}
           >
             Search...
@@ -135,7 +135,7 @@ function MapSearch({
             onChange={(e) => handleUpdateQuery(e.target.value)}
             className={clsx(
               isSearching ? "block" : "hidden",
-              "text-small w-full focus:border-none placeholder:text-gray-300 bg-transparent text-primary px-3 tracking-tighter transition-all focus:outline-none focus:"
+              "text-small w-full focus:border-none placeholder:text-gray-200 bg-transparent text-primary px-3 tracking-tighter transition-all focus:outline-none focus:"
             )}
             placeholder={
               searchType === "PLACES"
@@ -150,7 +150,7 @@ function MapSearch({
           }}
           className={clsx(
             isSearching ? "block" : "hidden",
-            "w-5 text-gray-300 cursor-pointer"
+            "w-5 text-gray-200 cursor-pointer"
           )}
         />
       </div>
