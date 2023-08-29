@@ -4,6 +4,7 @@ import {
   ArrowTopRightOnSquareIcon,
   PlusCircleIcon,
 } from "@heroicons/react/24/solid";
+import ReviewEditor from "../ReviewEditor";
 
 interface PlaceOverviewProps {
   selectedPoi: PlacesFeature | null;
@@ -70,13 +71,14 @@ function PlaceOverview({
 
       <div className="flex gap-3 flex-wrap">{renderPoiCategories()}</div>
 
-      <div className="w-full mt-6">
+      <div className="w-full mt-6 flex flex-col gap-3">
         <div className="w-full flex justify-between">
           <p className="tracking-tighter text-sm font-bold">Reviews</p>
           <p className="bg-accent px-2 flex items-center  rounded-lg text-sm font-bold tracking-tighter">
             Overall 8.9
           </p>
         </div>
+        <ReviewEditor />
       </div>
     </div>
   );
