@@ -3,8 +3,10 @@ import {
   ArrowLeftCircleIcon,
   ArrowTopRightOnSquareIcon,
   PlusCircleIcon,
+  XCircleIcon,
 } from "@heroicons/react/24/solid";
 import ReviewEditor from "../ReviewEditor";
+import { useState } from "react";
 
 interface PlaceOverviewProps {
   selectedPoi: PlacesFeature | null;
@@ -15,6 +17,9 @@ function PlaceOverview({
   selectedPoi,
   handleUpdateSelectedPoi,
 }: PlaceOverviewProps) {
+  const [isReviewing, setIsReviewing] = useState<boolean>(false);
+  const [isSubmittingFind, setIsSubmittingFind] = useState<boolean>(false);
+
   const renderPoiCategories = () => {
     return selectedPoi?.properties?.poi_category?.map((category) => {
       return (
@@ -41,9 +46,18 @@ function PlaceOverview({
         />
 
         <div className="flex items-center gap-3 justify-between">
-          <div className="flex items-center group gap-1 hover:bg-accent transition-all cursor-pointer bg-gray-200 px-2 py-1 rounded-lg">
-            <p className="tracking-tighter text-sm">Add to finds</p>
-            <PlusCircleIcon className="w-5 h-5 text-primary group-hover:rotate-180 transition-all" />
+          <div
+            onClick={() => setIsReviewing((prev) => !prev)}
+            className="flex items-center group gap-1 hover:bg-accent transition-all cursor-pointer bg-gray-200 px-2 py-1 rounded-lg"
+          >
+            <p className="tracking-tighter text-sm">
+              {isReviewing ? "Cancel review" : "Add to finds"}
+            </p>
+            {isReviewing ? (
+              <XCircleIcon className="w-5 h-5 text-primary group-hover:rotate-180 transition-all" />
+            ) : (
+              <PlusCircleIcon className="w-5 h-5 text-primary group-hover:rotate-180 transition-all" />
+            )}
           </div>
 
           {selectedPoi?.properties.full_address && (
@@ -72,13 +86,17 @@ function PlaceOverview({
       <div className="flex gap-3 flex-wrap">{renderPoiCategories()}</div>
 
       <div className="w-full mt-6 flex flex-col gap-3">
+        <ReviewEditor
+          isReviewing={isReviewing}
+          isSubmittingFind={isSubmittingFind}
+        />
+
         <div className="w-full flex justify-between">
           <p className="tracking-tighter text-sm font-bold">Reviews</p>
-          <p className="bg-accent px-2 flex items-center  rounded-lg text-sm font-bold tracking-tighter">
+          <p className="bg-accent px-2 flex items-center rounded-lg text-sm tracking-tighter">
             Overall 8.9
           </p>
         </div>
-        <ReviewEditor />
       </div>
     </div>
   );
