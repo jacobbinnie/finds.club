@@ -8,6 +8,7 @@ import { useParams } from "next/navigation";
 import { ProfileAndFinds, isProfileAndFindsResponse } from "@/interfaces";
 import Profile from "@/components/Profile";
 import { usernamePattern } from "@/utils/utils";
+import PlaceOverview from "@/components/PlaceOverview";
 
 function Home() {
   const { mapPosition, setMapPosition } = useLocation();
@@ -18,6 +19,8 @@ function Home() {
     useState<ProfileAndFinds | null>();
 
   const [invalidUsername, setInvalidUsername] = useState(false);
+
+  const { selectedPoi, handleUpdateSelectedPoi } = useLocation();
 
   const params = useParams();
 
@@ -72,11 +75,18 @@ function Home() {
           setMapPosition={setMapPosition}
           fullScreen={true}
         />
-        <Profile
-          loading={loading}
-          profileAndFinds={profileAndFinds}
-          invalidUsername={invalidUsername}
-        />
+        {selectedPoi ? (
+          <PlaceOverview
+            selectedPoi={selectedPoi}
+            handleUpdateSelectedPoi={handleUpdateSelectedPoi}
+          />
+        ) : (
+          <Profile
+            loading={loading}
+            profileAndFinds={profileAndFinds}
+            invalidUsername={invalidUsername}
+          />
+        )}
       </div>
     </div>
   );

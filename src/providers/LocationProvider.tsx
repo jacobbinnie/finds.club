@@ -7,7 +7,7 @@ interface LocationContextValues {
   mapPosition: MapPosition;
   setMapPosition: (mapPosition: MapPosition) => void;
   selectedPoi: PlacesFeature | null;
-  handleUpdateSelectedPoi: (value: PlacesFeature) => void;
+  handleUpdateSelectedPoi: (value: PlacesFeature | null) => void;
 }
 
 const LocationContext = createContext<LocationContextValues>({

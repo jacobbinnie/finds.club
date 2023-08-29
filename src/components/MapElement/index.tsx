@@ -125,6 +125,12 @@ function MapElement({
           setCurrentMarker(marker);
         }
       }
+    } else {
+      currentMarker?.remove();
+      setCurrentMarker(null);
+      currentMap?.flyTo({
+        zoom: 5,
+      });
     }
   }, [selectedPoi]);
 
