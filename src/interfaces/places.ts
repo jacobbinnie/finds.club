@@ -130,9 +130,9 @@ export interface PlaceDeconstructed {
   full_address: string;
   lat: number;
   lng: number;
-  locality?: string;
-  region?: string;
-  country?: string;
-  categories?: string[];
-  postcode?: string;
+  locality: string | null;
+  region: string | null;
+  country: string | null;
+  categories: string[] | null;
+  postcode: string | null;
 }

@@ -31,6 +31,11 @@ function Find({ find, isReviewLayout }: FindProps) {
           lat: find.place.lat,
           lng: find.place.lng,
           mapbox_hash_id: find.place.id,
+          categories: find.place.categories,
+          locality: find.place.locality,
+          region: find.place.region,
+          country: find.place.country,
+          postcode: find.place.postcode,
         })
       }
       key={find.id}

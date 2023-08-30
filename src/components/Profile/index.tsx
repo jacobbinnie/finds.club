@@ -69,7 +69,7 @@ function Profile({ profileAndFinds, loading, invalidUsername }: ProfileProps) {
   };
 
   return (
-    <div className="w-full sm:max-w-[500px] px-6 flex flex-col items-center gap-6 h-screen">
+    <div className="w-full sm:max-w-[500px] px-6 flex flex-col items-center gap-6 min-h-screen max-h-screen overflow-scroll">
       {DisplaySwitch}
       {renderFinds()}
     </div>
