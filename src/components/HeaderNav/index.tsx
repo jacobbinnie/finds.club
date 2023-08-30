@@ -1,5 +1,6 @@
 "use client";
 import { useSupabase } from "@/providers/SupabaseProvider";
+import { supabase } from "@/utils/supabase";
 import { Bars3Icon } from "@heroicons/react/24/solid";
 import clsx from "clsx";
 import { usePathname, useRouter } from "next/navigation";
@@ -106,6 +107,12 @@ function HeaderNav() {
               </button>
               <button className="block py-2 text-small text-gray-500 md:mt-0 hover:text-accent focus:outline-none focus:shadow-outline">
                 <div className="w-6 h-6 rounded-full bg-accent" />
+              </button>
+              <button
+                onClick={() => supabase.auth.signOut()}
+                className="text-small text-secondary hover:text-accent transition-all whitespace-nowrap"
+              >
+                Logout
               </button>
             </div>
           ) : (
