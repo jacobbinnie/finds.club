@@ -13,7 +13,7 @@ import * as crypto from "crypto";
 
 interface PlaceOverviewProps {
   selectedPoi: PlaceDeconstructed | null;
-  handleUpdateSelectedPoi: (value: PlacesFeature | null) => void;
+  handleUpdateSelectedPoi: (value: PlaceDeconstructed | null) => void;
 }
 
 function PlaceOverview({
