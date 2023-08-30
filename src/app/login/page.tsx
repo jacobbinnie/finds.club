@@ -23,8 +23,8 @@ export default function Login() {
         </p>
       </Marquee>
 
-      <div className="flex mt-10">
-        <div className="flex flex-col items-center gap-6">
+      <div className="flex mt-10 w-full">
+        <div className="flex flex-col w-full items-center gap-6">
           <h1 className="text-3xl tracking-tighter font-bold">
             Sign in / Sign up
           </h1>
@@ -39,9 +39,27 @@ export default function Login() {
                     backgroundColor: "white",
                     color: "black",
                     borderColor: "black",
+                    fontSize: "16px",
+                    letterSpacing: "-0.05em",
                   },
                   container: {
                     width: "100%",
+                    letterSpacing: "-0.05em",
+                  },
+                  input: {
+                    fontSize: "16px",
+                    letterSpacing: "-0.05em",
+                  },
+                  label: {
+                    fontSize: "16px",
+                    letterSpacing: "-0.05em",
+                  },
+                  loader: {
+                    color: "black",
+                  },
+                  anchor: {
+                    fontSize: "16px",
+                    letterSpacing: "-0.05em",
                   },
                 },
               }}
@@ -49,6 +67,7 @@ export default function Login() {
           </div>
         </div>
       </div>
+
       <div className="w-full fixed bottom-0">
         <Marquee autoFill speed={15} className="bg-accent">
           <p className="text-sm tracking-tighter font-bold px-6 py-1">

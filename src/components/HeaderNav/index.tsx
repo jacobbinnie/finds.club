@@ -102,17 +102,17 @@ function HeaderNav() {
         <div className="flex items-center gap-6">
           {profile ? (
             <div className="flex items-center gap-6 list-none lg:ml-auto">
-              <button className="inline-flex tracking-tighter items-center justify-center px-4 py-1 text-small transition-all hover:px-10 hover:shadow-lg rounded-md text-tertiary bg-primary group focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 hover:bg-accent">
+              {/* <button className="inline-flex tracking-tighter items-center justify-center px-4 py-1 text-small transition-all hover:px-10 hover:shadow-lg rounded-md text-tertiary bg-primary group focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 hover:bg-accent">
                 Messages
-              </button>
-              <button className="block py-2 text-small text-gray-500 md:mt-0 hover:text-accent focus:outline-none focus:shadow-outline">
-                <div className="w-6 h-6 rounded-full bg-accent" />
-              </button>
+              </button> */}
               <button
                 onClick={() => supabase.auth.signOut()}
                 className="text-small text-secondary hover:text-accent transition-all whitespace-nowrap"
               >
                 Logout
+              </button>
+              <button className="block py-2 text-small text-gray-500 md:mt-0 hover:text-accent focus:outline-none focus:shadow-outline">
+                <div className="w-6 h-6 rounded-full bg-accent" />
               </button>
             </div>
           ) : (
