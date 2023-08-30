@@ -1,4 +1,4 @@
-import { PlaceDeconstructed, PlacesFeature } from "@/interfaces/places";
+import { PlaceDeconstructed } from "@/interfaces/places";
 import {
   ArrowLeftCircleIcon,
   ArrowTopRightOnSquareIcon,
@@ -74,6 +74,7 @@ function PlaceOverview({
             submitFind(place.data[0].id);
           } else {
             if (selectedPoi?.full_address) {
+              console.log(selectedPoi);
               supabase
                 .from("places")
                 .insert([
@@ -90,6 +91,7 @@ function PlaceOverview({
                     postcode: selectedPoi?.postcode,
                     region: selectedPoi?.region,
                     country: selectedPoi?.country,
+                    categories: selectedPoi?.categories,
                   },
                 ])
                 .select()

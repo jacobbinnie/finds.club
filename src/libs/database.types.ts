@@ -51,6 +51,7 @@ export interface Database {
       }
       places: {
         Row: {
+          categories: string[] | null
           country: string | null
           created_at: string
           full_address: string
@@ -64,6 +65,7 @@ export interface Database {
           region: string | null
         }
         Insert: {
+          categories?: string[] | null
           country?: string | null
           created_at?: string
           full_address: string
@@ -77,6 +79,7 @@ export interface Database {
           region?: string | null
         }
         Update: {
+          categories?: string[] | null
           country?: string | null
           created_at?: string
           full_address?: string

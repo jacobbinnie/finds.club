@@ -22,7 +22,8 @@ export async function GET(request: NextRequest) {
       lng,
       locality,
       region,
-      country
+      country,
+      categories
     )
    )
   `
