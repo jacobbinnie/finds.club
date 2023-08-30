@@ -1,4 +1,5 @@
 import { Find } from "@/interfaces";
+import { useLocation } from "@/providers/LocationProvider";
 
 interface FindProps {
   find: Find;
@@ -6,14 +7,25 @@ interface FindProps {
 }
 
 function Find({ find, isReviewLayout }: FindProps) {
+  const { handleUpdateSelectedPoi } = useLocation();
+
   return (
     <div
+      onClick={() =>
+        handleUpdateSelectedPoi({
+          full_address: find.place.full_address,
+          name: find.place.name,
+          lat: find.place.lng, // TODO: FIX THESE, WRONG WAY ROUND
+          lng: find.place.lat,
+          mapbox_hash_id: find.place.id,
+        })
+      }
       key={find.id}
       className="w-full flex gap-2 flex-col bg-white hover:bg-slate-50 shadow-lg p-4 rounded-lg cursor-pointer transition-all"
     >
       <div className="flex justify-between">
         <p className="bg-primary w-min whitespace-nowrap h-min px-2 py-1 text-tertiary rounded-lg text-sm font-light tracking-tighter">
-          {find.place.neighborhood}
+          {find.place.locality || find.place.region || find.place.country}
         </p>
         <p className="bg-accent h-min px-2 py-1 flex items-center text-tertiary rounded-lg text-sm font-bold tracking-tighter">
           {find.rating}
@@ -22,7 +34,9 @@ function Find({ find, isReviewLayout }: FindProps) {
 
       <p className="text-md font-bold tracking-tighter">{find.place.name}</p>
 
-      <p className="text-sm tracking-tighter font-light">{find.description}</p>
+      <p className="text-sm tracking-tighter font-light">
+        {find.place.full_address}
+      </p>
 
       <p className="tracking-tighter font-light text-sm text-gray-200">
         {new Date(find.created_at).toDateString()}

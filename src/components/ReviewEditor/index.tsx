@@ -5,11 +5,28 @@ import { useState } from "react";
 interface ReviewEditorProps {
   isReviewing: boolean;
   isSubmittingFind: boolean;
+  submitFindReview: (
+    review: string,
+    rating: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10
+  ) => Promise<void>;
 }
 
-function ReviewEditor({ isReviewing, isSubmittingFind }: ReviewEditorProps) {
+function ReviewEditor({
+  isReviewing,
+  isSubmittingFind,
+  submitFindReview,
+}: ReviewEditorProps) {
   const [review, setReview] = useState<string>("");
   const [rating, setRating] = useState<number>(0);
+
+  const handleSubmitFind = () => {
+    if (review.length >= 20 && rating > 0 && rating <= 10) {
+      submitFindReview(
+        review,
+        rating as 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10
+      );
+    }
+  };
 
   const handleUpdateReview = (value: string) => {
     if (value.length <= 180 && review.length <= 180) {
@@ -20,9 +37,10 @@ function ReviewEditor({ isReviewing, isSubmittingFind }: ReviewEditorProps) {
   };
 
   const renderRatingValues = () => {
-    return [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((value) => {
+    return [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((value, key) => {
       return (
         <button
+          key={key}
           disabled={isSubmittingFind}
           onClick={() =>
             setRating((prev) => {
@@ -74,6 +92,7 @@ function ReviewEditor({ isReviewing, isSubmittingFind }: ReviewEditorProps) {
       <div className="flex justify-between gap-1">{renderRatingValues()}</div>
 
       <button
+        onClick={handleSubmitFind}
         disabled={isSubmittingFind || review.length < 20}
         className="bg-accent transition-all disabled:bg-gray-200 disabled:text-gray-300 flex gap-1 items-center justify-center w-full rounded-lg text-sm py-2 tracking-tighter"
       >

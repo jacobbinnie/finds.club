@@ -12,27 +12,27 @@ export interface Database {
       finds: {
         Row: {
           created_at: string
-          description: string | null
           id: string
           place: string
           rating: number
-          user_find: string
+          review: string
+          user_id: string
         }
         Insert: {
           created_at?: string
-          description?: string | null
           id?: string
           place: string
           rating: number
-          user_find: string
+          review: string
+          user_id: string
         }
         Update: {
           created_at?: string
-          description?: string | null
           id?: string
           place?: string
           rating?: number
-          user_find?: string
+          review?: string
+          user_id?: string
         }
         Relationships: [
           {
@@ -42,8 +42,8 @@ export interface Database {
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "finds_user_find_fkey"
-            columns: ["user_find"]
+            foreignKeyName: "finds_user_id_fkey"
+            columns: ["user_id"]
             referencedRelation: "profile"
             referencedColumns: ["id"]
           }
@@ -51,28 +51,43 @@ export interface Database {
       }
       places: {
         Row: {
+          country: string | null
           created_at: string
+          full_address: string
+          hashed_mapbox_id: string
           id: string
-          lat: string
-          lng: string
+          lat: number
+          lng: number
+          locality: string | null
           name: string
-          neighborhood: string
+          postcode: string | null
+          region: string | null
         }
         Insert: {
+          country?: string | null
           created_at?: string
-          id: string
-          lat: string
-          lng: string
+          full_address: string
+          hashed_mapbox_id: string
+          id?: string
+          lat: number
+          lng: number
+          locality?: string | null
           name: string
-          neighborhood: string
+          postcode?: string | null
+          region?: string | null
         }
         Update: {
+          country?: string | null
           created_at?: string
+          full_address?: string
+          hashed_mapbox_id?: string
           id?: string
-          lat?: string
-          lng?: string
+          lat?: number
+          lng?: number
+          locality?: string | null
           name?: string
-          neighborhood?: string
+          postcode?: string | null
+          region?: string | null
         }
         Relationships: []
       }

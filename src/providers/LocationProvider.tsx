@@ -1,13 +1,13 @@
 "use client";
 import React, { createContext, useContext, useState } from "react";
 import { MapPosition } from "../interfaces";
-import { PlacesFeature } from "@/interfaces/places";
+import { PlaceDeconstructed, PlacesFeature } from "@/interfaces/places";
 
 interface LocationContextValues {
   mapPosition: MapPosition;
   setMapPosition: (mapPosition: MapPosition) => void;
-  selectedPoi: PlacesFeature | null;
-  handleUpdateSelectedPoi: (value: PlacesFeature | null) => void;
+  selectedPoi: PlaceDeconstructed | null;
+  handleUpdateSelectedPoi: (value: PlaceDeconstructed | null) => void;
 }
 
 const LocationContext = createContext<LocationContextValues>({
@@ -22,7 +22,9 @@ interface LocationProviderOptions {
 }
 
 export const LocationProvider = ({ children }: LocationProviderOptions) => {
-  const [selectedPoi, setSelectedPoi] = useState<PlacesFeature | null>(null);
+  const [selectedPoi, setSelectedPoi] = useState<PlaceDeconstructed | null>(
+    null
+  );
 
   const [mapPosition, setMapPosition] = useState<MapPosition>({
     lat: 40.776676,
@@ -30,7 +32,7 @@ export const LocationProvider = ({ children }: LocationProviderOptions) => {
     zoom: 0,
   });
 
-  const handleUpdateSelectedPoi = (value: PlacesFeature | null) => {
+  const handleUpdateSelectedPoi = (value: PlaceDeconstructed | null) => {
     setSelectedPoi(value);
   };
 

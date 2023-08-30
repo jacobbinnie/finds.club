@@ -1,7 +1,6 @@
 import { ProfileAndFinds } from "@/interfaces";
 import { ArrowPathIcon } from "@heroicons/react/24/solid";
 import Find from "../Find";
-import { profile } from "console";
 
 interface ProfileProps {
   profileAndFinds: ProfileAndFinds | null | undefined;
@@ -37,7 +36,10 @@ function Profile({ profileAndFinds, loading, invalidUsername }: ProfileProps) {
           <p className="tracking-tighter">{profileAndFinds?.description}</p>
           <p className="tracking-tighter font-bold">
             {profileAndFinds?.finds.length} find
-            {profileAndFinds && profileAndFinds?.finds.length > 1 ? "s" : ""}
+            {(profileAndFinds && profileAndFinds?.finds.length > 1) ||
+            profileAndFinds?.finds.length === 0
+              ? "s"
+              : ""}
           </p>
         </div>
       </div>

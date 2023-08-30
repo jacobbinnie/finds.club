@@ -123,3 +123,16 @@ export function isPlacesFeatureFullResponse(
   }
   return false;
 }
+
+export interface PlaceDeconstructed {
+  mapbox_hash_id: string;
+  name: string;
+  full_address: string;
+  lat: number;
+  lng: number;
+  locality?: string;
+  region?: string;
+  country?: string;
+  categories?: string[];
+  postcode?: string;
+}

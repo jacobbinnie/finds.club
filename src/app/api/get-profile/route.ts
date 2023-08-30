@@ -13,13 +13,16 @@ export async function GET(request: NextRequest) {
    description,
    finds (
     created_at,
-    description,
     rating,
+    review,
     place (
       name,
-      neighborhood,
+      full_address,
       lat,
-      lng
+      lng,
+      locality,
+      region,
+      country
     )
    )
   `

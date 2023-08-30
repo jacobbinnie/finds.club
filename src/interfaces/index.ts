@@ -1,7 +1,7 @@
 import { Database } from "@/libs/database.types";
 
 export type Profile = Database["public"]["Tables"]["profile"]["Row"];
-type Place = Database["public"]["Tables"]["places"]["Row"];
+export type Place = Database["public"]["Tables"]["places"]["Row"];
 
 export type Find = Database["public"]["Tables"]["finds"]["Row"] & {
   place: Place;

@@ -1,4 +1,5 @@
 "use client";
+import * as crypto from "crypto";
 import "mapbox-gl/dist/mapbox-gl.css";
 import clsx from "clsx";
 import { useEffect, useRef, useState } from "react";
@@ -65,7 +66,27 @@ function MapElement({
         .then((data) => {
           if (isPlacesFeatureFullResponse(data)) {
             setIsSearching(false);
-            handleUpdateSelectedPoi(data.features[0]);
+
+            if (
+              data.features[0].properties.full_address &&
+              data.features[0].properties.mapbox_id
+            ) {
+              const placeDeconstructed = {
+                mapbox_hash_id: crypto
+                  .createHash("md5")
+                  .update(data.features[0].properties.mapbox_id)
+                  .digest("hex"),
+                name: data.features[0].properties.name,
+                full_address: data.features[0].properties.full_address,
+                locality: data.features[0].properties.context.locality?.name,
+                region: data.features[0].properties.context.region?.name,
+                country: data.features[0].properties.context.country?.name,
+                lat: data.features[0].geometry.coordinates[0],
+                lng: data.features[0].geometry.coordinates[1],
+                categories: data.features[0].properties.poi_category,
+              };
+              handleUpdateSelectedPoi(placeDeconstructed);
+            }
           } else {
             console.log("Something went wrong");
           }
@@ -92,23 +113,14 @@ function MapElement({
 
   useEffect(() => {
     if (selectedPoi) {
-      if (
-        selectedPoi?.geometry.coordinates[0] &&
-        selectedPoi?.geometry.coordinates[1]
-      ) {
+      if (selectedPoi?.lat && selectedPoi?.lng) {
         currentMap?.flyTo({
-          center: [
-            selectedPoi.geometry.coordinates[0],
-            selectedPoi.geometry.coordinates[1],
-          ],
+          center: [selectedPoi.lat, selectedPoi.lng],
           zoom: 15,
         });
       }
       if (currentMarker) {
-        currentMarker?.setLngLat([
-          selectedPoi?.geometry.coordinates[0],
-          selectedPoi?.geometry.coordinates[1],
-        ]);
+        currentMarker?.setLngLat([selectedPoi?.lat, selectedPoi?.lng]);
       } else {
         if (currentMap) {
           const marker = new mapboxgl.Marker({
@@ -116,10 +128,7 @@ function MapElement({
             color: "#00d688",
             scale: 0.75,
           })
-            .setLngLat([
-              selectedPoi?.geometry.coordinates[0],
-              selectedPoi?.geometry.coordinates[1],
-            ])
+            .setLngLat([selectedPoi?.lat, selectedPoi?.lng])
             .addTo(currentMap);
 
           setCurrentMarker(marker);

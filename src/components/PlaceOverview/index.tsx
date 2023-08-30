@@ -1,4 +1,4 @@
-import { PlacesFeature } from "@/interfaces/places";
+import { PlaceDeconstructed, PlacesFeature } from "@/interfaces/places";
 import {
   ArrowLeftCircleIcon,
   ArrowTopRightOnSquareIcon,
@@ -7,9 +7,12 @@ import {
 } from "@heroicons/react/24/solid";
 import ReviewEditor from "../ReviewEditor";
 import { useState } from "react";
+import { supabase } from "@/utils/supabase";
+import { useSupabase } from "@/providers/SupabaseProvider";
+import * as crypto from "crypto";
 
 interface PlaceOverviewProps {
-  selectedPoi: PlacesFeature | null;
+  selectedPoi: PlaceDeconstructed | null;
   handleUpdateSelectedPoi: (value: PlacesFeature | null) => void;
 }
 
@@ -20,10 +23,94 @@ function PlaceOverview({
   const [isReviewing, setIsReviewing] = useState<boolean>(false);
   const [isSubmittingFind, setIsSubmittingFind] = useState<boolean>(false);
 
+  const { profile } = useSupabase();
+
+  const submitFindReview = async (
+    review: string,
+    rating: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10
+  ) => {
+    setIsSubmittingFind(true);
+
+    const submitFind = (placeId: string) => {
+      if (profile?.id) {
+        supabase
+          .from("finds")
+          .insert([
+            {
+              review,
+              place: placeId,
+              rating,
+              user_id: profile?.id,
+            },
+          ])
+          .select()
+          .then((res) => {
+            if (res) {
+              setIsReviewing(false);
+              setIsSubmittingFind(false);
+            }
+          });
+      }
+    };
+
+    if (selectedPoi) {
+      supabase
+        .from("places")
+        .select("*")
+        .eq(
+          "hashed_mapbox_id",
+          crypto
+            .createHash("md5")
+            .update(selectedPoi?.mapbox_hash_id)
+            .digest("hex")
+        )
+        .eq("name", selectedPoi?.name)
+
+        .throwOnError()
+
+        .then((place) => {
+          if (place.data && place.data.length > 0) {
+            console.log("Trying to submit first find step");
+            submitFind(place.data[0].id);
+          } else {
+            if (selectedPoi?.full_address) {
+              supabase
+                .from("places")
+                .insert([
+                  {
+                    hashed_mapbox_id: crypto
+                      .createHash("md5")
+                      .update(selectedPoi?.mapbox_hash_id)
+                      .digest("hex"),
+                    name: selectedPoi?.name,
+                    full_address: selectedPoi?.full_address,
+                    lat: selectedPoi?.lat,
+                    lng: selectedPoi?.lng,
+                    locality: selectedPoi?.locality,
+                    postcode: selectedPoi?.postcode,
+                    region: selectedPoi?.region,
+                    country: selectedPoi?.country,
+                  },
+                ])
+                .select()
+                .then((place) => {
+                  if (place.data && place.data.length > 0) {
+                    submitFind(place.data[0].id);
+                  }
+                });
+            }
+          }
+        });
+    }
+  };
+
   const renderPoiCategories = () => {
-    return selectedPoi?.properties?.poi_category?.map((category) => {
+    return selectedPoi?.categories?.map((category, key) => {
       return (
-        <p className="bg-accent whitespace-nowrap px-2 rounded-lg text-sm tracking-tighter">
+        <p
+          key={key}
+          className="bg-accent whitespace-nowrap px-2 rounded-lg text-sm tracking-tighter"
+        >
           {category}
         </p>
       );
@@ -31,11 +118,11 @@ function PlaceOverview({
   };
 
   const urlMapString =
-    selectedPoi?.properties.full_address &&
+    selectedPoi?.full_address &&
     "https://www.google.com/maps/search/?api=1&query=" +
-      encodeURIComponent(selectedPoi.properties.name) +
+      encodeURIComponent(selectedPoi.name) +
       " " +
-      encodeURIComponent(selectedPoi?.properties.full_address);
+      encodeURIComponent(selectedPoi?.full_address);
 
   return (
     <div className="w-full sm:max-w-[500px] p-6 gap-3 flex flex-col h-screen">
@@ -60,7 +147,7 @@ function PlaceOverview({
             )}
           </div>
 
-          {selectedPoi?.properties.full_address && (
+          {selectedPoi?.full_address && (
             <a
               target="_blank"
               href={urlMapString}
@@ -76,11 +163,9 @@ function PlaceOverview({
 
       <div className="w-full flex flex-col gap-1">
         <h1 className="text-2xl tracking-tighter font-bold">
-          {selectedPoi?.properties.name}
+          {selectedPoi?.name}
         </h1>
-        <p className="tracking-tighter text-sm">
-          {selectedPoi?.properties.full_address}
-        </p>
+        <p className="tracking-tighter text-sm">{selectedPoi?.full_address}</p>
       </div>
 
       <div className="flex gap-3 flex-wrap">{renderPoiCategories()}</div>
@@ -89,6 +174,7 @@ function PlaceOverview({
         <ReviewEditor
           isReviewing={isReviewing}
           isSubmittingFind={isSubmittingFind}
+          submitFindReview={submitFindReview}
         />
 
         <div className="w-full flex justify-between">
