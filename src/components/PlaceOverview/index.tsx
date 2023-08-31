@@ -84,7 +84,7 @@ function PlaceOverview({
       supabase
         .from("places")
         .select("*")
-        .eq("hashed_mapbox_id", hashString(selectedPoi?.hashed_mapbox_id))
+        .eq("hashed_mapbox_id", selectedPoi?.hashed_mapbox_id)
         .eq("name", selectedPoi?.name)
 
         .throwOnError()
