@@ -170,8 +170,8 @@ function MapElement({
     mapboxMap.on("load", () => setMapLoaded(true));
 
     const secondsPerRevolution = 360;
-    const maxSpinZoom = 5;
-    const slowSpinZoom = 5;
+    const maxSpinZoom = 4;
+    const slowSpinZoom = 4;
 
     let userInteracting = false;
     const spinEnabled = true;
