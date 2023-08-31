@@ -7,6 +7,40 @@ export type Find = Database["public"]["Tables"]["finds"]["Row"] & {
   place: Place;
 };
 
+type ReviewProfile = {
+  username: string;
+};
+
+export type Review = {
+  id: string;
+  created_at: string;
+  rating: number;
+  review: string;
+  profile: ReviewProfile;
+};
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function isArrayOfReviews(data: any): data is Review[] {
+  if (!Array.isArray(data)) {
+    return false;
+  }
+
+  for (const item of data) {
+    if (
+      typeof item.id !== "string" ||
+      typeof item.created_at !== "string" ||
+      typeof item.rating !== "number" ||
+      typeof item.review !== "string" ||
+      !item.profile ||
+      typeof item.profile.username !== "string"
+    ) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
 export type UserProfile = {
   username: Database["public"]["Tables"]["profile"]["Row"]["username"];
   description: Database["public"]["Tables"]["profile"]["Row"]["description"];

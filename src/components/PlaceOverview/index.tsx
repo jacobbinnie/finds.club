@@ -7,11 +7,11 @@ import {
   XCircleIcon,
 } from "@heroicons/react/24/solid";
 import ReviewEditor from "../ReviewEditor";
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { supabase } from "@/utils/supabase";
 import { useSupabase } from "@/providers/SupabaseProvider";
 import * as crypto from "crypto";
-import { ProfileAndFinds } from "@/interfaces";
+import { ProfileAndFinds, Review, isArrayOfReviews } from "@/interfaces";
 import JSConfetti from "js-confetti";
 
 interface PlaceOverviewProps {
@@ -29,6 +29,7 @@ function PlaceOverview({
 }: PlaceOverviewProps) {
   const [isReviewing, setIsReviewing] = useState<boolean>(false);
   const [isSubmittingFind, setIsSubmittingFind] = useState<boolean>(false);
+  const [reviews, setReviews] = useState<Review[]>([]);
 
   const checkUserFind = () => {
     if (profileAndFinds?.finds) {
@@ -38,12 +39,37 @@ function PlaceOverview({
     }
     return false;
   };
-
   const [isUserFind, setIsUserFind] = useState<boolean>(checkUserFind());
 
   const jsConfetti = new JSConfetti();
 
   const { profile } = useSupabase();
+
+  const getReviews = useCallback(() => {
+    supabase
+      .from("finds")
+      .select(
+        `
+        id,
+        created_at,
+        rating,
+        review,
+        profile (
+          username
+        )
+        `
+      )
+      .eq("place", selectedPoi?.hashed_mapbox_id)
+      .then((res) => {
+        if (res.data && res.data.length > 0) {
+          isArrayOfReviews(res.data) && setReviews(res.data);
+        }
+      });
+  }, [isUserFind]);
+
+  useEffect(() => {
+    getReviews();
+  }, [isUserFind]);
 
   const submitFindReview = async (
     review: string,
@@ -141,6 +167,27 @@ function PlaceOverview({
     });
   };
 
+  const renderReviews = () => {
+    return reviews.map((review, key) => {
+      return (
+        <div
+          key={key}
+          className="w-full flex flex-col gap-1 border-b border-gray-200 pb-2"
+        >
+          <div className="flex justify-between">
+            <p className="tracking-tighter text-sm font-bold">
+              {review.profile.username}
+            </p>
+            <p className="bg-accent px-2 flex items-center rounded-lg text-sm tracking-tighter">
+              {review.rating}
+            </p>
+          </div>
+          <p className="tracking-tighter text-sm">{review.review}</p>
+        </div>
+      );
+    });
+  };
+
   const urlMapString =
     selectedPoi?.full_address &&
     "https://www.google.com/maps/search/?api=1&query=" +
@@ -216,6 +263,7 @@ function PlaceOverview({
           </p>
         </div>
       </div>
+      {renderReviews()}
     </div>
   );
 }
