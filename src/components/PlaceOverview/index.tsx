@@ -7,7 +7,7 @@ import {
   XCircleIcon,
 } from "@heroicons/react/24/solid";
 import ReviewEditor from "../ReviewEditor";
-import { useCallback, useEffect, useState } from "react";
+import { use, useCallback, useEffect, useState } from "react";
 import { supabase } from "@/utils/supabase";
 import { useSupabase } from "@/providers/SupabaseProvider";
 import * as crypto from "crypto";
@@ -31,21 +31,20 @@ function PlaceOverview({
   const [isSubmittingFind, setIsSubmittingFind] = useState<boolean>(false);
   const [reviews, setReviews] = useState<Review[]>([]);
 
-  const checkUserFind = () => {
-    if (profileAndFinds?.finds) {
-      return profileAndFinds?.finds.some(
-        (find) => find.place.hashed_mapbox_id === selectedPoi?.hashed_mapbox_id
-      );
-    }
-    return false;
-  };
-  const [isUserFind, setIsUserFind] = useState<boolean>(checkUserFind());
+  const [isUserFind, setIsUserFind] = useState<boolean>(false);
 
   const jsConfetti = new JSConfetti();
 
   const { profile } = useSupabase();
 
-  const getReviews = useCallback(() => {
+  const checkUserFind = () => {
+    const bool = profileAndFinds?.finds.some(
+      (find) => find.place.hashed_mapbox_id === selectedPoi?.hashed_mapbox_id
+    );
+    bool ? setIsUserFind(true) : setIsUserFind(false);
+  };
+
+  const checkReviews = () => {
     supabase
       .from("finds")
       .select(
@@ -62,14 +61,16 @@ function PlaceOverview({
       .eq("place", selectedPoi?.hashed_mapbox_id)
       .then((res) => {
         if (res.data && res.data.length > 0) {
-          isArrayOfReviews(res.data) && setReviews(res.data);
+          isArrayOfReviews(res.data) ? setReviews(res.data) : setReviews([]);
         }
       });
-  }, [isUserFind]);
+  };
 
   useEffect(() => {
-    getReviews();
-  }, [isUserFind]);
+    checkUserFind();
+    checkReviews();
+    console.log("Triggered");
+  }, [selectedPoi]);
 
   const submitFindReview = async (
     review: string,
@@ -95,6 +96,7 @@ function PlaceOverview({
               fetchProfile().then(() => {
                 jsConfetti.addConfetti();
                 setIsUserFind(true);
+                checkReviews();
                 setIsReviewing(false);
                 setIsSubmittingFind(false);
               });
