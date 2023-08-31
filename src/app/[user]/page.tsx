@@ -5,7 +5,12 @@ import NavBar from "@/components/HeaderNav";
 import { useLocation } from "@/providers/LocationProvider";
 import { useCallback, useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import { ProfileAndFinds, isProfileAndFindsResponse } from "@/interfaces";
+import {
+  ProfileAndFinds,
+  Review,
+  isArrayOfReviews,
+  isProfileAndFindsResponse,
+} from "@/interfaces";
 import Profile from "@/components/Profile";
 import { usernamePattern } from "@/utils/utils";
 import PlaceOverview from "@/components/PlaceOverview";
@@ -17,6 +22,7 @@ function Home() {
   const [username, setUsername] = useState<string>();
   const [profileAndFinds, setProfileAndFinds] =
     useState<ProfileAndFinds | null>();
+  const [placeReviews, setPlaceReviews] = useState<Review[] | "LOADING">([]);
 
   const [invalidUsername, setInvalidUsername] = useState(false);
 
@@ -35,6 +41,24 @@ function Home() {
         : setInvalidUsername(true);
     }
   }, [params]);
+
+  const fetchPlaceReviews = useCallback(async (hashed_mapbox_id: string) => {
+    setPlaceReviews("LOADING");
+    fetch(`/api/get-place-reviews?q=${hashed_mapbox_id}`)
+      .then((response) => response.json())
+      .then((data) => {
+        if (isArrayOfReviews(data)) {
+          setPlaceReviews(data);
+        } else {
+          console.debug("Received data is not in the expected format.");
+          setPlaceReviews([]);
+        }
+      })
+      .catch(() => {
+        console.debug("An error occurred while fetching data.");
+        setPlaceReviews([]);
+      });
+  }, []);
 
   const fetchProfile = useCallback(async () => {
     if (username) {
@@ -81,6 +105,8 @@ function Home() {
             handleUpdateSelectedPoi={handleUpdateSelectedPoi}
             fetchProfile={fetchProfile}
             profileAndFinds={profileAndFinds}
+            fetchPlaceReviews={fetchPlaceReviews}
+            placeReviews={placeReviews}
           />
         ) : (
           <Profile

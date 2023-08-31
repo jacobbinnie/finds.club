@@ -7,18 +7,20 @@ import {
   XCircleIcon,
 } from "@heroicons/react/24/solid";
 import ReviewEditor from "../ReviewEditor";
-import { use, useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { supabase } from "@/utils/supabase";
 import { useSupabase } from "@/providers/SupabaseProvider";
-import * as crypto from "crypto";
-import { ProfileAndFinds, Review, isArrayOfReviews } from "@/interfaces";
+import { ProfileAndFinds, Review } from "@/interfaces";
 import JSConfetti from "js-confetti";
+import { hashString } from "@/utils/utils";
 
 interface PlaceOverviewProps {
   selectedPoi: PlaceDeconstructed | null;
   handleUpdateSelectedPoi: (value: PlaceDeconstructed | null) => void;
   fetchProfile: () => Promise<void>;
   profileAndFinds: ProfileAndFinds | null | undefined;
+  fetchPlaceReviews: (hashed_mapbox_id: string) => Promise<void>;
+  placeReviews: Review[] | "LOADING";
 }
 
 function PlaceOverview({
@@ -26,10 +28,11 @@ function PlaceOverview({
   handleUpdateSelectedPoi,
   fetchProfile,
   profileAndFinds,
+  fetchPlaceReviews,
+  placeReviews,
 }: PlaceOverviewProps) {
   const [isReviewing, setIsReviewing] = useState<boolean>(false);
   const [isSubmittingFind, setIsSubmittingFind] = useState<boolean>(false);
-  const [reviews, setReviews] = useState<Review[]>([]);
 
   const [isUserFind, setIsUserFind] = useState<boolean>(false);
 
@@ -37,40 +40,12 @@ function PlaceOverview({
 
   const { profile } = useSupabase();
 
-  const checkUserFind = () => {
-    const bool = profileAndFinds?.finds.some(
-      (find) => find.place.hashed_mapbox_id === selectedPoi?.hashed_mapbox_id
-    );
-    bool ? setIsUserFind(true) : setIsUserFind(false);
-  };
-
-  const checkReviews = () => {
-    supabase
-      .from("finds")
-      .select(
-        `
-        id,
-        created_at,
-        rating,
-        review,
-        profile (
-          username
-        )
-        `
-      )
-      .eq("place", selectedPoi?.hashed_mapbox_id)
-      .then((res) => {
-        if (res.data && res.data.length > 0) {
-          isArrayOfReviews(res.data) ? setReviews(res.data) : setReviews([]);
-        }
-      });
-  };
-
-  useEffect(() => {
-    checkUserFind();
-    checkReviews();
-    console.log("Triggered");
-  }, [selectedPoi]);
+  // const checkUserFind = () => {
+  //   const bool = profileAndFinds?.finds.some(
+  //     (find) => find.place.hashed_mapbox_id === selectedPoi?.hashed_mapbox_id
+  //   );
+  //   bool ? setIsUserFind(true) : setIsUserFind(false);
+  // };
 
   const submitFindReview = async (
     review: string,
@@ -96,7 +71,6 @@ function PlaceOverview({
               fetchProfile().then(() => {
                 jsConfetti.addConfetti();
                 setIsUserFind(true);
-                checkReviews();
                 setIsReviewing(false);
                 setIsSubmittingFind(false);
               });
@@ -109,13 +83,7 @@ function PlaceOverview({
       supabase
         .from("places")
         .select("*")
-        .eq(
-          "hashed_mapbox_id",
-          crypto
-            .createHash("md5")
-            .update(selectedPoi?.hashed_mapbox_id)
-            .digest("hex")
-        )
+        .eq("hashed_mapbox_id", hashString(selectedPoi?.hashed_mapbox_id))
         .eq("name", selectedPoi?.name)
 
         .throwOnError()
@@ -129,10 +97,7 @@ function PlaceOverview({
                 .from("places")
                 .insert([
                   {
-                    hashed_mapbox_id: crypto
-                      .createHash("md5")
-                      .update(selectedPoi?.hashed_mapbox_id)
-                      .digest("hex"),
+                    hashed_mapbox_id: selectedPoi.hashed_mapbox_id,
                     name: selectedPoi?.name,
                     full_address: selectedPoi?.full_address,
                     lat: selectedPoi?.lat,
@@ -170,7 +135,9 @@ function PlaceOverview({
   };
 
   const renderReviews = () => {
-    return reviews.map((review, key) => {
+    if (placeReviews === "LOADING") return <p>Loading...</p>;
+
+    return placeReviews.map((review, key) => {
       return (
         <div
           key={key}
@@ -196,6 +163,10 @@ function PlaceOverview({
       encodeURIComponent(selectedPoi.name) +
       " " +
       encodeURIComponent(selectedPoi?.full_address);
+
+  useEffect(() => {
+    fetchPlaceReviews(selectedPoi?.hashed_mapbox_id || "");
+  }, [selectedPoi]);
 
   return (
     <div className="w-full sm:max-w-[500px] p-6 gap-3 flex flex-col h-screen">

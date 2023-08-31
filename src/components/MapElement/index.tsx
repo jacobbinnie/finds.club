@@ -1,5 +1,5 @@
 "use client";
-import * as crypto from "crypto";
+
 import "mapbox-gl/dist/mapbox-gl.css";
 import clsx from "clsx";
 import { useEffect, useRef, useState } from "react";
@@ -13,6 +13,7 @@ import {
   isPlacesFeatureFullResponse,
 } from "@/interfaces/places";
 import { useLocation } from "@/providers/LocationProvider";
+import { hashString } from "@/utils/utils";
 
 const access_token = process.env.NEXT_PUBLIC_MAPBOX_MAP_TOKEN || "";
 interface MapElementProps {
@@ -72,10 +73,7 @@ function MapElement({
               data.features[0].properties.mapbox_id
             ) {
               const placeDeconstructed = {
-                hashed_mapbox_id: crypto
-                  .createHash("md5")
-                  .update(data.features[0].properties.mapbox_id)
-                  .digest("hex"),
+                hashed_mapbox_id: hashString(suggestion.mapbox_id),
                 name: data.features[0].properties.name,
                 full_address: data.features[0].properties.full_address,
                 lat: data.features[0].geometry.coordinates[0],
