@@ -30,7 +30,7 @@ function Find({ find, isReviewLayout }: FindProps) {
           name: find.place.name,
           lat: find.place.lat,
           lng: find.place.lng,
-          mapbox_hash_id: find.place.id,
+          hashed_mapbox_id: find.place.hashed_mapbox_id,
           categories: find.place.categories,
           locality: find.place.locality,
           region: find.place.region,

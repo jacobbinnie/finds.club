@@ -72,18 +72,24 @@ function MapElement({
               data.features[0].properties.mapbox_id
             ) {
               const placeDeconstructed = {
-                mapbox_hash_id: crypto
+                hashed_mapbox_id: crypto
                   .createHash("md5")
                   .update(data.features[0].properties.mapbox_id)
                   .digest("hex"),
                 name: data.features[0].properties.name,
                 full_address: data.features[0].properties.full_address,
-                locality: data.features[0].properties.context.locality?.name,
-                region: data.features[0].properties.context.region?.name,
-                country: data.features[0].properties.context.country?.name,
                 lat: data.features[0].geometry.coordinates[0],
                 lng: data.features[0].geometry.coordinates[1],
-                categories: data.features[0].properties.poi_category,
+                locality:
+                  data.features[0].properties.context.locality?.name ?? null,
+                region:
+                  data.features[0].properties.context.region?.name ?? null,
+                country:
+                  data.features[0].properties.context.country?.name ?? null,
+
+                categories: data.features[0].properties.poi_category ?? null,
+                postcode:
+                  data.features[0].properties.context.postcode?.name ?? null,
               };
               handleUpdateSelectedPoi(placeDeconstructed);
             }

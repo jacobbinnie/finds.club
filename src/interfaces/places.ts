@@ -125,7 +125,7 @@ export function isPlacesFeatureFullResponse(
 }
 
 export interface PlaceDeconstructed {
-  mapbox_hash_id: string;
+  hashed_mapbox_id: string;
   name: string;
   full_address: string;
   lat: number;

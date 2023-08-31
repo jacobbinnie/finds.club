@@ -80,6 +80,7 @@ function Home() {
             selectedPoi={selectedPoi}
             handleUpdateSelectedPoi={handleUpdateSelectedPoi}
             fetchProfile={fetchProfile}
+            profileAndFinds={profileAndFinds}
           />
         ) : (
           <Profile

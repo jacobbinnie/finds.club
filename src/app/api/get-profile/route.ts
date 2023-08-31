@@ -16,6 +16,7 @@ export async function GET(request: NextRequest) {
     rating,
     review,
     place (
+      hashed_mapbox_id,
       name,
       full_address,
       lat,
