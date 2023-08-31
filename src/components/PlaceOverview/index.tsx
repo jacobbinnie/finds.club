@@ -14,11 +14,13 @@ import * as crypto from "crypto";
 interface PlaceOverviewProps {
   selectedPoi: PlaceDeconstructed | null;
   handleUpdateSelectedPoi: (value: PlaceDeconstructed | null) => void;
+  fetchProfile: () => Promise<void>;
 }
 
 function PlaceOverview({
   selectedPoi,
   handleUpdateSelectedPoi,
+  fetchProfile,
 }: PlaceOverviewProps) {
   const [isReviewing, setIsReviewing] = useState<boolean>(false);
   const [isSubmittingFind, setIsSubmittingFind] = useState<boolean>(false);
@@ -46,8 +48,10 @@ function PlaceOverview({
           .select()
           .then((res) => {
             if (res) {
-              setIsReviewing(false);
-              setIsSubmittingFind(false);
+              fetchProfile().then(() => {
+                setIsReviewing(false);
+                setIsSubmittingFind(false);
+              });
             }
           });
       }
@@ -70,11 +74,9 @@ function PlaceOverview({
 
         .then((place) => {
           if (place.data && place.data.length > 0) {
-            console.log("Trying to submit first find step");
             submitFind(place.data[0].id);
           } else {
             if (selectedPoi?.full_address) {
-              console.log(selectedPoi);
               supabase
                 .from("places")
                 .insert([
@@ -135,19 +137,21 @@ function PlaceOverview({
         />
 
         <div className="flex items-center gap-3 justify-between">
-          <div
-            onClick={() => setIsReviewing((prev) => !prev)}
-            className="flex items-center group gap-1 hover:bg-accent transition-all cursor-pointer bg-gray-200 px-2 py-1 rounded-lg"
-          >
-            <p className="tracking-tighter text-sm">
-              {isReviewing ? "Cancel review" : "Add to finds"}
-            </p>
-            {isReviewing ? (
-              <XCircleIcon className="w-5 h-5 text-primary group-hover:rotate-180 transition-all" />
-            ) : (
-              <PlusCircleIcon className="w-5 h-5 text-primary group-hover:rotate-180 transition-all" />
-            )}
-          </div>
+          {profile?.username && (
+            <div
+              onClick={() => setIsReviewing((prev) => !prev)}
+              className="flex items-center group gap-1 hover:bg-accent transition-all cursor-pointer bg-gray-200 px-2 py-1 rounded-lg"
+            >
+              <p className="tracking-tighter text-sm">
+                {isReviewing ? "Cancel review" : "Add to finds"}
+              </p>
+              {isReviewing ? (
+                <XCircleIcon className="w-5 h-5 text-primary group-hover:rotate-180 transition-all" />
+              ) : (
+                <PlusCircleIcon className="w-5 h-5 text-primary group-hover:rotate-180 transition-all" />
+              )}
+            </div>
+          )}
 
           {selectedPoi?.full_address && (
             <a

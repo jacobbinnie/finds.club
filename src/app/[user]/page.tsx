@@ -79,6 +79,7 @@ function Home() {
           <PlaceOverview
             selectedPoi={selectedPoi}
             handleUpdateSelectedPoi={handleUpdateSelectedPoi}
+            fetchProfile={fetchProfile}
           />
         ) : (
           <Profile
