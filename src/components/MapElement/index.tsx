@@ -40,6 +40,8 @@ function MapElement({
 
   const { handleUpdateSelectedPoi, selectedPoi } = useLocation();
 
+  const [mapMoving, setMapMoving] = useState(false);
+
   const resetQueries = () => {
     setProfilesQuery("");
     setPlacesQuery("");
@@ -121,6 +123,7 @@ function MapElement({
         currentMap?.flyTo({
           center: [selectedPoi.lat, selectedPoi.lng],
           zoom: 15,
+          speed: 2,
         });
       }
       if (currentMarker) {
@@ -143,6 +146,7 @@ function MapElement({
       setCurrentMarker(null);
       currentMap?.flyTo({
         zoom: 4,
+        speed: 3,
       });
     }
   }, [selectedPoi]);
@@ -203,6 +207,14 @@ function MapElement({
       spinGlobe();
     });
 
+    mapboxMap.on("movestart", () => {
+      setMapMoving(true);
+    });
+
+    mapboxMap.on("moveend", () => {
+      setMapMoving(false);
+    });
+
     spinGlobe();
     setCurrentMap(mapboxMap);
 
@@ -251,6 +263,7 @@ function MapElement({
       />
 
       <MapSearch
+        disabled={mapMoving}
         suggestions={searchType === "PLACES" ? placesSuggestions : []}
         searchType={searchType}
         setSearchType={setSearchType}

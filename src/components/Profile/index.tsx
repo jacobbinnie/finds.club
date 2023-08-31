@@ -28,7 +28,7 @@ function Profile({ profileAndFinds, loading, invalidUsername }: ProfileProps) {
   const UserProfile = () => {
     return (
       <div className="flex flex-col items-center gap-3">
-        <div className="w-36 h-36 mt-[-77px] transition-all sm:mt-10 z-10 shadow-lg bg-accent rounded-full" />
+        <div className="w-28 h-28 mt-[-56px] transition-all sm:mt-10 z-10 shadow-lg bg-accent rounded-full" />
         <div className="w-full flex flex-col items-center gap-1">
           <h1 className="text-2xl tracking-tighter font-bold">
             @{profileAndFinds?.username}

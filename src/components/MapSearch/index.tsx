@@ -10,6 +10,7 @@ import { Dispatch, SetStateAction } from "react";
 import MapSearchSuggestions from "../MapSearchSuggestions";
 
 interface MapSearchProps {
+  disabled?: boolean;
   suggestions: PlacesSuggestion[] | []; // TODO: Add profile suggestions
   searchType: SearchType;
   setSearchType: Dispatch<SetStateAction<SearchType>>;
@@ -23,6 +24,7 @@ interface MapSearchProps {
 }
 
 function MapSearch({
+  disabled,
   suggestions,
   searchType,
   setSearchType,
@@ -37,9 +39,11 @@ function MapSearch({
   return (
     <div
       className={clsx(
-        isSearching
-          ? "w-full sm:w-full max-w-[500px]"
-          : "w-44 rounded-lg max-w-[500px]",
+        disabled
+          ? "opacity-0"
+          : isSearching
+          ? "w-full sm:w-full max-w-[500px] opacity-100"
+          : "w-44 rounded-lg max-w-[500px] opacity-100",
         "gap-1 px-[6px] z-20 rounded-lg flex flex-col absolute top-[6px] text-tertiary text-small font-regular transition-all tracking-tighter"
       )}
     >
@@ -128,6 +132,7 @@ function MapSearch({
             Search...
           </p>
           <input
+            disabled={disabled}
             autoComplete="shipping address-line1"
             value={
               searchType === "PLACES" ? placesQuery ?? "" : profilesQuery ?? ""

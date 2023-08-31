@@ -12,7 +12,6 @@ import { supabase } from "@/utils/supabase";
 import { useSupabase } from "@/providers/SupabaseProvider";
 import { ProfileAndFinds, Review } from "@/interfaces";
 import JSConfetti from "js-confetti";
-import { hashString } from "@/utils/utils";
 
 interface PlaceOverviewProps {
   selectedPoi: PlaceDeconstructed | null;
