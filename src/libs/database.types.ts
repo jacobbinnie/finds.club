@@ -39,7 +39,7 @@ export interface Database {
             foreignKeyName: "finds_place_fkey"
             columns: ["place"]
             referencedRelation: "places"
-            referencedColumns: ["id"]
+            referencedColumns: ["hashed_mapbox_id"]
           },
           {
             foreignKeyName: "finds_user_id_fkey"

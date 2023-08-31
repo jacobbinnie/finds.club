@@ -30,11 +30,7 @@ function PlaceOverview({
   const [isReviewing, setIsReviewing] = useState<boolean>(false);
   const [isSubmittingFind, setIsSubmittingFind] = useState<boolean>(false);
 
-  const jsConfetti = new JSConfetti();
-
-  const { profile } = useSupabase();
-
-  const isUserFind = () => {
+  const checkUserFind = () => {
     if (profileAndFinds?.finds) {
       return profileAndFinds?.finds.some(
         (find) => find.place.hashed_mapbox_id === selectedPoi?.hashed_mapbox_id
@@ -42,6 +38,12 @@ function PlaceOverview({
     }
     return false;
   };
+
+  const [isUserFind, setIsUserFind] = useState<boolean>(checkUserFind());
+
+  const jsConfetti = new JSConfetti();
+
+  const { profile } = useSupabase();
 
   const submitFindReview = async (
     review: string,
@@ -66,6 +68,7 @@ function PlaceOverview({
             if (res) {
               fetchProfile().then(() => {
                 jsConfetti.addConfetti();
+                setIsUserFind(true);
                 setIsReviewing(false);
                 setIsSubmittingFind(false);
               });
@@ -91,7 +94,7 @@ function PlaceOverview({
 
         .then((place) => {
           if (place.data && place.data.length > 0) {
-            submitFind(place.data[0].id);
+            submitFind(place.data[0].hashed_mapbox_id);
           } else {
             if (selectedPoi?.full_address) {
               supabase
@@ -116,7 +119,7 @@ function PlaceOverview({
                 .select()
                 .then((place) => {
                   if (place.data && place.data.length > 0) {
-                    submitFind(place.data[0].id);
+                    submitFind(place.data[0].hashed_mapbox_id);
                   }
                 });
             }
@@ -155,7 +158,7 @@ function PlaceOverview({
 
         <div className="flex items-center gap-3 justify-between">
           {profile?.username &&
-            (isUserFind() ? (
+            (isUserFind ? (
               <div className="flex gap-1">
                 <p className="text-sm tracking-tighter font-bold">Found</p>
                 <CheckBadgeIcon className="w-5 h-5 text-primary" />
