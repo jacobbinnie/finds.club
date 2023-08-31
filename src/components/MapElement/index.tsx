@@ -144,7 +144,7 @@ function MapElement({
       currentMarker?.remove();
       setCurrentMarker(null);
       currentMap?.flyTo({
-        zoom: 5,
+        zoom: 4,
       });
     }
   }, [selectedPoi]);
@@ -166,13 +166,14 @@ function MapElement({
       zoom: mapPosition.zoom,
       attributionControl: false,
       logoPosition: "top-left",
+      pitch: 40,
     });
 
     mapboxMap.on("load", () => setMapLoaded(true));
 
-    const secondsPerRevolution = 120;
-    const maxSpinZoom = 3;
-    const slowSpinZoom = 3;
+    const secondsPerRevolution = 360;
+    const maxSpinZoom = 5;
+    const slowSpinZoom = 5;
 
     let userInteracting = false;
     const spinEnabled = true;
