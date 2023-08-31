@@ -40,12 +40,12 @@ function PlaceOverview({
 
   const { profile } = useSupabase();
 
-  // const checkUserFind = () => {
-  //   const bool = profileAndFinds?.finds.some(
-  //     (find) => find.place.hashed_mapbox_id === selectedPoi?.hashed_mapbox_id
-  //   );
-  //   bool ? setIsUserFind(true) : setIsUserFind(false);
-  // };
+  const checkUserFind = () => {
+    const bool = profileAndFinds?.finds.some(
+      (find) => find.place.hashed_mapbox_id === selectedPoi?.hashed_mapbox_id
+    );
+    bool ? setIsUserFind(true) : setIsUserFind(false);
+  };
 
   const submitFindReview = async (
     review: string,
@@ -70,6 +70,7 @@ function PlaceOverview({
             if (res) {
               fetchProfile().then(() => {
                 jsConfetti.addConfetti();
+                fetchPlaceReviews(selectedPoi?.hashed_mapbox_id || "");
                 setIsUserFind(true);
                 setIsReviewing(false);
                 setIsSubmittingFind(false);
@@ -166,6 +167,7 @@ function PlaceOverview({
 
   useEffect(() => {
     fetchPlaceReviews(selectedPoi?.hashed_mapbox_id || "");
+    checkUserFind();
   }, [selectedPoi]);
 
   return (
