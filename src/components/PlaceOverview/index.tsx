@@ -70,6 +70,7 @@ function PlaceOverview({
               fetchProfile().then(() => {
                 jsConfetti.addConfetti();
                 fetchPlaceReviews(selectedPoi?.hashed_mapbox_id || "");
+                window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
                 setIsUserFind(true);
                 setIsReviewing(false);
                 setIsSubmittingFind(false);
