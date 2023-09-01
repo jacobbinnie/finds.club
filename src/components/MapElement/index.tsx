@@ -155,8 +155,6 @@ function MapElement({
   }, [selectedPoi]);
 
   useEffect(() => {
-    const controller = new AbortController();
-
     const node = mapNode.current;
 
     if (typeof window === "undefined" || node === null) return;
@@ -174,6 +172,8 @@ function MapElement({
       attributionControl: false,
       logoPosition: "top-left",
       pitch: 40,
+      trackResize: true,
+      renderWorldCopies: false,
     });
 
     mapboxMap.on("load", () => setMapLoaded(true));
@@ -226,8 +226,6 @@ function MapElement({
     return () => {
       mapboxMap.remove();
     };
-
-    return () => controller.abort();
   }, []);
 
   useEffect(() => {
@@ -238,26 +236,6 @@ function MapElement({
 
     return () => controller.abort();
   }, [searchType, isSearching]);
-
-  useEffect(() => {
-    const controller = new AbortController();
-
-    if (currentMap) {
-      setTimeout(() => {
-        currentMap.resize();
-      }, 250);
-    }
-
-    return () => controller.abort();
-  }, [fullScreen]);
-
-  window.addEventListener("resize", () => {
-    if (currentMap) {
-      setTimeout(() => {
-        currentMap.resize();
-      }, 250);
-    }
-  });
 
   return (
     <div
