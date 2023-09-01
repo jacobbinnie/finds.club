@@ -155,6 +155,8 @@ function MapElement({
   }, [selectedPoi]);
 
   useEffect(() => {
+    const controller = new AbortController();
+
     const node = mapNode.current;
 
     if (typeof window === "undefined" || node === null) return;
@@ -224,19 +226,29 @@ function MapElement({
     return () => {
       mapboxMap.remove();
     };
+
+    return () => controller.abort();
   }, []);
 
   useEffect(() => {
+    const controller = new AbortController();
+
     resetQueries();
     setPlacesSuggestions([]);
+
+    return () => controller.abort();
   }, [searchType, isSearching]);
 
   useEffect(() => {
+    const controller = new AbortController();
+
     if (currentMap) {
       setTimeout(() => {
         currentMap.resize();
       }, 250);
     }
+
+    return () => controller.abort();
   }, [fullScreen]);
 
   window.addEventListener("resize", () => {

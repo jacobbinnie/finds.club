@@ -35,11 +35,15 @@ function Home() {
   }
 
   useEffect(() => {
+    const controller = new AbortController();
+
     if (params.user) {
       isValidUsername(params.user.toString())
         ? setUsername(params.user.toString())
         : setInvalidUsername(true);
     }
+
+    return () => controller.abort();
   }, [params]);
 
   const fetchPlaceReviews = useCallback(async (hashed_mapbox_id: string) => {
@@ -86,8 +90,12 @@ function Home() {
   }, [username]);
 
   useEffect(() => {
+    const controller = new AbortController();
+
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
     fetchProfile();
+
+    return () => controller.abort();
   }, [username]);
 
   return (
