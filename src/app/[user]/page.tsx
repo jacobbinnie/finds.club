@@ -88,7 +88,7 @@ function Home() {
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
     fetchProfile();
-  }, [username, selectedPoi]);
+  }, [username]);
 
   return (
     <div className="bg-tertiary w-full h-full">

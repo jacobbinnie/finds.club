@@ -119,28 +119,31 @@ function MapElement({
 
   useEffect(() => {
     if (selectedPoi) {
-      if (selectedPoi?.lat && selectedPoi?.lng) {
-        currentMap?.flyTo({
-          center: [selectedPoi.lat, selectedPoi.lng],
-          zoom: 15,
-          speed: 2,
-        });
-      }
-      if (currentMarker) {
-        currentMarker?.setLngLat([selectedPoi?.lat, selectedPoi?.lng]);
-      } else {
-        if (currentMap) {
-          const marker = new mapboxgl.Marker({
-            anchor: "bottom",
-            color: "#00d688",
-            scale: 0.75,
-          })
-            .setLngLat([selectedPoi?.lat, selectedPoi?.lng])
-            .addTo(currentMap);
-
-          setCurrentMarker(marker);
+      window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+      setTimeout(() => {
+        if (selectedPoi?.lat && selectedPoi?.lng) {
+          currentMap?.flyTo({
+            center: [selectedPoi.lat, selectedPoi.lng],
+            zoom: 15,
+            speed: 3,
+          });
         }
-      }
+        if (currentMarker) {
+          currentMarker?.setLngLat([selectedPoi?.lat, selectedPoi?.lng]);
+        } else {
+          if (currentMap) {
+            const marker = new mapboxgl.Marker({
+              anchor: "bottom",
+              color: "#00d688",
+              scale: 0.75,
+            })
+              .setLngLat([selectedPoi?.lat, selectedPoi?.lng])
+              .addTo(currentMap);
+
+            setCurrentMarker(marker);
+          }
+        }
+      }, 500);
     } else {
       currentMarker?.remove();
       setCurrentMarker(null);
