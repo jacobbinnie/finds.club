@@ -262,7 +262,7 @@ function MapElement({
       />
       <div
         ref={mapNode}
-        className="w-full transition-all h-[400px] sm:h-full"
+        className="w-full transition-all h-[300px] sm:h-full"
       />
 
       <MapSearch
