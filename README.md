@@ -1,34 +1,16 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+![screely-1694050037657](https://github.com/jacobbinnie/finds.club/assets/83803154/60c57880-127a-48b6-bf5d-9c23a84c85c9)
 
-## Getting Started
+## Finds - a social app for sharing your favourite bars, restaurants & general 'finds' with friends 🍕 
 
-First, run the development server:
+- Claim a @handle and share all your favourite places to eat / drink worldwide
+- WebGL JS globe and custom map designed through Mapbox
+- Search custom places and locations worldwide using a geocode api
+- `flyTo` animations supported, fully mobile / desktop responsive
+- Add a specific place to your 'finds', leave a review and rating
+- Visualise and interact with all finds on your shareable profile
+- Auth & backend handled by Supabase
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+### Video Walkthrough
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+https://github.com/jacobbinnie/finds.club/assets/83803154/11e7646c-fec3-484e-a2b9-d0c30bbfe08e
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
