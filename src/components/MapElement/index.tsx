@@ -173,7 +173,7 @@ function MapElement({
       logoPosition: "top-left",
       pitch: 40,
       trackResize: true,
-      renderWorldCopies: false,
+      // renderWorldCopies: false,
     });
 
     mapboxMap.on("load", () => setMapLoaded(true));
